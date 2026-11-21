@@ -1,6 +1,6 @@
 # Video script: The five problems everyone hits
 
-Target length: about 4 minutes.
+Target length: about 2 minutes.
 
 ## Scene 1: Hook
 visual: slide

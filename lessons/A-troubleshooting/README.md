@@ -1,5 +1,7 @@
 # Troubleshooting
 
+**Time:** 2 minute video · as long as it takes
+
 Something went wrong? Find the message you're seeing below. Each fix says
 what happened and what to run. Nearly everything in git can be undone, so
 don't panic, and **don't delete your folder and start again** until you've

@@ -1,6 +1,6 @@
 # Video script: Capstone: your first external contribution
 
-Target length: about 6 minutes.
+Target length: about 2 minutes.
 
 ## Scene 1: Hook
 visual: slide

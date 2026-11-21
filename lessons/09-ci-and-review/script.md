@@ -1,6 +1,6 @@
 # Video script: CI and code review
 
-Target length: about 8 minutes.
+Target length: about 3 minutes.
 
 ## Scene 1: Hook
 visual: slide

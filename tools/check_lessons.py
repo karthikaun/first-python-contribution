@@ -33,9 +33,27 @@ def check_lesson(folder: Path) -> list[str]:
         script = script_format.load(script_path)
         out.extend(script_format.problems(script))
         out.extend(check_captures(folder, script))
+        out.extend(check_stated_time(folder, script))
         if script.minutes > MAX_MINUTES:
             out.append(f"script is about {script.minutes:.0f} minutes; keep it under {MAX_MINUTES}")
     return out
+
+
+TIME_RE = re.compile(r"\*\*Time:\*\* (\d+) minute video")
+
+
+def check_stated_time(folder: Path, script: script_format.Script) -> list[str]:
+    """The README's "**Time:** N minute video" must match the script's length."""
+    readme = folder / "README.md"
+    if not readme.is_file():
+        return []
+    m = TIME_RE.search(readme.read_text(encoding="utf-8"))
+    if not m:
+        return ['README.md needs a line like "**Time:** 3 minute video"']
+    stated = int(m.group(1))
+    if abs(stated - script.minutes) > 1:
+        return [f"README says a {stated} minute video, but the script is about {script.minutes:.1f} minutes"]
+    return []
 
 
 def check_captures(folder: Path, script: script_format.Script) -> list[str]:

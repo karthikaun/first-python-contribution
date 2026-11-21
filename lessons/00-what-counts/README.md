@@ -1,6 +1,6 @@
 # Lesson 00: What counts as a contribution
 
-**Time:** 5 minute video · 5 minute exercise
+**Time:** 3 minute video · 5 minute exercise
 **You'll need:** nothing yet
 
 ## Open source in one paragraph

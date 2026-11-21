@@ -1,6 +1,6 @@
 # Lesson 04: Your second PR, from the terminal
 
-**Time:** 8 minute video · 30 minute exercise
+**Time:** 3 minute video · 30 minute exercise
 **You'll need:** a green `tools/doctor.py` (Lesson 02)
 
 This time you'll contribute like you would to a real Python project: on a
@@ -183,13 +183,14 @@ Prefer the browser? Open your fork on GitHub and click **Compare & pull request*
 gh pr checks --watch
 ```
 
-Two checks run:
+One check runs on your PR: **Exercise 2 tests** (listed as `test`). It
+runs `ruff format --check`, `ruff check` and `pytest` on your code, exactly
+like Steps 5 and 6.
 
-1. **Exercise 2 tests** runs `ruff format --check`, `ruff check` and
-   `pytest` on your code, exactly like Step 5 and 6.
-2. **Exercise 2 review** checks your file names and that your code only
-   contains what it should. Then the bot comments, and if everything passed,
-   it merges.
+When it finishes, a separate review bot checks your file names and that your
+code only contains what it should. It doesn't appear in the checks list:
+about a minute later it **comments** on your PR, and if everything passed, it
+merges.
 
 Read the bot's comment with:
 

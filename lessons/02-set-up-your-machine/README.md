@@ -1,6 +1,6 @@
 # Lesson 02: Set up your machine
 
-**Time:** 7 minute video · 20–30 minute exercise (mostly installers)
+**Time:** 3 minute video · 20–30 minute exercise (mostly installers)
 **You'll need:** the fork you made in Lesson 01
 
 In Lesson 01 you did everything in the browser. Real projects need you to

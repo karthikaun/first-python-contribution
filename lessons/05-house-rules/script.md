@@ -1,6 +1,6 @@
 # Video script: House rules
 
-Target length: about 8 minutes.
+Target length: about 4 minutes.
 
 ## Scene 1: Hook
 visual: slide

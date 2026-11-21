@@ -29,7 +29,9 @@ Every lesson has the same four parts:
 | `exercise.md` | The hands-on task. Most of them happen in this repo, starting with [`first-commits/`](first-commits/). |
 | `quiz.md` | 3–5 questions with hidden answers. |
 
-Target length: 5–8 minute video, 10–20 minutes including the exercise.
+Target length: a 2–4 minute video (narration runs about 150 words a
+minute), then the exercise. `tools/check_lessons.py` checks that each
+lesson's stated length matches its script.
 Each long video also gets one 60-second clip for Shorts/Reels.
 
 ## Part 1: Your first PR, today
@@ -78,8 +80,9 @@ Each long video also gets one 60-second clip for Shorts/Reels.
 2. **Teach what real Python projects actually check.** Later lessons are
    built around the checks a maintainer will run (pytest, ruff, pre-commit,
    news fragments), not toy steps.
-3. **Every command is tested.** Commands in lessons are run in CI so the
-   course can't go out of date without us noticing.
+3. **Commands are tested.** Every command that can run without your own
+   account is run in CI (`tools/test_commands.py`), so the course can't go
+   out of date without us noticing. The rest are marked and explained.
 4. **Honest about AI.** The course is AI-generated and human-reviewed, and
    says so. Lessons 05 and 10 ask learners to be just as honest.
 5. **Real projects, not just practice.** The sandbox teaches the moves.

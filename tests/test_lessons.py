@@ -84,3 +84,14 @@ def test_code_font_fits_long_lines():
     long = render_video.code_font_px(["(.venv) $ " + "x" * 90])
     assert long * 0.61 * 100 <= render_video.CODE_WIDTH_PX
     assert 'class="prompt">(.venv) $ </span>git' in render_video._terminal_line("(.venv) $ git status")
+
+
+def test_stated_time_must_match_script(tmp_path):
+    words = " ".join(["word"] * 450)  # about 3 minutes at 150 words a minute
+    script = script_format.parse(f"# Video script: X\n\n## Scene 1: S\nvisual: slide\ntitle: T\n\n> {words}\n")
+    (tmp_path / "README.md").write_text("# L\n\n**Time:** 3 minute video · 5 minute exercise\n")
+    assert check_lessons.check_stated_time(tmp_path, script) == []
+    (tmp_path / "README.md").write_text("# L\n\n**Time:** 8 minute video · 5 minute exercise\n")
+    assert "8 minute video" in check_lessons.check_stated_time(tmp_path, script)[0]
+    (tmp_path / "README.md").write_text("# L\n")
+    assert "needs a line" in check_lessons.check_stated_time(tmp_path, script)[0]

@@ -1,6 +1,6 @@
 # Video script: Just enough git
 
-Target length: about 7 minutes.
+Target length: about 3 minutes.
 
 ## Scene 1: Hook
 visual: slide

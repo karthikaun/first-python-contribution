@@ -1,6 +1,6 @@
 # Video script: Using AI tools well
 
-Target length: about 7 minutes.
+Target length: about 3 minutes.
 
 ## Scene 1: Hook
 visual: slide

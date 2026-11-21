@@ -1,6 +1,6 @@
 # Lesson 03: Just enough git
 
-**Time:** 7 minute video · 15 minute exercise
+**Time:** 3 minute video · 15 minute exercise
 **You'll need:** git set up (Lesson 02)
 
 You don't need to know all of git to contribute. You need six ideas. We'll
