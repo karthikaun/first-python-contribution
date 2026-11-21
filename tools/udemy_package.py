@@ -9,7 +9,7 @@ Writes ``dist/udemy/``:
     lectures/NN - Title.mp4    stereo audio, loudness-normalised to -16 LUFS,
                                video copied unchanged (1080p H.264)
     captions/NN - Title.vtt    WebVTT captions from each lesson's .srt
-    course-image.png           2048x1152 (16:9) course image
+    course-image.png           750x422 course image with no text (Udemy's standard)
     test-video.mp4             a 2.5 minute clip for Udemy's free Test Video review
     UPLOAD.md                  landing page copy, sections and lectures, step by step
 
@@ -137,27 +137,46 @@ def encode_lecture(src: Path, dst: Path) -> None:
 
 
 def course_image(landing: dict, dst: Path) -> None:
-    html = f"""<!doctype html><html><head><meta charset="utf-8"><style>
-    body {{ margin:0; width:2048px; height:1152px; font-family:-apple-system,"Helvetica Neue",sans-serif;
-           background:radial-gradient(circle at 80% 15%, #1f3b63 0%, #0d1b2a 60%); color:#f4f1e8;
-           display:flex; flex-direction:column; justify-content:center; padding:0 170px; box-sizing:border-box; }}
-    .badge {{ font-size:44px; font-weight:700; letter-spacing:4px; color:#0d1b2a; background:#ffd43b;
-             padding:14px 30px; border-radius:16px; align-self:flex-start; }}
-    h1 {{ font-size:132px; line-height:1.05; margin:56px 0 40px; font-weight:800; max-width:1650px; }}
-    p {{ font-size:54px; color:#c9d6e8; margin:0; max-width:1600px; line-height:1.3; }}
-    .steps {{ margin-top:70px; font-size:46px; color:#ffd43b; font-weight:700; letter-spacing:2px; }}
-    </style></head><body>
-    <div class="badge">PYTHON · GITHUB · OPEN SOURCE</div>
-    <h1>{landing["Title"]}</h1>
-    <p>From your first commit to a merged PR in a real project</p>
-    <div class="steps">FORK → BRANCH → COMMIT → PULL REQUEST → MERGE</div>
-    </body></html>"""
+    """A 750x422 course image with no text (Udemy's image standards forbid text).
+
+    It shows the contribution workflow as a git graph: a main line, a branch
+    that curves off for your change, and the merge back.
+    """
+    svg = """<svg xmlns="http://www.w3.org/2000/svg" width="750" height="422" viewBox="0 0 750 422">
+    <defs>
+      <radialGradient id="bg" cx="78%" cy="18%" r="85%">
+        <stop offset="0" stop-color="#1f3b63"/><stop offset="1" stop-color="#0d1b2a"/>
+      </radialGradient>
+      <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <rect width="750" height="422" fill="url(#bg)"/>
+    <g opacity="0.08" stroke="#c9d6e8" stroke-width="1">
+      <path d="M0 70 H750 M0 140 H750 M0 210 H750 M0 280 H750 M0 350 H750"/>
+      <path d="M75 0 V422 M150 0 V422 M225 0 V422 M300 0 V422 M375 0 V422"/>
+      <path d="M450 0 V422 M525 0 V422 M600 0 V422 M675 0 V422"/>
+    </g>
+    <path d="M60 280 H690" stroke="#3776ab" stroke-width="14" stroke-linecap="round"/>
+    <path d="M210 280 C 270 280, 270 140, 330 140 H 450 C 510 140, 510 280, 570 280"
+          fill="none" stroke="#ffd43b" stroke-width="14" stroke-linecap="round" filter="url(#glow)"/>
+    <g fill="#0d1b2a" stroke="#3776ab" stroke-width="10">
+      <circle cx="90" cy="280" r="22"/><circle cx="210" cy="280" r="22"/><circle cx="390" cy="280" r="22"/>
+      <circle cx="660" cy="280" r="22"/>
+    </g>
+    <g fill="#0d1b2a" stroke="#ffd43b" stroke-width="10" filter="url(#glow)">
+      <circle cx="330" cy="140" r="24"/><circle cx="450" cy="140" r="24"/>
+    </g>
+    <circle cx="570" cy="280" r="34" fill="#ffd43b" filter="url(#glow)"/>
+    <path d="M553 281 l12 12 l23 -25" fill="none" stroke="#0d1b2a" stroke-width="9"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>"""
+    html = f"<!doctype html><html><body style='margin:0'>{svg}</body></html>"
     with tempfile.TemporaryDirectory() as tmp:
         page = Path(tmp) / "image.html"
         page.write_text(html, encoding="utf-8")
         run(
             [str(CHROME), "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=1",
-             f"--user-data-dir={tmp}/profile", "--window-size=2048,1152", f"--screenshot={dst}", page.as_uri()]
+             f"--user-data-dir={tmp}/profile", "--window-size=750,422", f"--screenshot={dst}", page.as_uri()]
         )  # fmt: skip
 
 
@@ -188,7 +207,7 @@ def upload_guide(landing: dict, sections: list[Section]) -> str:
         "",
         "**Language:** English · **Level:** Beginner · **Category:** Development",
         "",
-        "**Course image:** `course-image.png` (2048x1152, 16:9)",
+        "**Course image:** `course-image.png` (750x422, no text, per Udemy's image standards)",
         "",
         "## 2. Intended learners",
         "",
