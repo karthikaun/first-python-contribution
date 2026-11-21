@@ -3,7 +3,7 @@
 A free video course that takes you from "I've never opened a pull request"
 to a merged contribution to a real Python project.
 
-- **Lesson 01 needs no install.** You open your first pull request in the
+- **Lesson 02 needs no install.** You open your first pull request in the
   browser and a bot merges it within minutes.
 - **Then the real tools:** git, GitHub CLI, virtualenvs, pytest, ruff,
   pre-commit — the things maintainers will actually check.
@@ -14,7 +14,7 @@ to a merged contribution to a real Python project.
 
 👉 Start with [the curriculum](CURRICULUM.md).
 
-The hands-on exercises happen right here: in Lesson 01 you star and fork
+The hands-on exercises happen right here: in Lesson 02 you star and fork
 this repo, then add your own file to [`first-commits/`](first-commits/) as
 your first commit. A bot checks it and merges it.
 
@@ -32,7 +32,7 @@ re-rendering. If you spot something wrong, please
 
 ```
 lessons/NN-slug/   README.md, script.md, exercise.md, quiz.md
-first-commits/     one file per learner, added in Lesson 01
+first-commits/     one file per learner, added in Lesson 02
 tools/             lesson checker, video renderer (Python)
 tests/             tests for the tools and lesson structure
 publishing/        Udemy landing page copy (tools/udemy_package.py builds dist/udemy/)
@@ -43,7 +43,7 @@ publishing/        Udemy landing page copy (tools/udemy_package.py builds dist/u
 ```bash
 uv run pytest           # check lesson structure and tools
 uv run ruff check .     # lint
-uv run python tools/render_video.py lessons/00-what-counts   # render a video
+uv run python tools/render_video.py lessons/01-what-counts   # render a video
 ```
 
 ## License

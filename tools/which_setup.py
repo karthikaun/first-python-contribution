@@ -1,4 +1,4 @@
-"""Work out how to set up and test a Python project you just cloned (Lesson 06).
+"""Work out how to set up and test a Python project you just cloned (Lesson 07).
 
 Usage::
 

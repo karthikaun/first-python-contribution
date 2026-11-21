@@ -1,4 +1,4 @@
-"""Check that your machine is ready to contribute (Lesson 02).
+"""Check that your machine is ready to contribute (Lesson 03).
 
 Run it from your clone of the course repo::
 
@@ -57,7 +57,7 @@ def check_venv() -> tuple[str, str]:
 def check_git(runner=run) -> tuple[str, str]:
     res = runner(["git", "--version"])
     if res is None:
-        return FAIL, "git isn't installed. See Lesson 02, step 1."
+        return FAIL, "git isn't installed. See Lesson 03, step 1."
     version = parse_version(res[1])
     if version[:2] < MIN_GIT:
         return FAIL, f"git {'.'.join(map(str, version))} is too old; install git 2.28 or newer."
@@ -74,20 +74,20 @@ def check_git_name(runner=run) -> tuple[str, str]:
 def check_git_email(runner=run) -> tuple[str, str]:
     res = runner(["git", "config", "--global", "user.email"])
     if not (res and res[0] == 0 and res[1]):
-        return FAIL, "git doesn't know your email. See Lesson 02, step 3 (use your GitHub noreply address)."
+        return FAIL, "git doesn't know your email. See Lesson 03, step 3 (use your GitHub noreply address)."
     email = res[1]
     if email.endswith("@users.noreply.github.com"):
         return OK, f"git user.email is your private noreply address ({email})"
     return WARN, (
         f"git user.email is {email}. Every commit you push makes it public. "
-        "Consider your GitHub noreply address instead (Lesson 02, step 3)."
+        "Consider your GitHub noreply address instead (Lesson 03, step 3)."
     )
 
 
 def check_gh(runner=run) -> tuple[str, str]:
     res = runner(["gh", "--version"])
     if res is None:
-        return FAIL, "GitHub CLI (gh) isn't installed. See Lesson 02, step 1."
+        return FAIL, "GitHub CLI (gh) isn't installed. See Lesson 03, step 1."
     return OK, f"gh {'.'.join(map(str, parse_version(res[1])))}"
 
 
@@ -109,7 +109,7 @@ def check_upstream(runner=run) -> tuple[str, str] | None:
     if COURSE_REPO in origin[1]:
         return (
             WARN,
-            "You cloned the course repo itself, not your fork. Lesson 04 needs your fork: see Lesson 02, step 5.",
+            "You cloned the course repo itself, not your fork. Lesson 05 needs your fork: see Lesson 03, step 5.",
         )
     upstream = runner(["git", "remote", "get-url", "upstream"])
     if upstream and upstream[0] == 0 and COURSE_REPO in upstream[1]:
@@ -150,7 +150,7 @@ def main() -> int:
     if failures:
         print(f"{failures} thing(s) to fix. Fix the first one, then run this again.")
         return 1
-    print("All set. You're ready for Lesson 03.")
+    print("All set. You're ready for Lesson 04.")
     return 0
 
 

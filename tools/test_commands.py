@@ -85,8 +85,8 @@ def main(argv: list[str]) -> int:
     )
     with tempfile.TemporaryDirectory() as tmp:
         home = Path(tmp)
-        if not any(f.name.startswith("02-") for f in folders):
-            # Lesson 02 normally sets the identity; stand in for it when it isn't run.
+        if not any(f.name.startswith("03-") for f in folders):
+            # Lesson 03 normally sets the identity; stand in for it when it isn't run.
             (home / ".gitconfig").write_text("[user]\n\tname = Course CI\n\temail = ci@example.com\n")
         ok = all([run_lesson(folder, home) for folder in folders])
     return 0 if ok else 1

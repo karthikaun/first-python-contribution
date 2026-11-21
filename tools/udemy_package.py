@@ -35,7 +35,7 @@ CHROME = Path("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 TITLE_MAX, SUBTITLE_MAX, LECTURE_TITLE_MAX = 60, 120, 80
 DESCRIPTION_MIN_WORDS, OBJECTIVES_MIN = 200, 4
 LOUDNESS = "loudnorm=I=-16:TP=-1.5:LRA=11"
-TEST_VIDEO_LESSON, TEST_VIDEO_SECONDS = "04-second-pr-from-terminal", 150
+TEST_VIDEO_LESSON, TEST_VIDEO_SECONDS = "05-second-pr-from-terminal", 150
 MAX_UPLOAD_BYTES = int(9.5 * 1024 * 1024)  # browser automation uploads at most 10 MB per file
 
 

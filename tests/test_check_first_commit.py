@@ -104,7 +104,7 @@ def test_validate_against_real_git(tmp_path, monkeypatch):
         (["first-commits/ada.py"], True),
         (["first-commits/ada.py", "README.md"], True),
         (["first-commits/README.md"], False),
-        (["lessons/01-first-pr-in-browser/README.md"], False),
+        (["lessons/02-first-pr-in-browser/README.md"], False),
         (["first-commits/sub/ada.py"], False),
     ],
 )

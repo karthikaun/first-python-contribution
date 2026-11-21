@@ -2,7 +2,7 @@
 
 Usage::
 
-    python tools/capture_pages.py lessons/01-first-pr-in-browser
+    python tools/capture_pages.py lessons/02-first-pr-in-browser
 
 For every ``visual: browser`` scene with an ``image:`` field, it opens the
 scene's ``url`` in headless Chrome and saves a screenshot to that path inside

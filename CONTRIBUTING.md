@@ -4,10 +4,10 @@ Thanks for helping! There are two kinds of contribution here.
 
 ## 1. Learners: the exercises
 
-- **Lesson 01:** add `first-commits/YOUR-USERNAME.py`. See
-  [the lesson](lessons/01-first-pr-in-browser/).
-- **Lesson 04:** add `practice/greetings/YOUR_NAME.py` and its test. See
-  [the lesson](lessons/04-second-pr-from-terminal/).
+- **Lesson 02:** add `first-commits/YOUR-USERNAME.py`. See
+  [the lesson](lessons/02-first-pr-in-browser/).
+- **Lesson 05:** add `practice/greetings/YOUR_NAME.py` and its test. See
+  [the lesson](lessons/05-second-pr-from-terminal/).
 
 Bots check and merge these PRs. Change only your own files.
 

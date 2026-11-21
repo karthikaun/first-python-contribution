@@ -1,6 +1,6 @@
 # Exercise 2: a Python function and its test
 
-This is the hands-on part of [Lesson 04](../lessons/04-second-pr-from-terminal/).
+This is the hands-on part of [Lesson 05](../lessons/05-second-pr-from-terminal/).
 You add two files, named after your GitHub username (lowercase, with `-`
 replaced by `_`, because Python module names can't contain hyphens):
 
@@ -38,7 +38,7 @@ When your pull request's tests pass, a bot merges it.
 
 # Exercise 3: fix a planted bug (local only)
 
-`practice/textkit.py` has a bug on purpose. [Lesson 08](../lessons/08-making-the-change/)
+`practice/textkit.py` has a bug on purpose. [Lesson 09](../lessons/09-making-the-change/)
 walks you through fixing it on a branch, and `python tools/check_exercise_3.py`
 checks your work. **Don't open a pull request for it**: the next learner
 needs the bug.

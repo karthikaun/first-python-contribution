@@ -10,7 +10,7 @@ Pipeline:
 
 Usage::
 
-    python tools/render_video.py lessons/00-what-counts [--voice Samantha] [--scenes 1-3]
+    python tools/render_video.py lessons/01-what-counts [--voice Samantha] [--scenes 1-3]
 
 Output goes to ``build/<lesson>/<lesson>.mp4`` (and ``.srt``). Frames are
 ``sceneNN.png``, or ``sceneNN-K.png`` for beat K of a scene with several.
@@ -339,7 +339,7 @@ def _browser_capture(scene: Scene, lesson_dir: Path) -> str:
 
 
 def lesson_label(lesson_dir: Path | None) -> str:
-    """``lessons/04-second-pr`` gives "Lesson 04"; an appendix like ``A-...`` gives "Appendix A"."""
+    """``lessons/05-second-pr`` gives "Lesson 05"; an appendix like ``A-...`` gives "Appendix A"."""
     prefix = lesson_dir.name.split("-")[0] if lesson_dir else ""
     if prefix.isdigit():
         return f"Lesson {prefix}"
