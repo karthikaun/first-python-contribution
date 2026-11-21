@@ -36,6 +36,7 @@ TITLE_MAX, SUBTITLE_MAX, LECTURE_TITLE_MAX = 60, 120, 80
 DESCRIPTION_MIN_WORDS, OBJECTIVES_MIN = 200, 4
 LOUDNESS = "loudnorm=I=-16:TP=-1.5:LRA=11"
 TEST_VIDEO_LESSON, TEST_VIDEO_SECONDS = "04-second-pr-from-terminal", 150
+MAX_UPLOAD_BYTES = int(9.5 * 1024 * 1024)  # browser automation uploads at most 10 MB per file
 
 
 @dataclass
@@ -117,10 +118,22 @@ def run(cmd: list[str]) -> None:
 
 
 def encode_lecture(src: Path, dst: Path) -> None:
-    run(
-        ["ffmpeg", "-y", "-i", str(src), "-c:v", "copy", "-af", LOUDNESS, "-ac", "2", "-ar", "48000",
-         "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(dst)]
-    )  # fmt: skip
+    """Stereo, loudness-normalised audio; video copied, or re-encoded if the file is too big."""
+    audio = ["-af", LOUDNESS, "-ac", "2", "-ar", "48000", "-c:a", "aac", "-b:a", "128k"]
+    run(["ffmpeg", "-y", "-i", str(src), "-c:v", "copy", *audio, "-movflags", "+faststart", str(dst)])
+    if dst.stat().st_size > MAX_UPLOAD_BYTES:
+        seconds = float(
+            subprocess.run(
+                ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(src)],
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout
+        )
+        kbps = int(MAX_UPLOAD_BYTES * 8 * 0.95 / seconds / 1000) - 128  # leave room for audio and the container
+        video = ["-c:v", "libx264", "-preset", "slow", "-tune", "stillimage", "-pix_fmt", "yuv420p",
+                 "-b:v", f"{kbps}k", "-maxrate", f"{kbps * 2}k", "-bufsize", f"{kbps * 4}k"]  # fmt: skip
+        run(["ffmpeg", "-y", "-i", str(src), *video, *audio, "-movflags", "+faststart", str(dst)])
 
 
 def course_image(landing: dict, dst: Path) -> None:
@@ -134,7 +147,7 @@ def course_image(landing: dict, dst: Path) -> None:
     p {{ font-size:54px; color:#c9d6e8; margin:0; max-width:1600px; line-height:1.3; }}
     .steps {{ margin-top:70px; font-size:46px; color:#ffd43b; font-weight:700; letter-spacing:2px; }}
     </style></head><body>
-    <div class="badge">PYTHON · OPEN SOURCE</div>
+    <div class="badge">PYTHON · GITHUB · OPEN SOURCE</div>
     <h1>{landing["Title"]}</h1>
     <p>From your first commit to a merged PR in a real project</p>
     <div class="steps">FORK → BRANCH → COMMIT → PULL REQUEST → MERGE</div>
