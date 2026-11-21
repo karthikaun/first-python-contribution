@@ -69,7 +69,7 @@ Each long video also gets one 60-second clip for Shorts/Reels.
 | # | Lesson | Hands-on | Status |
 |---|---|---|---|
 | 12 | **[Your first external contribution](lessons/12-capstone/)**: a stage-by-stage checklist for a real PR | Get a PR merged in a real project you don't own, then add `graduates/YOUR-USERNAME.py`. The **Validate graduate** bot checks on GitHub that the PR is merged, yours, merged by a maintainer and in a real project, then you join the [graduates wall](graduates/) | Drafted |
-| A | Troubleshooting: auth errors, committed to `main`, detached HEAD, wrong fork, push rejected, "this branch has conflicts" | Reference page | Planned |
+| A | [Troubleshooting](lessons/A-troubleshooting/): login problems, pushing to the wrong repo, committed to `main`, push rejected, detached HEAD, fixing your last commit, fork out of date, pip and venv errors, PRs in the wrong place | A sandbox to break and fix each problem | Drafted |
 
 ## Principles
 
