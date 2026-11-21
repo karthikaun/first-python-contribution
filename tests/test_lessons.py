@@ -166,6 +166,7 @@ def test_slide_layouts():
         return render_video.scene_html(scene, "Demo", ROOT / "lessons" / "04-second-pr-from-terminal")
 
     assert '<div class="badge">Lesson 04</div>' in frame("title", ["sub"])
+    assert "Click <b>Commit</b> in <code>a.py</code>" in frame("bullets", ["Click **Commit** in `a.py`"])
     steps = frame("steps", ["a", "b", "c"], "2")
     assert [c in steps for c in ('"step done"', '"step on"', '"step todo"')] == [True] * 3
     cards = frame("cards", ["Docs | Fix a typo | No code", "Bug"])
@@ -184,6 +185,15 @@ def test_python_highlighting_and_code_focus():
     page = render_video.scene_html(scene, "Demo")
     assert page.count('class="ln dim"') == 1 and page.count('class="ln on"') == 1  # code never hides lines
     assert '<span class="wintitle">a.py</span>' in page
+    doc = render_video._highlight_python_lines(
+        ['    """Turn a title', "    and digits", '    """', "    return x and y"]
+    )
+    assert doc[1] == '<span class="tok-str">    and digits</span>' and "tok-kw" not in doc[0] + doc[2]
+    assert '<span class="tok-kw">and</span>' in doc[3]
+    assert render_video._output_class("4 failed, 1 passed in 0.01s") == "out-err"
+    assert render_video._output_class("7 passed in 0.01s") == "out-ok"
+    scene.fields["lang"] = "text"
+    assert 'class="tok-' not in render_video.scene_html(scene, "Demo")
 
 
 def test_segments_and_subtitles(tmp_path):

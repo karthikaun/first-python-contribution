@@ -146,8 +146,9 @@ pre { font-family: "SF Mono", Menlo, monospace; font-size: 50px; line-height: 1.
 
 
 def inline(text: str) -> str:
-    """Escape text for HTML; `backticks` become <code>."""
-    return re.sub(r"`([^`]+)`", r"<code>\1</code>", html.escape(text))
+    """Escape text for HTML; `backticks` become <code> and **stars** become <b>."""
+    out = re.sub(r"`([^`]+)`", r"<code>\1</code>", html.escape(text))
+    return re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", out)
 
 
 PY_TOKEN_RE = re.compile(
@@ -170,6 +171,19 @@ def _highlight_python(line: str) -> str:
     return "".join(out)
 
 
+def _highlight_python_lines(lines: list[str]) -> list[str]:
+    """Highlight a block of Python; the inside of a multi-line docstring is all string."""
+    out, in_docstring = [], False
+    for line in lines:
+        odd = line.count('"""') % 2 == 1
+        if in_docstring or (odd and not line.rstrip().endswith('"""')) or (odd and line.strip() == '"""'):
+            out.append(f'<span class="tok-str">{html.escape(line)}</span>')
+        else:
+            out.append(_highlight_python(line))
+        in_docstring ^= odd
+    return out
+
+
 PROMPT_RE = re.compile(r"^((?:\(\.venv\) )?\$ )(.*)$")
 CODE_WIDTH_PX = 1560  # inside the frame and the <pre> padding
 CODE_HEIGHT_PX = 680
@@ -190,7 +204,7 @@ def _output_class(line: str) -> str:
         return "out-plus"
     if re.match(r"^E\s+\? ", line):
         return "out-hint"
-    if re.match(r"^(E\s|ERROR\b|FAILED\b|error:|fatal:)", line) or re.search(r"\b(failed|error) in \d", line):
+    if re.match(r"^(E\s|ERROR\b|FAILED\b|CONFLICT\b|error:|fatal:)", line) or re.search(r"\d (failed|errors?)\b", line):
         return "out-err"
     if line.startswith("✓") or "All checks passed" in line or re.search(r"\bpassed in \d", line):
         return "out-ok"
@@ -220,13 +234,13 @@ def _line_states(count: int, focus: set[int] | None, reveal_to: int | None) -> l
 def _window(scene: Scene, focus: set[int] | None, reveal_to: int | None, note: str | None) -> str:
     """A code or terminal window, with focused lines lit and an optional note underneath."""
     terminal = scene.visual == "terminal"
-    render = _terminal_line if terminal else _highlight_python
+    plain = scene.fields.get("lang") == "text"  # prose or a search query: no Python colours
+    render = _terminal_line if terminal else html.escape if plain else _highlight_python
     height = CODE_HEIGHT_PX - (NOTE_HEIGHT_PX if scene.notes else 0)
     states = _line_states(len(scene.code), focus, reveal_to)
-    lines = "".join(
-        f'<span class="ln {state}">{render(line)}</span>' for line, state in zip(scene.code, states, strict=True)
-    )
-    title = scene.fields.get("file") or ("Terminal" if terminal else "Python")
+    rendered = _highlight_python_lines(scene.code) if render is _highlight_python else map(render, scene.code)
+    lines = "".join(f'<span class="ln {state}">{line}</span>' for line, state in zip(rendered, states, strict=True))
+    title = scene.fields.get("file") or ("Terminal" if terminal else "Text" if plain else "Python")
     out = (
         '<div class="win"><div class="winbar">'
         '<span class="dot" style="background:#ff5f57"></span>'

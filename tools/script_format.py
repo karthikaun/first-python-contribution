@@ -36,7 +36,8 @@ short callout under the code.
 
 Other optional fields: ``layout:`` on slides (``bullets``, ``title``,
 ``steps``, ``cards``; card bullets are ``Title | detail | tag``) and
-``file:`` on code/terminal scenes (the window title).
+``file:`` on code/terminal scenes (the window title). ``lang: text`` on a
+code scene turns off Python colours, for prose or a search query.
 
 ``{gh|g h}`` in narration shows "gh" in the subtitles and says "g h".
 """
