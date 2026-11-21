@@ -32,6 +32,8 @@ bullets:
 visual: browser
 url: https://github.com/thejesh23/first-python-contribution
 caption: Click Star, top right
+image: captures/repo.png
+highlight: 1236,184,96,36
 
 > Open the course repository. The link is in the description. Top right,
 > there's a Star button. Starring saves the repo to your list of stars, so you
@@ -40,8 +42,10 @@ caption: Click Star, top right
 
 ## Scene 4: Fork
 visual: browser
-url: https://github.com/thejesh23/first-python-contribution/fork
+url: https://github.com/thejesh23/first-python-contribution
 caption: Fork → Create fork
+image: captures/repo.png
+highlight: 1138,184,98,36
 
 > Next to Star is Fork. Click it, then click Create fork. After a few
 > seconds you're on a page with your username in the address. Look under the
@@ -51,7 +55,9 @@ caption: Fork → Create fork
 ## Scene 5: Create your file
 visual: browser
 url: https://github.com/thejesh23/first-python-contribution/tree/main/first-commits
-caption: first-commits → Add file → Create new file
+caption: In your fork: first-commits → Add file → Create new file
+image: captures/first-commits.png
+highlight: 337,417,1087,41
 
 > In your fork, open the folder called first commits. Click Add file, then
 > Create new file. Name the file after your GitHub username, followed by dot
@@ -72,9 +78,13 @@ message = "Why you're learning Python"
 > every value needs one at the start and one at the end.
 
 ## Scene 7: Commit
-visual: browser
-url: https://github.com/thejesh23/first-python-contribution
-caption: Commit changes... → write a message → Commit changes
+visual: slide
+title: Commit your file
+bullets:
+- Click Commit changes...
+- Message: Add first commit for octocat
+- Keep "Commit directly to the main branch" (it's your fork)
+- Click Commit changes
 
 > Click Commit changes. Write a short message, like: add first commit for,
 > and your username. Keep commit directly to the main branch selected. That's
@@ -84,7 +94,10 @@ caption: Commit changes... → write a message → Commit changes
 ## Scene 8: Open the pull request
 visual: browser
 url: https://github.com/thejesh23/first-python-contribution/compare
-caption: Contribute → Open pull request
+caption: Contribute → Open pull request, then check base ← head
+image: captures/compare.png
+crop: 100,180,1240,250
+highlight: 56,99,260,36
 
 > Go back to the main page of your fork. There's a banner saying your branch
 > is one commit ahead. Click Contribute, then Open pull request. Check the
@@ -92,12 +105,12 @@ caption: Contribute → Open pull request
 > on the left. Click Create pull request.
 
 ## Scene 9: The bot
-visual: slide
-title: What happens next
-bullets:
-- A check reads your file with Python's own parser
-- All good: the bot comments and merges your PR
-- Something wrong: it tells you exactly what to fix
+visual: browser
+url: https://github.com/thejesh23/first-python-contribution/pull/1
+caption: The bot explains what to fix, then merges when it's right
+image: captures/bot-merges.png
+height: 2400
+crop: 100,580,900,600
 
 > Now watch. A check called validate first commit starts running. It reads
 > your file with Python's own parser, the same one Python uses before it runs
