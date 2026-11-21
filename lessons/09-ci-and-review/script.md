@@ -1,120 +1,249 @@
 # Video script: CI and code review
 
-Target length: about 3 minutes.
+Target length: about 4 minutes.
 
-## Scene 1: Hook
+## Scene 1: Start here
 visual: slide
+layout: title
 title: Opening the PR isn't the end
 bullets:
-- A red CI check
-- "This branch has conflicts"
-- Review comments
-- "Please squash"
+- What comes next is normal. None of it means you did something wrong.
 
-> Opening the pull request isn't the end. Almost every pull request gets at
-> least one of these: a red check, a merge conflict, review comments, or a
-> request to squash your commits. None of them means you did something
-> wrong. They're the normal back and forth of every pull request.
+> Opening the pull request isn't the end. Almost every pull request gets
+> some back and forth.
 
-## Scene 2: Red CI
+> None of it means you did something wrong. It is the normal back and forth
+> of every pull request.
+
+## Scene 2: Four things
+visual: slide
+layout: cards
+title: Almost every PR gets at least one of these
+bullets:
+- A red CI check | Something failed in the automated checks.
+- Conflicts | "This branch has conflicts that must be resolved."
+- Review comments | A reviewer asks for changes.
+- A squash request | "Please squash into one commit."
+
+> There are four things. A red {CI|C I} check.
+
+> A message saying, this branch has conflicts that must be resolved.
+
+> Review comments, asking for changes.
+
+> And a request to squash your commits. This lesson covers all four.
+
+## Scene 3: Red CI
 visual: terminal
+focus: 1 | 2 | all
+notes:
+- See which checks failed
+- Print just the failing steps' output. Read the last 20 lines first.
+- Push the fix to the same branch. Never open a new PR for it.
 code:
 ```
 $ gh pr checks
-X  tests (3.12)   https://github.com/...
-✓  lint
 $ gh run view --log-failed
 ```
 
-> When CI goes red, run g h p r checks to see what failed, and g h run view
-> dash dash log failed to see just the failing output. Read the last twenty
-> lines first. That's where pytest or ruff tells you what went wrong. Fix it
-> locally, commit, and push to the same branch. Your pull request updates
-> itself.
+> When {CI|C I} is red, run {gh pr checks|g h, p r, checks}, to see what
+> failed.
 
-## Scene 3: Not your fault
+> Then {gh run view --log-failed|g h, run, view, dash dash log failed}. It
+> prints just the failing steps' output. Read the last twenty lines first.
+> That is where {pytest|pie test}, and ruff, say what went wrong.
+
+> Fix it, and push to the same branch. Your pull request updates by itself.
+> Never open a new pull request for the same change.
+
+## Scene 4: What failed
 visual: slide
-title: Sometimes it's not you
+layout: cards
+title: What failed, and what to do
 bullets:
-- Fails on main too? Say so in a comment
-- "Awaiting approval": a maintainer must approve first-time runs
-- CLA or DCO check: see Lesson 05
+- Lint or format | A style issue. Run the project's formatter and linter locally, commit, push.
+- Fails on `main` too | A flaky or already-broken test, not you. Say so in a comment.
+- "Waiting for approval" | First-time contributors' workflows need a maintainer's approval. Just wait.
 
-> Sometimes it isn't your fault. If the same test fails on main too, say so
-> in a comment. If the checks say awaiting approval, that's GitHub waiting
-> for a maintainer to approve runs from first time contributors. Just wait.
+> What failed? If it is lint or format, it is a style issue. Run the
+> project's formatter and linter locally, commit, and push.
 
-## Scene 4: The lab
+> If the same test fails on main too, or passes on a re-run, it is not you.
+> Say so in a comment.
+
+> And if it says, waiting for approval, do nothing. GitHub doesn't run first
+> time contributors' workflows until a maintainer approves.
+
+## Scene 5: The lab
 visual: terminal
+focus: 1-2 | 3-4 | 6 | 7 | 8
+notes:
+- A practice world on your computer: a fake project, a fake fork, your clone
+- Your pull request is "open", and it has review comments
+- While your PR waited, a maintainer changed the same line on `main`
+- The reviewer wants a docstring
+- And later, one tidy commit
 code:
 ```
 $ python3 tools/conflict_lab.py ../conflict-lab
 $ cd ../conflict-lab/work
 $ cat ../REVIEW.md
-1. CI: This branch has conflicts that must be resolved.
-2. Reviewer: Could you add a docstring to greeting()?
-3. Reviewer (later): Please squash into one commit before we merge.
+# Review comments on your pull request
+
+1. **CI:** This branch has conflicts that must be resolved.
+2. **Reviewer:** Could you add a docstring to `greeting()`?
+3. **Reviewer (later):** Looks good! Please squash into one commit before we merge.
 ```
 
-> To practise the rest safely, the course builds a little lab on your
-> computer: a fake project, your fork, and your clone, with a pull request
-> open. While it waited, a maintainer changed the same line you did. And
-> your reviewer has three comments.
+> You'll practise the rest in a safe lab on your computer. One command
+> builds a fake project, a fake fork, and your clone, with a pull request
+> open.
 
-## Scene 5: Rebase and conflict
+> Read the review comments.
+
+> One. This branch has conflicts. While your pull request waited, a
+> maintainer changed the same line on main.
+
+> Two. The reviewer asks for a docstring.
+
+> Three. Later, the reviewer asks you to squash into one commit. Let's
+> handle all three.
+
+## Scene 6: Rebase
 visual: terminal
+focus: 1-2 | 3-4
+notes:
+- Replay your commit on top of the latest `main`
+- Git stops, and tells you where the conflict is
 code:
 ```
 $ git fetch upstream
 $ git rebase upstream/main
 CONFLICT (content): Merge conflict in app.py
-$ cat app.py
+error: could not apply 5cf76f3... Add an exclamation mark to the greeting
+```
+
+> First, the conflict. Fetch upstream, and rebase on its main. That replays
+> your commit on top of the latest main.
+
+> Git stops, and tells you. Merge conflict, in app {.py|dot p y}.
+
+## Scene 7: Read the conflict
+visual: code
+lang: text
+file: app.py
+focus: 2-3 | 4-6 | all
+notes:
+- Between `<<<<<<<` and `=======`: what's on `main` now
+- Between `=======` and `>>>>>>>`: your commit
+- Don't just pick one side. Keep what both changes meant.
+code:
+```
+def greeting(name):
 <<<<<<< HEAD
     return f"Hello, {name}"
 =======
     return "Hello " + name + "!"
->>>>>>> (Add an exclamation mark to the greeting)
+>>>>>>> 5cf76f3 (Add an exclamation mark to the greeting)
 ```
 
-> Fetch upstream and rebase on its main. That replays your commit on top of
-> the latest code. Git stops: conflict in app dot p y. The top half is what's
-> on main now. The bottom half is yours.
+> Open the file. Git has marked the conflict. The top part is what's on main
+> now. The maintainer's change.
 
-## Scene 6: Resolve it
-visual: terminal
+> The bottom part is your commit.
+
+> Don't just pick one side. Keep what both changes meant. The maintainer's f
+> string and comma. And your exclamation mark.
+
+## Scene 8: Resolve it
+visual: code
+file: app.py
+notes:
+- No markers left. The f-string, the comma, and your `!`.
 code:
 ```
-$ cat app.py
 def greeting(name):
     return f"Hello, {name}!"
+```
+
+> Edit the file so it reads exactly this, with no markers left.
+
+## Scene 9: Continue and push
+visual: terminal
+focus: 1-2 | 3-4 | 5
+notes:
+- Check that it works
+- Stage the file, then continue the rebase
+- You rewrote history. Never use plain `--force`.
+code:
+```
+$ python3 -c "from app import greeting; print(greeting('Ada'))"
+Hello, Ada!
 $ git add app.py
 $ git rebase --continue
 $ git push --force-with-lease
 ```
 
-> Don't just pick a side. Keep what both changes meant: the maintainer's f
-> string and comma, and your exclamation mark. Delete the markers, git add
-> the file, and git rebase dash dash continue. You rewrote history, so push
-> with dash dash force with lease. It refuses if anyone else pushed in the
-> meantime. Never use plain force.
+> Check that it works. Hello, Ada, with the comma and the exclamation mark.
 
-## Scene 7: Review comments
-visual: slide
-title: Handling review
-bullets:
-- Fix it in a new commit, push, reply with the commit
-- Suggestions: click Commit suggestion
-- Let the reviewer resolve their conversations
-- Then click Re-request review
+> Then git add the file, and git rebase, dash dash continue. Your commit now
+> sits on top of the maintainer's.
 
-> Now the reviewer's comment. Make the change as a new commit and push
-> normally, so the reviewer sees exactly what changed. Reply in one line,
-> naming the commit. If they left a suggestion, you can apply it with one
-> click. Let them resolve their own conversations, then click re-request
-> review.
+> Now update your pull request. You rewrote your branch's history, so a
+> plain git push is refused. Use dash dash force with lease. It replaces the
+> branch, but only if nobody else pushed to it. Never use plain force. And
+> if a rebase goes wrong, git rebase, dash dash abort, puts everything back.
 
-## Scene 8: Squash
+## Scene 10: Review comments
 visual: terminal
+focus: 1 | 2
+notes:
+- Make the change as a new commit
+- Push normally. Then reply in one line, naming the commit.
+code:
+```
+$ git commit -am "Add a docstring to greeting"
+$ git push
+```
+
+> Next, the review comment. The reviewer asked for a docstring. Add it, and
+> make the change as a new commit.
+
+> Then push normally. New commits let reviewers see exactly what changed
+> since they last looked. Then reply on the comment with one short line,
+> naming the commit.
+
+## Scene 11: Review etiquette
+visual: slide
+title: Review etiquette
+bullets:
+- New commits while review is going on
+- Don't resolve the reviewer's conversations yourself
+- Disagreeing is fine: explain once, politely
+- Don't know how? Say so, and ask
+- Changes requested? Fix, push, then **Re-request review**
+
+> Some review etiquette. Push new commits while review is going on. Don't
+> force push in the middle of a review, unless asked.
+
+> Don't resolve the reviewer's conversations yourself. Let them do it, once
+> they're happy.
+
+> Disagreeing is fine. Explain your reasoning once, politely. Then go with
+> the maintainer's decision. It's their project.
+
+> Don't know how to do what they asked? Say so, and ask. That's normal.
+
+> And if they requested changes, fix what's asked, push, and click
+> Re-request review.
+
+## Scene 12: Squash
+visual: terminal
+focus: 1 | 2 | 3-4
+notes:
+- Undo your commits, but keep all your changes staged
+- One commit, with a message for the whole change
+- Only squash when asked. Many projects squash for you when they merge.
 code:
 ```
 $ git reset --soft upstream/main
@@ -123,20 +252,29 @@ $ git log --oneline
 $ git push --force-with-lease
 ```
 
-> Finally: please squash. Git reset dash dash soft upstream slash main
-> undoes your commits but keeps all your changes staged. Commit once, with a
-> message for the whole change, and force with lease again. Many projects
-> squash for you when they merge, so only do this when you're asked.
+> Finally, the squash. Git reset, dash dash soft, upstream slash main. It
+> undoes your commits, but keeps all your changes staged.
 
-## Scene 9: Done
+> So the next commit contains everything. Write a message that describes
+> the whole change.
+
+> Check the log, and push with force with lease again. Many projects squash
+> for you when they merge. Only do it yourself when asked.
+
+## Scene 13: Done
 visual: slide
 title: You can handle any review
 bullets:
-- Red CI: read the last lines, fix, push
-- Conflicts: rebase, resolve, force-with-lease
-- Review: new commits, short replies, re-request
-- Squash only when asked
+- Red CI: read the last lines, fix, push to the same branch
+- Conflicts: rebase, keep both meanings, `--force-with-lease`
+- Review: new commits, short replies
+- Squash: only when asked
 
-> That's every part of review you'll meet. Red checks, conflicts, review
-> comments, squashing. Next lesson, we talk about using AI tools well, when
-> a project allows them.
+> That's it. Red {CI|C I}. Read the last lines, fix, and push to the same
+> branch.
+
+> Conflicts. Rebase, keep both meanings, and force with lease.
+
+> Review. New commits, and short replies.
+
+> Squash. Only when asked. Next lesson, using {AI|A I} tools well.

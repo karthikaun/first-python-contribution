@@ -2,48 +2,72 @@
 
 Target length: about 3 minutes.
 
-## Scene 1: Hook
+## Scene 1: Start here
 visual: slide
+layout: title
 title: Don't fix something that's already fixed
 bullets:
-- Days of work on an issue
-- Open the PR
-- Someone fixed it last week
+- Find an issue that nobody else is working on.
 
-> Here's the most common way beginners lose a weekend. They pick an issue,
-> work on it for days, open a pull request, and find out someone else fixed
-> it last week. This lesson is about picking well, so that never happens to
-> you.
+> Here is the most common way beginners waste a weekend. They pick an issue.
+> They work on it for days. They open a pull request. And they find that
+> someone else fixed it last week.
+
+> This lesson is about picking well. So that never happens to you.
 
 ## Scene 2: Be realistic
 visual: slide
-title: Good first issues go fast
+title: Good first issues get taken fast
 bullets:
-- Popular projects' easy issues are taken in days
-- Try help wanted, easy, documentation labels
-- Projects you use, problems you hit yourself
+- In popular projects, often within days
+- Try other labels: `help wanted`, `easy`, `beginner`, `documentation`
+- Try projects you actually use
+- Try problems you hit yourself
 
-> Be realistic about good first issues. In popular projects they get taken
-> within days. When we checked, pytest had just one, and someone was already
-> on it. So widen your net. Try other labels, like help wanted, easy or
-> documentation. Try projects you actually use. And remember the problems
-> you hit yourself, like a setup step that failed in lesson six. Nobody else
-> is working on those.
+> Be realistic about the label, good first issue. In popular projects, those
+> get taken fast, often within days. When we checked, in November 2026,
+> {pytest|pie test} had just one open, and someone was already assigned to
+> it.
+
+> So widen your net. Try other labels. Help wanted, easy, beginner, or
+> documentation. Every project names them differently.
+
+> Try projects you actually use. You understand them, and you'll notice
+> their rough edges.
+
+> And try problems you hit yourself. A confusing error. A broken docs
+> example. Nobody else is working on those.
 
 ## Scene 3: Search with filters
-visual: code
-code:
-```
-is:issue is:open label:"good first issue" no:assignee -linked:pr language:python
-```
+visual: slide
+layout: cards
+title: GitHub's issue search understands filters
+bullets:
+- `is:open` | Not closed
+- `label:"good first issue"` | Has that label
+- `no:assignee` | Nobody is assigned
+- `-linked:pr` | No pull request is linked to it yet
+- `language:python` | In a mostly-Python repository
 
-> GitHub search understands filters. Is open. A label. No assignee, so
-> nobody's been given it. Minus linked P R, so there's no pull request for it
-> yet. And language python. Paste that into GitHub's search and choose
+> GitHub's issue search understands filters. Is open means not closed.
+
+> Label means it has that label.
+
+> No assignee means nobody is assigned.
+
+> Minus linked {PR|P R} means no pull request is linked to it yet.
+
+> And language Python means a mostly Python repository. The full search line
+> is in the written lesson. Paste it into GitHub's search, and choose
 > issues.
 
 ## Scene 4: The issue finder
 visual: terminal
+focus: 1 | 2-4 | 6
+notes:
+- It searches active Python projects with 500+ stars
+- A candidate: the project, the title, the link, and its age
+- Candidates, not guarantees. Your list will be different.
 code:
 ```
 $ python3 tools/find_issues.py
@@ -54,31 +78,50 @@ pipeshub-ai/pipeshub-ai (★4140)  Re-enable Greenhouse in the MCP server catalo
 26 of 62 issues look free. Read each thread fully before you claim one.
 ```
 
-> That search finds lots of tiny personal projects. The course's issue
-> finder is pickier. It looks only in active Python projects with five
-> hundred stars or more, uses the same filters, then drops issues that an
-> open pull request mentions, and flags ones where someone has already said
-> I'll take this. You can change the label, or search one repository.
+> That search returns a lot of tiny personal projects. The course's issue
+> finder does better. It first finds active Python projects with five
+> hundred stars or more. Then it searches those, with the same filters.
+
+> It drops issues that an open pull request already mentions. And it flags
+> issues where someone has commented, I'd like to work on this.
+
+> Your list will be different. Issues are claimed and closed every day.
+> These are candidates, not guarantees.
 
 ## Scene 5: The five checks
 visual: slide
 title: Before you claim: five checks
 bullets:
 - Read the whole thread, every comment
-- Assignees, and claims in the comments
-- Development sidebar and PR search, including closed PRs
-- Labels like needs triage: not agreed yet
-- Reproduce it on the latest main
+- Is someone already on it? Look at **Assignees** and the comments
+- Is there a PR already? Look at **Development**, and search closed PRs too
+- Is it agreed? `needs triage` means not decided yet
+- Is it still a problem? Reproduce it on the latest `main`
 
-> Those are candidates, not guarantees. Before you claim one, do five
-> checks. Read the whole thread: the answer is often in comment fourteen.
-> Look for assignees and claims. Check the development sidebar and search the
-> pull requests, including closed ones. Look for labels like needs triage,
-> which mean nobody's agreed what to do yet. And reproduce it on the latest
-> main, because bugs get fixed without anyone closing the issue.
+> Before you claim a candidate, open it, and do five checks. One. Read the
+> whole thread. Every comment. The answer is often in comment fourteen.
+
+> Two. Is someone already on it? Look at the assignees, and at the comments.
+
+> Three. Is there a pull request already? Look at Development in the
+> sidebar. Then search the project's pull requests, including closed ones.
+> A closed, unmerged one shows what the maintainers didn't want.
+
+> Four. Is it agreed? Labels like needs triage, or needs decision, mean the
+> maintainers haven't decided yet. Don't start coding.
+
+> Five. Is it still a problem? Try to reproduce it on the latest main. Bugs
+> get fixed without anyone closing the issue.
 
 ## Scene 6: Claim it well
 visual: code
+lang: text
+file: Your comment on the issue
+focus: all | 1-2 | 2-3
+notes:
+- In your own words, briefly, with your plan
+- You read the issue, and checked it still happens
+- You have a plan, so a maintainer can answer in one line
 code:
 ```
 Hi! I'd like to work on this. I can reproduce it on main: `parse("")`
@@ -86,32 +129,61 @@ raises IndexError. My plan is to return an empty list and add a test.
 Does that sound right?
 ```
 
-> Check the contributing file: some projects say just open a pull request.
-> Otherwise, comment in your own words, with a plan. This one shows you've
-> read the issue, reproduced it, and know what you'll do, so a maintainer can
-> say yes in one line. Then wait. A few days of silence is normal.
+> Now claim it. Check the contributing file first. Some projects say, don't
+> ask, just open a pull request. If it's not stated, comment in your own
+> words, briefly, with your plan.
 
-## Scene 7: Old claims
+> This comment shows that you read the issue, and checked it still happens.
+
+> And it shows you have a plan. So a maintainer can answer in one line. Then
+> wait. Silence for a few days is normal.
+
+## Scene 7: Don't
 visual: slide
-title: When someone claimed it first
+title: Three things not to do
 bullets:
-- Weeks old, no PR? Ask kindly if they're still on it
-- Wait a week, then ask a maintainer
-- Taking over? Mention them in your PR
+- Don't claim several issues at once
+- Don't write "can I work on this?" with nothing else
+- Don't use an AI tool to write the comment
 
-> And if someone claimed it weeks ago with no pull request, ask them kindly
-> if they're still working on it. Give it a week, then ask a maintainer. If
-> you take over, mention them in your pull request. They might have useful
-> notes.
+> Three things not to do. Don't claim several issues at once, or one you
+> can't start this week.
 
-## Scene 8: Done
+> Don't write, can I work on this, with nothing else.
+
+> And don't use an {AI|A I} tool to write the comment.
+
+## Scene 8: Old claims
+visual: slide
+layout: steps
+title: When someone else claimed it first
+bullets:
+- Weeks old, no PR? Ask kindly
+- Give it a week
+- Ask a maintainer
+- Mention them in your PR
+
+> What if someone else claimed it first? If the claim is weeks old, with no
+> pull request and no updates, ask kindly. Are you still working on this?
+
+> Give it a week.
+
+> If there is no answer, ask a maintainer whether you can take over.
+
+> And if you do, mention the earlier person in your pull request. They may
+> have useful notes.
+
+## Scene 9: Done
 visual: slide
 title: You found your issue
 bullets:
-- Search wide, then check carefully
+- Search wide
+- Check carefully
 - Claim with a plan, in your own words
-- Next: making the change
 
-> That's how you find an issue that's really yours. Search wide, check
-> carefully, and claim it with a plan. Next lesson: making the change the
-> way maintainers want it.
+> That is how you find an issue that is really yours. Search wide.
+
+> Check carefully.
+
+> And claim it with a plan, in your own words. Next lesson, making the
+> change.

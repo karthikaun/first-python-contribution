@@ -1,6 +1,6 @@
 # Lesson 05: House rules: read before you contribute
 
-**Time:** 4 minute video · 30 minute exercise
+**Time:** 5 minute video · 30 minute exercise
 **You'll need:** nothing new
 
 Most first pull requests that get closed aren't closed because the code is

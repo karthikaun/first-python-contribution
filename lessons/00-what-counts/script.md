@@ -1,53 +1,95 @@
 # Video script: What counts as a contribution
 
-Target length: about 5 minutes.
+Target length: about 4 minutes.
 
-## Scene 1: Hook
+## Scene 1: Start here
 visual: slide
-title: The Python you use was built by thousands of people
+layout: title
+title: You don't need to be an expert to contribute
 bullets:
-- Most of them started with something small
+- You need one small, careful change.
 
-> Every Python library you've ever installed, and the Python language itself,
-> was built by thousands of people. Almost all of them started the same way:
-> with one small change to someone else's project. By the end of this course,
-> you'll have made yours.
+> Maybe you think open source is for experts. People who write clever code
+> all day. It isn't.
 
-## Scene 2: Open source in one minute
+> To contribute, you need one small, careful change. In this video, you'll
+> see what counts as a contribution. The list is longer than you think.
+
+## Scene 2: Who is who
 visual: slide
+layout: cards
 title: How open source works
 bullets:
-- Code is public: anyone can read it
-- Maintainers decide what gets in
-- Contributors suggest changes
-- A pull request is a suggested change
+- Open source | The code is public. Anyone can read it, use it and suggest changes.
+- Maintainers | A small group who decide what gets in.
+- Contributors | Everyone else who helps. Soon, that's you.
 
-> Open source projects publish their code so anyone can read it and suggest
-> changes. A small group of people, called maintainers, decide what gets in.
-> Everyone else who helps is a contributor. You suggest a change by opening a
-> pull request. That's just a request: here's a change, please pull it into
-> your project. A maintainer reviews it, might ask for a few tweaks, and then
-> merges it.
+> First, how does open source work? A project publishes its code. Anyone can
+> read it, use it, and suggest changes.
 
-## Scene 3: Contributions that count
+> A small group of people decide what gets in. They are called maintainers.
+
+> Everyone else who helps is a contributor. That is going to be you.
+
+## Scene 3: The pull request
 visual: slide
-title: You don't have to write clever code
+layout: steps
+title: A pull request: "please pull my change in"
+focus: 0 | 1 | 2 | 3 | 4 | all
 bullets:
-- Fix a typo or a broken example in the docs
-- Report a bug with exact steps to reproduce it
-- Confirm someone else's bug on your machine
-- Add a missing test
-- Fix a small bug labelled "good first issue"
+- You open a pull request
+- A maintainer reviews it
+- Maybe they ask for tweaks
+- They merge it
 
-> Here's the first surprise. You don't have to write clever code to
-> contribute. Fixing a typo in the docs counts. So does a bug report with
-> exact steps to reproduce it, or confirming that someone else's bug happens
-> on your machine too. Adding a missing test counts. And yes, fixing small
-> bugs counts, especially ones labelled "good first issue".
+> Most changes arrive as a pull request. P R for short. The name says what it
+> is. Here is a change. Please pull it into your project.
 
-## Scene 4: Small teaches you everything
+> So, you open a pull request.
+
+> A maintainer reviews it.
+
+> Maybe they ask for a few tweaks. That is normal.
+
+> And then they merge it. Your change is now part of the project.
+
+> Almost every Python library you've used works this way. Requests. Pytest.
+> Rich. Even the Python language itself.
+
+## Scene 4: Contributions that count
 visual: slide
+layout: cards
+title: All of these count
+bullets:
+- Fix the docs | A typo, a broken link, an example that no longer runs | No code
+- Report a bug well | Exact steps, your Python version, the full error message | No code
+- Reproduce a bug | "I can reproduce this on Python 3.13 on macOS" | No code
+- Translate | Docs in your language | No code
+- Add a missing test | For an edge case that nobody covered | A little code
+- Fix a small bug | Usually labelled `good first issue` | Code
+
+> Now the surprise. You do not need to write clever code. All of these are
+> real contributions, and maintainers are glad to get them. Start with the
+> docs. Fix a typo, a broken link, or an example that no longer runs.
+
+> Report a bug well. That means the exact steps, your Python version, and the
+> full error message.
+
+> Or reproduce someone else's bug. Just say: I can reproduce this, on this
+> Python version, on this system. That helps a lot.
+
+> You can translate the docs into your language.
+
+> So far, no code at all. Next, add a missing test, for an edge case that
+> nobody covered. That needs a little code.
+
+> And yes, you can fix a small bug. Look for the label, good first issue.
+
+## Scene 5: Small teaches you everything
+visual: slide
+layout: steps
 title: A one-line fix teaches the whole workflow
+focus: 0 | 1-3 | 4-6 | all
 bullets:
 - Fork
 - Branch
@@ -56,67 +98,88 @@ bullets:
 - Review
 - Merge
 
-> Even a one-line docs fix takes you through the whole workflow: fork,
-> branch, commit, pull request, review, merge. Every contribution, big or
-> small, follows those same steps. Once you've done it once, you can do it
-> anywhere. That's what this course is really teaching.
+> Here is why small is fine. A one line docs fix that gets merged teaches you
+> the same workflow as a big feature.
 
-## Scene 5: Why Python
+> Fork. Branch. Commit.
+
+> Pull request. Review. Merge.
+
+> Don't worry if these words are new. That workflow is what this course
+> teaches, one step at a time.
+
+## Scene 6: Why Python
 visual: slide
-title: Why start with Python projects
+title: Why Python is a good place to start
 bullets:
-- Thousands of projects label beginner-friendly issues
-- Most share the same tools: virtualenv, pytest, ruff, pre-commit
-- Python is readable, even in code you didn't write
+- There's a lot of it: thousands of active projects label beginner-friendly issues
+- The tools are shared: a virtualenv, `pytest`, `ruff`, `pre-commit`
+- Python is readable, even in a codebase you've never seen
 
-> Why Python? There are thousands of active Python projects, and many of
-> them label issues that are good for beginners. Most of them use the same
-> handful of tools: a virtual environment, pytest for tests, a linter called
-> ruff, and pre-commit. Learn those once, and you can find your way around
-> most Python projects. And Python is readable, so you can often understand
-> code you've never seen before just by reading it.
+> Why start with Python? Three reasons. One. There is a lot of it. Thousands
+> of active Python projects label issues that are friendly to beginners.
 
-## Scene 6: Three myths
+> Two. The tools are shared. Most projects use the same few things. A virtual
+> environment. Pytest, for tests. A linter, like ruff. And pre-commit. Learn
+> them once, and you can work on most Python projects.
+
+> Three. Python is readable. You can often understand a function in an
+> unfamiliar codebase just by reading it.
+
+## Scene 7: Three myths
 visual: slide
-title: Three myths
+layout: cards
+title: Three myths, and the truth
 bullets:
-- "I need to be an expert first" — no
-- "My change is too small" — small is the right size
-- "Maintainers will be harsh" — review is about the code, not you
+- "I need to be an expert first" | Maintainers prefer small, careful changes from beginners over large, clever ones.
+- "My change is too small to matter" | Small is the right size. Small PRs are easy to review, so they get merged.
+- "Maintainers will be harsh" | Most are volunteers, happy to see new people. Review comments are about the code, not about you.
 
-> Let's clear up three myths. One: you need to be an expert first. You
-> don't. Maintainers would much rather get a small, careful change than a
-> big, clever one. Two: your change is too small to matter. Small is exactly
-> the right size, because small changes are easy to review, so they get
-> merged. Three: maintainers will be harsh. Most of them are volunteers who
-> are glad to see new people. When they leave review comments, they're
-> talking about the code, not about you.
+> Three myths might still be holding you back. Myth one. I need to be an
+> expert first. No. Maintainers prefer small, careful changes from beginners
+> over large, clever ones.
 
-## Scene 7: The road ahead
+> Myth two. My change is too small to matter. Small is the right size. Small
+> pull requests are easy to review, so they get merged.
+
+> Myth three. Maintainers will be harsh. Most of them are volunteers, and
+> they are happy to see new people. Review comments are about the code. They
+> are not about you.
+
+## Scene 8: The road ahead
 visual: slide
+layout: cards
 title: Where this course goes
 bullets:
-- Part 1: your first PR today, in the browser
-- Part 2: git, GitHub CLI, virtualenvs, pytest, ruff
-- Part 3: a real Python project, CI and code review
-- Part 4: being a good contributor, and using AI honestly
+- Part 1 | Your first PR today, in the browser. No install.
+- Part 2 | Real tools: git, GitHub CLI, virtualenvs, pytest, ruff.
+- Part 3 | A real Python project: finding an issue, passing CI, handling review.
+- Part 4 | Being a good contributor, including using AI tools honestly.
 
-> Here's the plan. In part one, you'll open your first pull request today,
-> right in your browser, with nothing to install. In part two, you'll set up
-> the real tools. In part three, you'll find an issue in a real Python
-> project and get it merged. And in part four, you'll learn how to be the
-> kind of contributor maintainers are happy to see, including how to use AI
-> tools honestly.
+> Here is where the course goes. Part one. You open your first pull request
+> today, in the browser, with nothing to install.
 
-## Scene 8: Your task
+> Part two. You set up the real tools. Git, the GitHub command line,
+> virtual environments, pytest and ruff.
+
+> Part three. A real Python project. You find an issue, pass the automated
+> checks, and handle review.
+
+> Part four. Being a good contributor. That includes using A I tools honestly.
+
+## Scene 9: Your task
 visual: slide
 title: Before the next lesson
 bullets:
-- Create a free GitHub account at github.com
-- Pick the kind of contribution you'll aim for first
-- Then open Lesson 01
+- Create a free GitHub account, with a username you'd show an employer
+- Turn on two-factor authentication
+- Write down the contribution you'd like to make first
 
-> Before the next lesson, create a free account at github dot com if you
-> don't have one. Then pick the kind of contribution you'd like to make
-> first. In the next lesson, you'll open your first pull request. It takes
-> about ten minutes. See you there.
+> Before the next lesson, three small things. Create a free GitHub account, if
+> you don't have one. Pick a username you'd be happy to show an employer. It
+> appears on every contribution you make.
+
+> Turn on two factor authentication. Many projects require it.
+
+> And look at the list of contributions again. Write down the one you'd like
+> to make first. Then open lesson one. Your first pull request is waiting.
