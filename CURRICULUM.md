@@ -61,14 +61,14 @@ Each long video also gets one 60-second clip for Shorts/Reels.
 
 | # | Lesson | Hands-on | Status |
 |---|---|---|---|
-| 10 | Using AI tools well: where they help, verifying output, disclosure formats, writing in your own words | Rewrite an AI-drafted PR description in your own words | Planned |
-| 11 | After the PR, and beyond GitHub: waiting, nudging once, rejection, "won't fix", becoming a regular. What's different on GitLab, Codeberg, Gerrit and mailing-list projects | Write a polite follow-up and a graceful close | Planned |
+| 10 | [Using AI tools well](lessons/10-using-ai-well/): where they help and hurt, verifying output, disclosure formats (`--trailer`), writing in your own words | Verify an AI explanation; rewrite an AI-style PR description | Drafted |
+| 11 | [After the PR, and beyond GitHub](lessons/11-after-the-pr/): waiting, nudging once, rejection, stale bots, becoming a regular. GitLab, Codeberg, Gerrit and mailing-list patches | Write a nudge and a graceful close; test someone's PR | Drafted |
 
 ## Part 5: Capstone
 
 | # | Lesson | Hands-on | Status |
 |---|---|---|---|
-| 12 | **Your first external contribution**: a start-to-finish walkthrough of a real PR, with a checklist for each stage | Get a PR merged in a real project you don't own, then add `graduates/YOUR-USERNAME.py` with its link. A bot checks on GitHub that the PR is merged and is yours, then adds you to the graduates wall | Planned |
+| 12 | **[Your first external contribution](lessons/12-capstone/)**: a stage-by-stage checklist for a real PR | Get a PR merged in a real project you don't own, then add `graduates/YOUR-USERNAME.py`. The **Validate graduate** bot checks on GitHub that the PR is merged, yours, merged by a maintainer and in a real project, then you join the [graduates wall](graduates/) | Drafted |
 | A | Troubleshooting: auth errors, committed to `main`, detached HEAD, wrong fork, push rejected, "this branch has conflicts" | Reference page | Planned |
 
 ## Principles

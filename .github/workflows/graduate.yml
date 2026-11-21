@@ -1,0 +1,71 @@
+name: Validate graduate
+
+# Same safety model as first-commit.yml: runs from the base branch, never
+# checks out or runs the PR's code, reads graduates/<login>.py with git show +
+# ast.parse, and looks up the linked PR with the GitHub API (read-only).
+# PRs that don't touch graduates/<name>.py (status 3) get no comment.
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths: ["graduates/**"]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: graduate-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out base branch (trusted code only)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Fetch PR commits without checking them out
+        env:
+          PR: ${{ github.event.pull_request.number }}
+        run: git fetch --no-tags origin "pull/${PR}/head"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOGIN: ${{ github.event.pull_request.user.login }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set +e
+          python tools/check_graduate.py --login "$LOGIN" --base "$BASE" --head "$HEAD" > comment.md
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          cat comment.md
+
+      - name: Comment on the PR
+        if: steps.check.outputs.status != '3'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        run: gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body-file comment.md
+
+      - name: Merge
+        if: steps.check.outputs.status == '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --merge --match-head-commit "$HEAD"
+
+      - name: Fail the check when the file needs fixes
+        if: steps.check.outputs.status != '0' && steps.check.outputs.status != '3'
+        run: exit 1
