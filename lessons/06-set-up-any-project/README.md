@@ -1,6 +1,6 @@
 # Lesson 06: Setting up any Python project
 
-**Time:** 7 minute video · 45 minute exercise
+**Time:** 3 minute video · 45 minute exercise
 **You'll need:** Lessons 02 and 04 done
 
 In Lesson 04 you set up this course repo with `venv`, `pip` and `pytest`. Real
@@ -91,16 +91,20 @@ Project: requests
 3. pre-commit  (found .pre-commit-config.yaml)
      $ pre-commit install
      $ pre-commit run --all-files
+     Runs the project's linters and formatters on every commit.
 4. Make  (found Makefile)
      $ make test
      $ make docs
+     Read the Makefile to see what each target runs.
 5. pip + venv  (found [dependency-groups] test)
      $ python3 -m venv .venv
      $ source .venv/bin/activate
      $ python -m pip install -e . --group test
      $ python -m pytest
+     --group needs pip 25.1 or newer.
 6. Sphinx (docs)  (found docs/conf.py)
      $ sphinx-build -b html docs docs/_build/html
+     Many projects wrap this in `make html` or a tox/nox session.
 ```
 
 So for requests you can either use tox, which builds its own environments,
