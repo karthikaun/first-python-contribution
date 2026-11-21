@@ -35,7 +35,11 @@ def test_parse_scene_fields():
         "## Scene 2: Code\n"
         "visual: code\n"
         "code:\n"
-        'x = "y"\n\n'
+        "```\n"
+        'x = "y"\n'
+        "\n"
+        ">       assert x\n"
+        "```\n\n"
         "> Narration.\n"
     )
     assert script.title == "Demo"
@@ -43,7 +47,8 @@ def test_parse_scene_fields():
     assert first.fields["title"] == "Hello"
     assert first.bullets == ["one", "two"]
     assert first.narration == "First line second line."
-    assert second.code == ['x = "y"']
+    assert second.code == ['x = "y"', "", ">       assert x"]
+    assert second.narration == "Narration."
     assert script_format.problems(script) == []
 
 
@@ -53,3 +58,20 @@ def test_problems_reported():
     assert any("expected scene number 1" in p for p in found)
     assert any("needs 'title:'" in p for p in found)
     assert any("no narration" in p for p in found)
+
+
+def test_lesson_04_examples_pass_the_bot():
+    """The example files in Lesson 04 must be exactly what the bot accepts."""
+    import re
+
+    from check_exercise_2 import check_greeting, check_test
+
+    text = (ROOT / "lessons/04-second-pr-from-terminal/README.md").read_text()
+    blocks = re.findall(r"```python\n(.*?)```", text, re.DOTALL)
+    greeting = next(b for b in blocks if "def greet" in b)
+    test = next(b for b in blocks if "from greetings" in b)
+    assert check_greeting(greeting).ok
+    assert check_test(test, "ada-lovelace").ok
+    namespace: dict = {}
+    exec(greeting, namespace)
+    assert "Sam" in namespace["greet"]("Sam")

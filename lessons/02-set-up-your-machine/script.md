@@ -44,12 +44,14 @@ bullets:
 ## Scene 4: Check the versions
 visual: terminal
 code:
+```
 $ git --version
 git version 2.47.1
 $ python3 --version
 Python 3.13.1
 $ gh --version
 gh version 2.63.0
+```
 
 > The install links for your system are in the written lesson. Once they're
 > done, close and reopen your terminal, and check each tool. Git should be two
@@ -74,9 +76,11 @@ bullets:
 ## Scene 6: Tell git who you are
 visual: terminal
 code:
+```
 $ git config --global user.name "Ada Lovelace"
 $ git config --global user.email "12345678+ada@users.noreply.github.com"
 $ git config --global init.defaultBranch main
+```
 
 > Now tell git. Git config, dash dash global, user dot name, and your name in
 > quotes. Then the same for user dot email, with that noreply address. The
@@ -86,11 +90,13 @@ $ git config --global init.defaultBranch main
 ## Scene 7: Log in
 visual: terminal
 code:
+```
 $ gh auth login
 ? Where do you use GitHub? GitHub.com
 ? What is your preferred protocol for Git operations? HTTPS
 ? Authenticate Git with your GitHub credentials? Yes
 ? How would you like to authenticate GitHub CLI? Login with a web browser
+```
 
 > Next, log in. Run g h auth login and answer four questions: GitHub dot com,
 > H T T P S, yes, and login with a web browser. G H shows a one time code and
@@ -99,11 +105,13 @@ $ gh auth login
 ## Scene 8: Clone your fork
 visual: terminal
 code:
+```
 $ gh repo clone ada/first-python-contribution
 $ cd first-python-contribution
 $ git remote -v
 origin    https://github.com/ada/first-python-contribution.git
 upstream  https://github.com/thejesh23/first-python-contribution.git
+```
 
 > Remember the fork you made last lesson? Download it with g h repo clone,
 > your username, slash first python contribution. Go into the folder and run
@@ -114,6 +122,7 @@ upstream  https://github.com/thejesh23/first-python-contribution.git
 ## Scene 9: Run the doctor
 visual: terminal
 code:
+```
 $ git pull upstream main
 $ python3 tools/doctor.py
 ✔ Python 3.13.1
@@ -122,6 +131,7 @@ $ python3 tools/doctor.py
 ✔ gh is logged in as ada
 ✔ origin is your fork, upstream is the course repo
 All set. You're ready for Lesson 03.
+```
 
 > Last step. Git pull upstream main brings in everything that's changed since
 > you forked. Then run python three tools slash doctor dot p y. It checks

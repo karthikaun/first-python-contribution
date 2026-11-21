@@ -60,9 +60,11 @@ caption: first-commits → Add file → Create new file
 ## Scene 6: Three lines of Python
 visual: code
 code:
+```
 name = "Your Name"
 github = "your-github-username"
 message = "Why you're learning Python"
+```
 
 > Now type three lines of Python. Name equals your name, in quotes. GitHub
 > equals your username, in quotes. And message equals one sentence about

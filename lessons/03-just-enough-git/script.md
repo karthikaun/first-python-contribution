@@ -17,10 +17,12 @@ bullets:
 ## Scene 2: A repository
 visual: terminal
 code:
+```
 $ mkdir git-sandbox
 $ cd git-sandbox
 $ git init -b main
 Initialized empty Git repository in /home/ada/git-sandbox/.git/
+```
 
 > Make a folder called git sandbox, go into it, and run git init dash b
 > main. That creates a hidden folder called dot git. That hidden folder is
@@ -30,6 +32,7 @@ Initialized empty Git repository in /home/ada/git-sandbox/.git/
 ## Scene 3: Untracked, staged, committed
 visual: terminal
 code:
+```
 $ echo 'print("Hello")' > hello.py
 $ git status
 Untracked files:
@@ -39,6 +42,7 @@ $ git status
 Changes to be committed:
 	new file:   hello.py
 $ git commit -m "Add hello.py"
+```
 
 > Create a tiny Python file, then run git status, the command you'll use
 > more than any other. Git sees hello dot p y but isn't saving it: it's
@@ -60,11 +64,13 @@ bullets:
 ## Scene 5: See what changed
 visual: terminal
 code:
+```
 $ echo 'print("Hello, open source!")' > hello.py
 $ git diff
 -print("Hello")
 +print("Hello, open source!")
 $ git commit -am "Greet open source"
+```
 
 > Change the file and run git diff. Lines starting with minus were removed,
 > lines starting with plus were added. This is exactly what a maintainer
@@ -74,6 +80,7 @@ $ git commit -am "Greet open source"
 ## Scene 6: Branches
 visual: terminal
 code:
+```
 $ git switch -c shout
 $ echo 'print("HELLO, OPEN SOURCE!")' > hello.py
 $ git commit -am "Shout the greeting"
@@ -82,6 +89,7 @@ HELLO, OPEN SOURCE!
 $ git switch main
 $ python3 hello.py
 Hello, open source!
+```
 
 > A branch lets you try something without touching main. Git switch dash c
 > shout creates a branch called shout and moves you onto it. Change the file
@@ -92,6 +100,7 @@ Hello, open source!
 ## Scene 7: Merge
 visual: terminal
 code:
+```
 $ git merge shout
 Fast-forward
  hello.py | 2 +-
@@ -99,6 +108,7 @@ $ git log --oneline --graph --all
 * 3c1d2e7 (HEAD -> main, shout) Shout the greeting
 * 9b8a7f6 Greet open source
 * 1a2b3c4 Add hello.py
+```
 
 > Happy with the shouting? Git merge shout brings it into main. Main hadn't
 > changed, so git simply moves main forward. That's a fast forward. In real
