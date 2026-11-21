@@ -7,6 +7,6 @@
    authentication). Many projects require it for contributors.
 3. **Pick your first target.** Write down which contribution from the table
    in this lesson you'd like to make first in a real project. You'll come
-   back to it in Lesson 06.
+   back to it in Lesson 07.
 
 Done? Go to [Lesson 01](../01-first-pr-in-browser/).

@@ -182,7 +182,7 @@ def format_comment(result: Result, login: str, tests: str, run_url: str) -> str:
         return (
             f"🎉 Nice work, @{login}! {tests_line} Merging this now.\n\n"
             "You just did what real Python contributors do every day: write code, test it, "
-            "pass CI, get merged. Next up: Lesson 05, reading a real Python project."
+            "pass CI, get merged. Next up: Lesson 05, the house rules every project has."
         )
     parts = [f"Thanks, @{login}! Not quite there yet:\n", tests_line]
     if result.errors:

@@ -26,25 +26,26 @@ Each long video also gets one 60-second clip for Shorts/Reels.
 
 | # | Lesson | Hands-on | Status |
 |---|---|---|---|
-| 02 | Set up your machine: git, `gh`, Python, a noreply email | Run `tools/doctor.py` until it's all green | Planned |
-| 03 | Just enough git: commits, branches, remotes, as pictures | Local sandbox repo | Planned |
-| 04 | Your second PR, from the terminal: a Python function and its test | Exercise 2 in this repo: pytest + ruff must pass in CI | Planned |
+| 02 | [Set up your machine: git, `gh`, Python, a private email](lessons/02-set-up-your-machine/) | Run `tools/doctor.py` until it's all green | Drafted |
+| 03 | [Just enough git: commits, branches, merges, remotes](lessons/03-just-enough-git/) | A local sandbox repo | Drafted |
+| 04 | [Your second PR, from the terminal: a Python function and its test](lessons/04-second-pr-from-terminal/) | Exercise 2 in `practice/`: pytest + ruff must pass in CI | Drafted |
 
 ## Part 3: Real projects
 
 | # | Lesson | Hands-on | Status |
 |---|---|---|---|
-| 05 | Reading a Python project: `pyproject.toml`, CONTRIBUTING, tests, tox/nox, pre-commit | Annotate a real repo | Planned |
-| 06 | Finding an issue: `good first issue`, checking who's on it, **searching for existing PRs first** | Shortlist 3 issues | Planned |
-| 07 | A quality change: virtualenv, run the tests, ruff, type hints, docstrings, news fragments | Exercise 3 in this repo | Planned |
-| 08 | CI and review: reading red checks, replying, syncing your fork, merge conflicts | Bot-staged failing check + review comment | Planned |
+| 05 | [House rules: CONTRIBUTING, CLAs, DCO sign-offs, AI policies, code of conduct](lessons/05-house-rules/) | Fill the pre-flight checklist for 3 projects | Drafted |
+| 06 | Reading a Python project: `pyproject.toml`, tests, tox/nox, pre-commit | Annotate a real repo | Planned |
+| 07 | Finding an issue: `good first issue`, checking who's on it, **searching for existing PRs first** | Shortlist 3 issues | Planned |
+| 08 | A quality change: virtualenv, run the tests, ruff, type hints, docstrings, news fragments | Exercise 3 in this repo | Planned |
+| 09 | CI and review: reading red checks, replying, syncing your fork, merge conflicts | Bot-staged failing check + review comment | Planned |
 
 ## Part 4: Being a good contributor
 
 | # | Lesson | Hands-on | Status |
 |---|---|---|---|
-| 09 | Using AI responsibly: project AI policies, disclosure, understanding every line, writing in your own words | Policy quiz on 3 real CONTRIBUTING files | Planned |
-| 10 | After the PR: waiting, nudging once, what to do when you're ignored, becoming a regular | Pick your real issue | Planned |
+| 10 | Using AI tools well: where they help, verifying output, disclosure, writing in your own words | Rewrite an AI-drafted PR description in your own words | Planned |
+| 11 | After the PR: waiting, nudging once, what to do when you're ignored, becoming a regular | Pick your real issue | Planned |
 | A | Troubleshooting: auth errors, committed to `main`, detached HEAD, wrong fork | Reference page | Planned |
 
 ## Principles
