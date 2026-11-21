@@ -3,6 +3,7 @@ name: Exercise 2 review
 # Runs after "Exercise 2 tests" finishes, with a write token. It never checks
 # out or runs the PR's code: it reads the PR's files with git show and
 # tools/check_exercise_2.py (from main), comments, and merges if all is well.
+# PRs that don't touch a learner's exercise files (status 3) get no comment.
 
 on:
   workflow_run:
@@ -66,7 +67,7 @@ jobs:
           cat comment.md
 
       - name: Comment on the PR
-        if: steps.pr.outputs.number
+        if: steps.pr.outputs.number && steps.check.outputs.status != '3'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ steps.pr.outputs.number }}
@@ -81,5 +82,5 @@ jobs:
         run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --merge --match-head-commit "$HEAD_SHA"
 
       - name: Fail when the PR needs fixes
-        if: steps.pr.outputs.number && steps.check.outputs.status != '0'
+        if: steps.pr.outputs.number && steps.check.outputs.status != '0' && steps.check.outputs.status != '3'
         run: exit 1

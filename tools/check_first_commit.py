@@ -11,6 +11,9 @@ Usage (in CI)::
     python tools/check_first_commit.py --login LOGIN --base BASE_SHA --head HEAD_SHA
 
 Prints a Markdown comment for the PR and exits 0 if the PR is valid, 1 if not.
+Exits 3, printing nothing, when the PR doesn't add or change any
+``first-commits/<name>.py`` (for example a maintainer editing the folder's
+README), so the bot stays quiet.
 """
 
 from __future__ import annotations
@@ -27,6 +30,14 @@ REQUIRED = ("name", "github", "message")
 MAX_BYTES = 2_000
 MAX_LEN = {"name": 80, "github": 39, "message": 280}
 LOGIN_RE = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$")
+
+
+NOT_A_LEARNER_PR = 3
+
+
+def is_learner_pr(paths: list[str]) -> bool:
+    """True if the PR touches at least one first-commits/<name>.py file."""
+    return any(p.startswith(f"{FOLDER}/") and p.count("/") == 1 and p.endswith(".py") for p in paths)
 
 
 @dataclass
@@ -189,6 +200,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--base", required=True)
     parser.add_argument("--head", required=True)
     args = parser.parse_args(argv)
+    if not is_learner_pr(_git("diff", "--no-renames", "--name-only", f"{args.base}...{args.head}").splitlines()):
+        return NOT_A_LEARNER_PR
     result = validate(args.login, args.base, args.head)
     print(format_comment(result, args.login))
     return 0 if result.ok else 1
