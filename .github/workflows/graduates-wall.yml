@@ -2,11 +2,18 @@ name: Update graduates wall
 
 # Regenerates graduates/README.md whenever a graduate file lands on main.
 # The files were validated before merging and are only parsed, never run.
+#
+# The graduate bot merges with GITHUB_TOKEN, and GitHub doesn't start new
+# workflows from pushes made with that token, so the push trigger alone would
+# miss every bot merge. workflow_run fires after "Validate graduate" finishes.
 
 on:
   push:
     branches: [main]
     paths: ["graduates/*.py"]
+  workflow_run:
+    workflows: ["Validate graduate"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -17,9 +24,12 @@ concurrency:
 
 jobs:
   wall:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
