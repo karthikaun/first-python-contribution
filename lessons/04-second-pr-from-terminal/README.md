@@ -1,6 +1,6 @@
 # Lesson 04: Your second PR, from the terminal
 
-**Time:** 3 minute video · 30 minute exercise
+**Time:** 6 minute video · 30 minute exercise
 **You'll need:** a green `tools/doctor.py` (Lesson 02)
 
 This time you'll contribute like you would to a real Python project: on a
@@ -117,10 +117,12 @@ python -m pytest practice
 ```
 
 ```text
-practice/tests/test_all_greetings.py ...                                 [ 66%]
-practice/tests/test_ada_lovelace.py .                                    [100%]
+practice/tests/test_ada_lovelace.py .                                    [ 14%]
+practice/tests/test_all_greetings.py ...                                 [ 57%]
+practice/tests/test_textkit.py .                                         [ 71%]
+practice/tests/test_thejesh23.py ..                                      [100%]
 
-============================== 6 passed in 0.01s ===============================
+============================== 7 passed in 0.01s ===============================
 ```
 
 Each `.` is a passing test. `test_all_greetings.py` is the course's own test:

@@ -1,6 +1,6 @@
 # Video script: Your second PR, from the terminal
 
-Target length: about 8 minutes.
+Target length: about 6 minutes.
 
 ## Scene 1: Start here
 visual: slide
@@ -205,19 +205,21 @@ def greet(name: str) -> str:
 
 ## Scene 10: Watch it pass
 visual: terminal
-focus: 1 | 3 | 2 | 5
+focus: 1 | 2 | 3-5 | 7
 notes:
 - Same command as before
-- Each `.` is one passing test
-- The course's own test checks every learner's `greet`, yours too
+- Each `.` is one passing test. This file is yours.
+- The course's own tests. One checks every learner's `greet`, yours too.
 - All green
 code:
 ```
 (.venv) $ python -m pytest practice
-practice/tests/test_all_greetings.py ...                                 [ 66%]
-practice/tests/test_ada_lovelace.py .                                    [100%]
+practice/tests/test_ada_lovelace.py .                                    [ 14%]
+practice/tests/test_all_greetings.py ...                                 [ 57%]
+practice/tests/test_textkit.py .                                         [ 71%]
+practice/tests/test_thejesh23.py ..                                      [100%]
 
-============================== 6 passed in 0.01s ===============================
+============================== 7 passed in 0.01s ===============================
 ```
 
 > Run the same command again.
@@ -225,10 +227,12 @@ practice/tests/test_ada_lovelace.py .                                    [100%]
 > This time, your test file has a dot next to it. Each dot is one passing
 > test.
 
-> The other file is the course's own test. It checks that every learner's
-> greeting follows the rules. Yours too.
+> The other files were already in the course. One of them, test all
+> greetings, checks that every learner's greeting follows the rules. Yours
+> too.
 
-> And at the bottom, everything passed.
+> And at the bottom, everything passed. Your number may be higher, because
+> every learner adds a test.
 
 ## Scene 11: Format and lint
 visual: terminal

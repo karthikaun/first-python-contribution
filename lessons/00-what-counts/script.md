@@ -1,6 +1,6 @@
 # Video script: What counts as a contribution
 
-Target length: about 5 minutes.
+Target length: about 4 minutes.
 
 ## Scene 1: Start here
 visual: slide
