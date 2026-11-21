@@ -1,6 +1,6 @@
 # Lesson 01: Star, fork, and your first commit, in the browser
 
-**Time:** 8 minute video · 10 minute exercise
+**Time:** 3 minute video · 10 minute exercise
 **You'll need:** a GitHub account. Nothing to install.
 
 By the end of this lesson you'll have a merged pull request in a public
@@ -93,4 +93,4 @@ will do both in Part 3.
 | Isn't valid Python | Usually a missing quote. Each value needs `"` at both ends. |
 | `github` doesn't match | The `github = "..."` value must be your username. |
 
-Next: Lesson 02 sets up git on your own machine.
+Next: [Lesson 02: set up your machine](../02-set-up-your-machine/).

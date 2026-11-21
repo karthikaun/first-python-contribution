@@ -26,7 +26,7 @@ before anything is published**. Commands shown in lessons are run in CI
 in, are marked and explained. Videos are generated from the scripts in this repo
 (`tools/render_video.py`), so fixing a mistake means fixing a text file and
 re-rendering. If you spot something wrong, please
-[open an issue](../../issues) — that's a contribution too.
+[open an issue](https://github.com/thejesh23/first-python-contribution/issues) — that's a contribution too.
 
 ## Repo layout
 
