@@ -5,3 +5,4 @@ __pycache__/
 build/
 *.aiff
 *.mp4
+.DS_Store

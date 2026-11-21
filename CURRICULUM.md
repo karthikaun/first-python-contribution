@@ -52,10 +52,10 @@ Each long video also gets one 60-second clip for Shorts/Reels.
 | # | Lesson | Hands-on | Status |
 |---|---|---|---|
 | 05 | [House rules: CONTRIBUTING, CLAs, DCO sign-offs, AI policies, code of conduct](lessons/05-house-rules/) | Fill the pre-flight checklist for 3 projects | Drafted |
-| 06 | Setting up any Python project: reading `pyproject.toml`, and the common setups (pip + venv, uv, Poetry, Hatch, tox, nox, pre-commit, Make). Plus docs builds (Sphinx, MkDocs) | Clone 2 real projects and get their test suites passing locally | Planned |
-| 07 | Finding an issue: `good first issue`, checking it's unclaimed, **searching for existing PRs first**, asking to be assigned. `tools/find_issues.py` lists fresh, unclaimed issues in welcoming Python projects | Shortlist 3 issues and comment on one | Planned |
-| 08 | Making the change: reproduce first, a failing test, the fix, docs, changelog/news fragments, commit messages. Docs-only PRs and good bug reports count too | Exercise 3 in this repo: fix a planted bug with a test | Planned |
-| 09 | CI and review: reading red checks, "changes requested", applying suggestions, syncing with upstream, rebasing, merge conflicts, squashing on request | Bot-staged review in this repo: a failing check, a review comment, a conflict | Planned |
+| 06 | [Setting up any Python project](lessons/06-set-up-any-project/): reading `pyproject.toml`, and the common setups (pip + venv, uv, Poetry, Hatch, tox, nox, pre-commit, Make). Plus docs builds (Sphinx, MkDocs). `tools/which_setup.py` detects them | Clone 2 real projects and get their test suites passing locally | Drafted |
+| 07 | [Finding an issue](lessons/07-finding-an-issue/): `good first issue`, checking it's unclaimed, **searching for existing PRs first**, asking to be assigned. `tools/find_issues.py` lists fresh, unclaimed issues in welcoming Python projects | Shortlist 3 issues and comment on one | Drafted |
+| 08 | [Making the change](lessons/08-making-the-change/): reproduce first, a failing test, the fix, docs, changelog/news fragments, commit messages. Docs-only PRs and good bug reports count too | Exercise 3 (local): fix a planted bug with a test; `tools/check_exercise_3.py` checks it | Drafted |
+| 09 | [CI and review](lessons/09-ci-and-review/): reading red checks, "changes requested", applying suggestions, syncing with upstream, rebasing, merge conflicts, squashing on request | `tools/conflict_lab.py`: rebase, resolve a conflict, answer review, squash | Drafted |
 
 ## Part 4: Being a good contributor
 

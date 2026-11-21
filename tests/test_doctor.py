@@ -63,3 +63,12 @@ def test_command_blocks_skip_norun_and_dedent():
 
 def test_command_block_after_blank_line_keeps_first_letter():
     assert test_commands.blocks("Text.\n\n```bash\ngit --version\n```\n") == ["git --version"]
+
+
+def test_expect_fail_block_wrapped(tmp_path):
+    import subprocess
+
+    (script,) = test_commands.blocks("```bash expect-fail\ntrue\nfalse\n```\n")
+    assert subprocess.run(["bash", "-e", "-c", script]).returncode == 0
+    (script,) = test_commands.blocks("```bash expect-fail\ntrue\n```\n")
+    assert subprocess.run(["bash", "-e", "-c", script], capture_output=True).returncode == 1

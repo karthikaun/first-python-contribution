@@ -178,4 +178,4 @@ Project: ______________________
 [ ] Code of conduct, and how to report problems
 ```
 
-Next: Lesson 06, reading a real Python project.
+Next: [Lesson 06: setting up any Python project](../06-set-up-any-project/).
