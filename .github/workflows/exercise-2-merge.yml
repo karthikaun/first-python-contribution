@@ -1,0 +1,85 @@
+name: Exercise 2 review
+
+# Runs after "Exercise 2 tests" finishes, with a write token. It never checks
+# out or runs the PR's code: it reads the PR's files with git show and
+# tools/check_exercise_2.py (from main), comments, and merges if all is well.
+
+on:
+  workflow_run:
+    workflows: ["Exercise 2 tests"]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  review:
+    if: github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main (trusted code only)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Find the pull request
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 500 \
+                 --json number,headRefOid --jq ".[] | select(.headRefOid == \"$HEAD_SHA\") | .number" | head -1)
+          if [ -z "$PR" ]; then
+            echo "No open PR has head $HEAD_SHA (it was probably updated since); nothing to do."
+            exit 0
+          fi
+          echo "number=$PR" >> "$GITHUB_OUTPUT"
+          echo "login=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json author -q .author.login)" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch PR commits without checking them out
+        if: steps.pr.outputs.number
+        env:
+          PR: ${{ steps.pr.outputs.number }}
+        run: git fetch --no-tags origin "pull/${PR}/head"
+
+      - uses: actions/setup-python@v5
+        if: steps.pr.outputs.number
+        with:
+          python-version: "3.12"
+
+      - name: Validate
+        id: check
+        if: steps.pr.outputs.number
+        env:
+          LOGIN: ${{ steps.pr.outputs.login }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          TESTS: ${{ github.event.workflow_run.conclusion }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+        run: |
+          set +e
+          python tools/check_exercise_2.py --login "$LOGIN" --base origin/main --head "$HEAD_SHA" \
+            --tests "$TESTS" --run-url "$RUN_URL" > comment.md
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          cat comment.md
+
+      - name: Comment on the PR
+        if: steps.pr.outputs.number
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ steps.pr.outputs.number }}
+        run: gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body-file comment.md
+
+      - name: Merge
+        if: steps.pr.outputs.number && steps.check.outputs.status == '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ steps.pr.outputs.number }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --match-head-commit "$HEAD_SHA"
+
+      - name: Fail when the PR needs fixes
+        if: steps.pr.outputs.number && steps.check.outputs.status != '0'
+        run: exit 1

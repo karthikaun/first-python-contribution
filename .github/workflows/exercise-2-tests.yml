@@ -1,0 +1,31 @@
+name: Exercise 2 tests
+
+# Runs the learner's code with a read-only token and no secrets.
+# exercise-2-merge.yml reads the result and decides whether to merge.
+
+on:
+  pull_request:
+    paths: ["practice/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install pytest and ruff
+        run: python -m pip install pytest ruff
+      - name: ruff format --check practice
+        run: ruff format --check practice
+      - name: ruff check practice
+        run: ruff check practice
+      - name: python -m pytest practice
+        run: python -m pytest practice -v
