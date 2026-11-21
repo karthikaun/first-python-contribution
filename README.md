@@ -35,6 +35,7 @@ lessons/NN-slug/   README.md, script.md, exercise.md, quiz.md
 first-commits/     one file per learner, added in Lesson 01
 tools/             lesson checker, video renderer (Python)
 tests/             tests for the tools and lesson structure
+publishing/        Udemy landing page copy (tools/udemy_package.py builds dist/udemy/)
 ```
 
 ## Working on the course
