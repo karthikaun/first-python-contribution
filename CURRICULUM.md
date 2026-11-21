@@ -29,7 +29,7 @@ Every lesson has the same four parts:
 | `exercise.md` | The hands-on task. Most of them happen in this repo, starting with [`first-commits/`](first-commits/). |
 | `quiz.md` | 3–5 questions with hidden answers. |
 
-Target length: a 2–4 minute video (narration runs about 150 words a
+Target length: a 2–6 minute video (narration runs about 150 words a
 minute), then the exercise. `tools/check_lessons.py` checks that each
 lesson's stated length matches its script.
 Each long video also gets one 60-second clip for Shorts/Reels.
