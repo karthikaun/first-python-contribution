@@ -1,6 +1,6 @@
 # Video script: After the PR, and beyond GitHub
 
-Target length: about 7 minutes.
+Target length: about 2 minutes.
 
 ## Scene 1: Hook
 visual: slide

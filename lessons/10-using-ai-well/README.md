@@ -1,6 +1,6 @@
 # Lesson 10: Using AI tools well
 
-**Time:** 7 minute video · 30 minute exercise
+**Time:** 3 minute video · 30 minute exercise
 **You'll need:** Lesson 05 (house rules) and Lesson 08
 
 Lesson 05 was about *whether* a project allows AI tools. This lesson is

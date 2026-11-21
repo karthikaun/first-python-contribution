@@ -1,6 +1,6 @@
 # Lesson 07: Finding an issue (that nobody else is working on)
 
-**Time:** 7 minute video · 30 minute exercise
+**Time:** 3 minute video · 30 minute exercise
 **You'll need:** `gh` logged in (Lesson 02)
 
 The most common way beginners waste a weekend: they pick an issue, work on

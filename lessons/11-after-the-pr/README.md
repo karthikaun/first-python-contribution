@@ -1,6 +1,6 @@
 # Lesson 11: After the PR, and beyond GitHub
 
-**Time:** 7 minute video · 20 minute exercise
+**Time:** 2 minute video · 20 minute exercise
 **You'll need:** Lesson 09
 
 Your PR is open, checks are green, and... nothing happens. This lesson is

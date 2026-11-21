@@ -1,6 +1,6 @@
 # Lesson 12: Capstone: your first external contribution
 
-**Time:** 6 minute video · 1–4 weeks, mostly waiting for review
+**Time:** 2 minute video · 1–4 weeks, mostly waiting for review
 **You'll need:** everything so far
 
 Time to do it for real: a **merged pull request in an open source project

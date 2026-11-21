@@ -1,6 +1,6 @@
 # Lesson 08: Making the change
 
-**Time:** 8 minute video · 40 minute exercise
+**Time:** 3 minute video · 40 minute exercise
 **You'll need:** this repo set up with your venv (Lesson 04)
 
 You've found an issue and claimed it. Now make the change the way

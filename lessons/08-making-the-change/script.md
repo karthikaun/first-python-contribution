@@ -1,6 +1,6 @@
 # Video script: Making the change
 
-Target length: about 8 minutes.
+Target length: about 3 minutes.
 
 ## Scene 1: Hook
 visual: slide
