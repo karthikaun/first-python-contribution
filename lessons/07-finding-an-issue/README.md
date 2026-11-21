@@ -64,7 +64,8 @@ pipeshub-ai/pipeshub-ai (★4140)  Re-enable Greenhouse in the MCP server catalo
 26 of 62 issues look free. Read each thread fully before you claim one.
 ```
 
-These are **candidates**, not guarantees. The next part is the real check.
+Your list will be different: issues are claimed and closed every day. These
+are **candidates**, not guarantees. The next part is the real check.
 
 ## Before you claim: the five checks
 
