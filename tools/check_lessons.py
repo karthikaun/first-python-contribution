@@ -32,8 +32,30 @@ def check_lesson(folder: Path) -> list[str]:
     if script_path.is_file():
         script = script_format.load(script_path)
         out.extend(script_format.problems(script))
+        out.extend(check_captures(folder, script))
         if script.minutes > MAX_MINUTES:
             out.append(f"script is about {script.minutes:.0f} minutes; keep it under {MAX_MINUTES}")
+    return out
+
+
+def check_captures(folder: Path, script: script_format.Script) -> list[str]:
+    """Browser scenes with image: must point at a capture, with the highlight inside it."""
+    from render_video import png_size
+
+    out = []
+    for scene in script.scenes:
+        image = scene.fields.get("image")
+        if scene.visual != "browser" or not image:
+            continue
+        path = folder / image
+        if not path.is_file():
+            out.append(f"scene {scene.number}: {image} is missing (run tools/capture_pages.py)")
+            continue
+        if scene.fields.get("highlight"):
+            w, h = png_size(path)
+            x, y, bw, bh = (int(v) for v in scene.fields["highlight"].split(","))
+            if x < 0 or y < 0 or x + bw > w or y + bh > h:
+                out.append(f"scene {scene.number}: highlight {x},{y},{bw},{bh} is outside the {w}x{h} capture")
     return out
 
 
