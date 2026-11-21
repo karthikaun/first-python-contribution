@@ -59,3 +59,7 @@ def test_upstream():
 def test_command_blocks_skip_norun_and_dedent():
     md = "x\n```bash\necho hi\n```\n```bash norun\ngh auth login\n```\n   ```bash\n   echo indented\n   ```\n"
     assert test_commands.blocks(md) == ["echo hi", "echo indented"]
+
+
+def test_command_block_after_blank_line_keeps_first_letter():
+    assert test_commands.blocks("Text.\n\n```bash\ngit --version\n```\n") == ["git --version"]
