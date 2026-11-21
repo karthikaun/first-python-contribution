@@ -3,7 +3,9 @@
 Every fenced ```bash block in a lesson's README.md and exercise.md is run, in
 lesson order, inside a throwaway HOME and working directory. Mark a block
 ```bash norun when it can't run in CI (installers, logins, your own fork) and
-say why in the text around it.
+say why in the text around it. Mark a block ```bash expect-fail when its last
+command is *supposed* to fail (like a rebase that stops on a conflict): the
+run fails if that block succeeds.
 
 Usage::
 
@@ -29,10 +31,14 @@ def blocks(text: str) -> list[str]:
     """Return the runnable bash blocks in a Markdown document."""
     out = []
     for m in FENCE_RE.finditer(text):
-        if "norun" in m.group("info").split():
+        info = m.group("info").split()
+        if "norun" in info:
             continue
         indent = len(m.group(1))
-        out.append("\n".join(line[indent:] for line in m.group("body").splitlines()))
+        body = "\n".join(line[indent:] for line in m.group("body").splitlines())
+        if "expect-fail" in info:
+            body = f'if {{\n{body}\n}}; then echo "this block was expected to fail" >&2; exit 1; fi'
+        out.append(body)
     return out
 
 
@@ -52,12 +58,14 @@ def run_lesson(folder: Path, home: Path) -> bool:
         return True
     work = home / "work" / folder.name
     work.mkdir(parents=True)
+    (work / "tools").symlink_to(ROOT / "tools")  # lessons run course tools as tools/...
     env = {
         "HOME": str(home),
         "PATH": os.environ["PATH"],
         "GIT_CONFIG_NOSYSTEM": "1",
         "LANG": "C.UTF-8",
         "TERM": "dumb",
+        "GIT_EDITOR": "true",  # accept default messages where a learner would save and close the editor
     }
     print(f"run  {folder.name}")
     proc = subprocess.run(
