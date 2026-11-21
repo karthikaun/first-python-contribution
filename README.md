@@ -19,8 +19,9 @@ your first commit. A bot checks it and merges it.
 ## How this course is made
 
 Lessons and video scripts are drafted with AI and **reviewed by a human
-before anything is published**. From Lesson 02 on, every command shown in a
-lesson is run in CI. Videos are generated from the scripts in this repo
+before anything is published**. Commands shown in lessons are run in CI
+(`tools/test_commands.py`); the few that need your own account, like logging
+in, are marked and explained. Videos are generated from the scripts in this repo
 (`tools/render_video.py`), so fixing a mistake means fixing a text file and
 re-rendering. If you spot something wrong, please
 [open an issue](../../issues) — that's a contribution too.

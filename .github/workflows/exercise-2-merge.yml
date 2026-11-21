@@ -78,7 +78,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ steps.pr.outputs.number }}
           HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
-        run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --match-head-commit "$HEAD_SHA"
+        run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --merge --match-head-commit "$HEAD_SHA"
 
       - name: Fail when the PR needs fixes
         if: steps.pr.outputs.number && steps.check.outputs.status != '0'
