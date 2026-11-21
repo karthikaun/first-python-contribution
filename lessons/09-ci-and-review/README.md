@@ -210,4 +210,4 @@ cd ../..
 rm -rf conflict-lab
 ```
 
-Next: Lesson 10, using AI tools well (coming soon).
+Next: [Lesson 10: using AI tools well](../10-using-ai-well/).

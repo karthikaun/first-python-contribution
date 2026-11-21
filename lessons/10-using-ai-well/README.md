@@ -129,4 +129,4 @@ to both. (Some policies allow translation tools: check.)
   AI-generated code as possibly copied from somewhere with an incompatible
   licence. That's why their policies are strict. Respect them.
 
-Next: Lesson 11, after the PR, and beyond GitHub.
+Next: [Lesson 11: after the PR, and beyond GitHub](../11-after-the-pr/).
