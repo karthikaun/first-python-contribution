@@ -1,6 +1,6 @@
 # Lesson 09: CI and code review
 
-**Time:** 3 minute video · 40 minute exercise
+**Time:** 4 minute video · 40 minute exercise
 **You'll need:** Lessons 03 and 08
 
 Opening the PR isn't the end. Almost every PR gets at least one of these:
