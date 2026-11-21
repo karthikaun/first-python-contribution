@@ -261,8 +261,8 @@ def render(lesson: Path, voice: str, rate: int, scene_range: str | None) -> Path
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Render a lesson video from its script.md")
     parser.add_argument("lesson", type=Path)
-    parser.add_argument("--voice", default="Samantha")
-    parser.add_argument("--rate", type=int, default=175, help="words per minute for say")
+    parser.add_argument("--voice", default="Aman", help="macOS voice (Aman: Indian English, male)")
+    parser.add_argument("--rate", type=int, default=170, help="words per minute for say")
     parser.add_argument("--scenes", help="e.g. 1-3 to render only some scenes")
     args = parser.parse_args(argv)
     render(args.lesson.resolve(), args.voice, args.rate, args.scenes)

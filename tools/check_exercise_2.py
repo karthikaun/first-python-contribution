@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import ast
 import keyword
+import subprocess
 import sys
 from pathlib import Path
 
@@ -61,7 +62,13 @@ def expected_paths(login: str) -> tuple[str, str]:
     return f"practice/greetings/{mod}.py", f"practice/tests/test_{mod}.py"
 
 
-def check_changes(changes: list[tuple[str, str]], login: str) -> Result:
+def check_changes(changes: list[tuple[str, str]], login: str, existing: set[str] | None = None) -> Result:
+    """Check which files the PR touches.
+
+    ``existing`` is the set of the learner's two files present at the PR head
+    (default: whatever the PR touches). A PR may change one or both files, as
+    long as both exist afterwards.
+    """
     result = Result()
     greet_path, test_path = expected_paths(login)
     wanted = {greet_path, test_path}
@@ -74,7 +81,10 @@ def check_changes(changes: list[tuple[str, str]], login: str) -> Result:
             f"This pull request changes files other than your two exercise files: {listed}. "
             f"Only `{greet_path}` and `{test_path}` should change."
         )
-    for path in sorted(wanted - touched):
+    present = touched if existing is None else existing
+    if not touched & wanted:
+        result.errors.append(f"This pull request doesn't change `{greet_path}` or `{test_path}`.")
+    for path in sorted(wanted - present):
         result.errors.append(f"Add `{path}`.")
     for status, path in changes:
         if path in wanted and status not in ("A", "M"):
@@ -196,15 +206,20 @@ def format_comment(result: Result, login: str, tests: str, run_url: str) -> str:
     return "\n".join(parts)
 
 
+def _exists(rev: str, path: str) -> bool:
+    return subprocess.run(["git", "cat-file", "-e", f"{rev}:{path}"], capture_output=True).returncode == 0
+
+
 def validate(login: str, base: str, head: str) -> Result:
     if not LOGIN_RE.match(login):
         return Result([f"Unexpected username `{login}`."])
     raw = _git("diff", "--no-renames", "--name-status", f"{base}...{head}")
     changes = [tuple(line.split("\t", 1)) for line in raw.splitlines() if line.strip()]
-    result = check_changes(changes, login)  # type: ignore[arg-type]
+    greet_path, test_path = expected_paths(login)
+    existing = {p for p in (greet_path, test_path) if _exists(head, p)}
+    result = check_changes(changes, login, existing)  # type: ignore[arg-type]
     if not result.ok:
         return result
-    greet_path, test_path = expected_paths(login)
     result.errors.extend(check_greeting(_git("show", f"{head}:{greet_path}")).errors)
     result.errors.extend(check_test(_git("show", f"{head}:{test_path}"), login).errors)
     return result
