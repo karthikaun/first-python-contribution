@@ -7,7 +7,7 @@ everything into `dist/udemy/UPLOAD.md`.
 
 ## Title
 
-Your First Open Source Contribution with Python
+Your First Open Source Contribution with Python and GitHub
 
 ## Subtitle
 
