@@ -40,6 +40,13 @@ def test_changes_exact_pair():
     assert check_changes([("M", greet), ("A", test)], "Ada-L").ok
 
 
+def test_editing_only_one_file_is_fine_when_both_exist():
+    greet, test = expected_paths("ada")
+    assert check_changes([("M", greet)], "ada", existing={greet, test}).ok
+    errors = check_changes([("A", greet)], "ada", existing={greet}).errors
+    assert any("test_ada.py" in e for e in errors)
+
+
 def test_changes_missing_and_extra():
     greet, _ = expected_paths("ada")
     errors = check_changes([("A", greet), ("M", "README.md")], "ada").errors
@@ -116,3 +123,10 @@ def test_validate_against_real_git(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     assert validate("ada", base, head).ok
     assert not validate("bob", base, head).ok
+
+    # A later PR that only edits the greeting is checked, including its content.
+    (tmp_path / "practice/greetings/ada.py").write_text("import os\n\n" + GREETING)
+    git("commit", "-qam", "edit greeting only")
+    errors = validate("ada", head, git("rev-parse", "HEAD")).errors
+    assert any("no imports" in e for e in errors), errors
+    assert not any("Add `" in e for e in errors), errors
