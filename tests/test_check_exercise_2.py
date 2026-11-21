@@ -130,3 +130,44 @@ def test_validate_against_real_git(tmp_path, monkeypatch):
     errors = validate("ada", head, git("rev-parse", "HEAD")).errors
     assert any("no imports" in e for e in errors), errors
     assert not any("Add `" in e for e in errors), errors
+
+
+@pytest.mark.parametrize(
+    ("paths", "expected"),
+    [
+        (["practice/greetings/ada.py", "practice/tests/test_ada.py"], True),
+        (["practice/greetings/ada.py", "README.md"], True),
+        (["practice/tests/test_ada.py"], True),
+        # PR #6: a maintainer changing the course
+        (["practice/textkit.py", "practice/tests/test_textkit.py", "practice/news/README.md", "CURRICULUM.md"], False),
+        (["practice/tests/test_all_greetings.py", "practice/greetings/__init__.py"], False),
+        (["practice/README.md"], False),
+        ([], False),
+    ],
+)
+def test_is_learner_pr(paths, expected):
+    from check_exercise_2 import is_learner_pr
+
+    assert is_learner_pr(paths) is expected
+
+
+def test_main_is_silent_for_maintainer_prs(tmp_path, monkeypatch, capsys):
+    from check_exercise_2 import NOT_A_LEARNER_PR, main
+
+    def git(*args):
+        return subprocess.run(["git", *args], cwd=tmp_path, check=True, capture_output=True, text=True).stdout.strip()
+
+    git("init", "-q", "-b", "main")
+    git("config", "user.email", "t@example.com")
+    git("config", "user.name", "t")
+    (tmp_path / "practice").mkdir()
+    (tmp_path / "practice/README.md").write_text("a\n")
+    git("add", ".")
+    git("commit", "-qm", "base")
+    base = git("rev-parse", "HEAD")
+    (tmp_path / "practice/README.md").write_text("b\n")
+    git("commit", "-qam", "docs")
+    monkeypatch.chdir(tmp_path)
+    code = main(["--login", "ada", "--base", base, "--head", "HEAD", "--tests", "success"])
+    assert code == NOT_A_LEARNER_PR
+    assert capsys.readouterr().out == ""

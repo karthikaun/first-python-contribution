@@ -14,7 +14,9 @@ Usage (in CI)::
 
     python tools/check_exercise_2.py --login LOGIN --base BASE --head HEAD --tests success --run-url URL
 
-Prints a Markdown comment and exits 0 only if the PR can be merged.
+Prints a Markdown comment and exits 0 only if the PR can be merged. Exits 3,
+printing nothing, when the PR isn't a learner's Exercise 2 PR at all (for
+example a maintainer changing the course), so the bot stays quiet.
 """
 
 from __future__ import annotations
@@ -45,6 +47,26 @@ BANNED_NAMES = {
     "delattr",
     "vars",
 }
+
+
+COURSE_FILES = {
+    "practice/greetings/__init__.py",
+    "practice/tests/test_all_greetings.py",
+    "practice/tests/test_textkit.py",
+}
+NOT_A_LEARNER_PR = 3
+
+
+def is_learner_pr(paths: list[str]) -> bool:
+    """True if the PR touches at least one file shaped like a learner's exercise file."""
+    for path in paths:
+        if path in COURSE_FILES:
+            continue
+        parts = path.split("/")
+        if len(parts) == 3 and parts[0] == "practice" and parts[2].endswith(".py"):
+            if parts[1] == "greetings" or (parts[1] == "tests" and parts[2].startswith("test_")):
+                return True
+    return False
 
 
 def module_name(login: str) -> str:
@@ -233,6 +255,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--tests", required=True, help="conclusion of the Exercise 2 tests run")
     parser.add_argument("--run-url", default="")
     args = parser.parse_args(argv)
+    if not is_learner_pr(_git("diff", "--no-renames", "--name-only", f"{args.base}...{args.head}").splitlines()):
+        return NOT_A_LEARNER_PR
     result = validate(args.login, args.base, args.head)
     print(format_comment(result, args.login, args.tests, args.run_url))
     return 0 if result.ok and args.tests == "success" else 1

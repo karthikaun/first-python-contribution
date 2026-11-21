@@ -96,3 +96,19 @@ def test_validate_against_real_git(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     assert validate("ada", base, head).ok
     assert not validate("bob", base, head).ok
+
+
+@pytest.mark.parametrize(
+    ("paths", "expected"),
+    [
+        (["first-commits/ada.py"], True),
+        (["first-commits/ada.py", "README.md"], True),
+        (["first-commits/README.md"], False),
+        (["lessons/01-first-pr-in-browser/README.md"], False),
+        (["first-commits/sub/ada.py"], False),
+    ],
+)
+def test_is_learner_pr(paths, expected):
+    from check_first_commit import is_learner_pr
+
+    assert is_learner_pr(paths) is expected
