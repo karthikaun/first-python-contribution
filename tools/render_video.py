@@ -49,7 +49,7 @@ li { font-size: 46px; line-height: 1.35; margin: 18px 0; padding-left: 60px; pos
 li::before { content: ""; position: absolute; left: 0; top: 24px; width: 22px; height: 22px; border-radius: 6px;
              background: #3776ab; box-shadow: 8px 8px 0 #ffd43b; }
 pre { font-family: "SF Mono", Menlo, monospace; font-size: 50px; line-height: 1.6; background: #0a1220;
-      border: 2px solid #2a4466; border-radius: 24px; padding: 60px 70px; color: #e8eef7; white-space: pre-wrap; }
+      border: 2px solid #2a4466; border-radius: 24px; padding: 60px 70px; color: #e8eef7; white-space: pre; }
 .tok-str { color: #ffd43b; } .tok-op { color: #7fb4ff; } .prompt { color: #5fd38d; }
 .browser { border-radius: 22px; overflow: hidden; border: 2px solid #2a4466; background: #f6f8fa; }
 .bar { background: #dfe3e8; padding: 22px 28px; display: flex; align-items: center; gap: 14px; }
@@ -67,19 +67,39 @@ def _highlight_python(line: str) -> str:
     return escaped.replace(" = ", ' <span class="tok-op">=</span> ')
 
 
+PROMPT_RE = re.compile(r"^((?:\(\.venv\) )?\$ )(.*)$")
+CODE_WIDTH_PX = 1480  # inside the frame and the <pre> padding
+CODE_HEIGHT_PX = 760
+
+
+def code_font_px(lines: list[str]) -> int:
+    """Largest font size (max 50px) that fits every line without wrapping."""
+    longest = max((len(line) for line in lines), default=1) or 1
+    by_width = CODE_WIDTH_PX / (0.61 * longest)
+    by_height = CODE_HEIGHT_PX / (1.6 * max(len(lines), 1))
+    return int(max(22, min(50, by_width, by_height)))
+
+
+def _terminal_line(line: str) -> str:
+    m = PROMPT_RE.match(line)
+    if m:
+        return f'<span class="prompt">{html.escape(m.group(1))}</span>{html.escape(m.group(2))}'
+    return html.escape(line)
+
+
+def _pre(lines: list[str], rendered: list[str]) -> str:
+    return f'<pre style="font-size: {code_font_px(lines)}px">' + "\n".join(rendered) + "</pre>"
+
+
 def scene_html(scene: Scene, lesson_title: str) -> str:
     kicker = html.escape(scene.heading)
     if scene.visual == "slide":
         items = "".join(f"<li>{html.escape(b)}</li>" for b in scene.bullets)
         body = f"<h1>{html.escape(scene.fields['title'])}</h1><ul>{items}</ul>"
     elif scene.visual == "code":
-        body = "<pre>" + "\n".join(_highlight_python(line) for line in scene.code) + "</pre>"
+        body = _pre(scene.code, [_highlight_python(line) for line in scene.code])
     elif scene.visual == "terminal":
-        lines = [
-            f'<span class="prompt">$</span> {html.escape(line[2:])}' if line.startswith("$ ") else html.escape(line)
-            for line in scene.code
-        ]
-        body = "<pre>" + "\n".join(lines) + "</pre>"
+        body = _pre(scene.code, [_terminal_line(line) for line in scene.code])
     elif scene.visual == "browser":
         # Placeholder frame until real page captures (Playwright) are wired in.
         body = (

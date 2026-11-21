@@ -75,3 +75,12 @@ def test_lesson_04_examples_pass_the_bot():
     namespace: dict = {}
     exec(greeting, namespace)
     assert "Sam" in namespace["greet"]("Sam")
+
+
+def test_code_font_fits_long_lines():
+    import render_video
+
+    assert render_video.code_font_px(['x = "y"']) == 50
+    long = render_video.code_font_px(["(.venv) $ " + "x" * 90])
+    assert long * 0.61 * 100 <= render_video.CODE_WIDTH_PX
+    assert 'class="prompt">(.venv) $ </span>git' in render_video._terminal_line("(.venv) $ git status")
