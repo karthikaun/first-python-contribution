@@ -35,3 +35,10 @@ When your pull request's tests pass, a bot merges it.
 - `greet(name)` returns one line of text, at most 120 characters, that includes `name`.
 - Your files contain functions only: no `import` in the greeting, and nothing
   that reads files, runs programs or calls `eval`.
+
+# Exercise 3: fix a planted bug (local only)
+
+`practice/textkit.py` has a bug on purpose. [Lesson 08](../lessons/08-making-the-change/)
+walks you through fixing it on a branch, and `python tools/check_exercise_3.py`
+checks your work. **Don't open a pull request for it**: the next learner
+needs the bug.
