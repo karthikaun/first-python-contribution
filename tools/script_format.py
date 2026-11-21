@@ -10,9 +10,10 @@ A script is a Markdown file made of scenes::
     > Narration, written as a blockquote.
     > It can span several lines.
 
-Fields before the narration are ``key: value`` lines. ``bullets:`` and
-``code:`` take the lines that follow them (``- item`` lines for bullets, raw
-lines for code) up to the first blank line or blockquote.
+Fields before the narration are ``key: value`` lines. ``bullets:`` takes the
+``- item`` lines that follow it. ``code:`` takes a fenced block (three
+backticks on their own line before and after), so code can contain blank
+lines and lines starting with ``>``.
 """
 
 from __future__ import annotations
@@ -65,7 +66,7 @@ def parse(text: str) -> Script:
     title = ""
     scenes: list[Scene] = []
     current: Scene | None = None
-    collecting: str | None = None  # "bullets" or "code"
+    collecting: str | None = None  # "bullets", "code" (waiting for fence) or "fence"
     narration: list[str] = []
 
     def finish() -> None:
@@ -85,6 +86,15 @@ def parse(text: str) -> Script:
             continue
         if current is None:
             continue
+        if collecting == "fence":
+            if line.strip() == "```":
+                collecting = None
+            else:
+                current.code.append(line)
+            continue
+        if collecting == "code" and line.strip().startswith("```"):
+            collecting = "fence"
+            continue
         if line.startswith(">"):
             collecting = None
             narration.append(line[1:].strip())
@@ -94,9 +104,6 @@ def parse(text: str) -> Script:
             continue
         if collecting == "bullets" and line.startswith("- "):
             current.bullets.append(line[2:].strip())
-            continue
-        if collecting == "code":
-            current.code.append(line)
             continue
         fm = FIELD_RE.match(line)
         if fm and not narration:
