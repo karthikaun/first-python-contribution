@@ -16,8 +16,13 @@ line-length = 120
 target-version = "py312"
 extend-exclude = ["first-commits"]
 
+[tool.ruff.lint.isort]
+known-first-party = ["greetings"]
+
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "practice"]
+pythonpath = ["practice"]
+addopts = ["--import-mode=importlib"]
