@@ -1,0 +1,85 @@
+"""Run the shell commands shown in lessons, so lessons can't silently go stale.
+
+Every fenced ```bash block in a lesson's README.md and exercise.md is run, in
+lesson order, inside a throwaway HOME and working directory. Mark a block
+```bash norun when it can't run in CI (installers, logins, your own fork) and
+say why in the text around it.
+
+Usage::
+
+    python tools/test_commands.py [lesson-folder ...]
+"""
+
+from __future__ import annotations
+
+import os
+import re
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+LESSONS = ROOT / "lessons"
+FENCE_RE = re.compile(r"^(\s*)```bash(?P<info>[^\n]*)\n(?P<body>.*?)^\1```", re.MULTILINE | re.DOTALL)
+FILES = ("README.md", "exercise.md")
+
+
+def blocks(text: str) -> list[str]:
+    """Return the runnable bash blocks in a Markdown document."""
+    out = []
+    for m in FENCE_RE.finditer(text):
+        if "norun" in m.group("info").split():
+            continue
+        indent = len(m.group(1))
+        out.append("\n".join(line[indent:] for line in m.group("body").splitlines()))
+    return out
+
+
+def lesson_script(folder: Path) -> str:
+    parts = []
+    for name in FILES:
+        path = folder / name
+        if path.is_file():
+            parts.extend(blocks(path.read_text(encoding="utf-8")))
+    return "\n".join(parts)
+
+
+def run_lesson(folder: Path, home: Path) -> bool:
+    script = lesson_script(folder)
+    if not script.strip():
+        print(f"skip {folder.name} (no runnable commands)")
+        return True
+    work = home / "work" / folder.name
+    work.mkdir(parents=True)
+    env = {
+        "HOME": str(home),
+        "PATH": os.environ["PATH"],
+        "GIT_CONFIG_NOSYSTEM": "1",
+        "LANG": "C.UTF-8",
+        "TERM": "dumb",
+    }
+    print(f"run  {folder.name}")
+    proc = subprocess.run(
+        ["bash", "-euxo", "pipefail", "-c", script], cwd=work, env=env, capture_output=True, text=True, timeout=300
+    )
+    if proc.returncode != 0:
+        print(proc.stdout)
+        print(proc.stderr)
+        print(f"FAIL {folder.name} (exit {proc.returncode})")
+        return False
+    return True
+
+
+def main(argv: list[str]) -> int:
+    folders = [Path(a).resolve() for a in argv] or sorted(
+        p for p in LESSONS.iterdir() if p.is_dir() and not p.name.startswith("_")
+    )
+    with tempfile.TemporaryDirectory() as tmp:
+        home = Path(tmp)
+        ok = all([run_lesson(folder, home) for folder in folders])
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
