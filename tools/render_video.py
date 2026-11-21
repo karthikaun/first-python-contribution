@@ -20,8 +20,10 @@ import argparse
 import html
 import re
 import shutil
+import struct
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -58,6 +60,15 @@ pre { font-family: "SF Mono", Menlo, monospace; font-size: 50px; line-height: 1.
        color: #444; }
 .page { height: 520px; display: flex; align-items: center; justify-content: center; color: #57606a; font-size: 38px; }
 .caption { margin-top: 50px; font-size: 56px; font-weight: 700; color: #ffd43b; }
+.capture { position: relative; overflow: hidden; line-height: 0; }
+.capture img { display: block; }
+.spot { position: absolute; border: 5px solid #ffd43b; border-radius: 12px;
+        box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.45), 0 0 24px 6px rgba(255, 212, 59, 0.6); }
+.shot-caption { margin-top: 20px; font-size: 38px; font-weight: 700; color: #ffd43b; text-align: center; }
+.shot { align-self: center; }
+.shot .bar { padding: 12px 20px; gap: 10px; }
+.shot .dot { width: 16px; height: 16px; }
+.shot .url { font-size: 20px; padding: 8px 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 """
 
 
@@ -91,7 +102,51 @@ def _pre(lines: list[str], rendered: list[str]) -> str:
     return f'<pre style="font-size: {code_font_px(lines)}px">' + "\n".join(rendered) + "</pre>"
 
 
-def scene_html(scene: Scene, lesson_title: str) -> str:
+CAPTURE_MAX_W, CAPTURE_MAX_H = 1560, 640
+
+
+def png_size(path: Path) -> tuple[int, int]:
+    """Width and height of a PNG, read from its header."""
+    data = path.read_bytes()[16:24]
+    return struct.unpack(">II", data)
+
+
+def capture_layout(size: tuple[int, int], highlight: str | None) -> tuple[float, tuple[int, ...] | None]:
+    """Scale a capture to fit the frame, and scale its highlight box with it."""
+    w, h = size
+    scale = min(CAPTURE_MAX_W / w, CAPTURE_MAX_H / h, 1.4)
+    box = tuple(round(int(v) * scale) for v in highlight.split(",")) if highlight else None
+    return scale, box
+
+
+def _browser_bar(url: str) -> str:
+    return (
+        '<div class="bar">'
+        '<span class="dot" style="background:#ff5f57"></span>'
+        '<span class="dot" style="background:#febc2e"></span>'
+        '<span class="dot" style="background:#28c840"></span>'
+        f'<span class="url">{html.escape(url)}</span></div>'
+    )
+
+
+def _browser_capture(scene: Scene, lesson_dir: Path) -> str:
+    image = lesson_dir / scene.fields["image"]
+    size = png_size(image)
+    scale, box = capture_layout(size, scene.fields.get("highlight"))
+    w, h = round(size[0] * scale), round(size[1] * scale)
+    spot = (
+        f'<div class="spot" style="left:{box[0]}px;top:{box[1]}px;width:{box[2]}px;height:{box[3]}px"></div>'
+        if box
+        else ""
+    )
+    return (
+        f'<div class="shot"><div class="browser" style="width:{w + 4}px">{_browser_bar(scene.fields["url"])}'
+        f'<div class="capture"><img src="{image.as_uri()}" width="{w}" height="{h}">{spot}</div></div>'
+        f'<div class="shot-caption">{html.escape(scene.fields["caption"])}</div></div>'
+    )
+
+
+def scene_html(scene: Scene, lesson_title: str, lesson_dir: Path | None = None) -> str:
     kicker = html.escape(scene.heading)
     if scene.visual == "slide":
         items = "".join(f"<li>{html.escape(b)}</li>" for b in scene.bullets)
@@ -100,14 +155,12 @@ def scene_html(scene: Scene, lesson_title: str) -> str:
         body = _pre(scene.code, [_highlight_python(line) for line in scene.code])
     elif scene.visual == "terminal":
         body = _pre(scene.code, [_terminal_line(line) for line in scene.code])
+    elif scene.visual == "browser" and scene.fields.get("image") and lesson_dir is not None:
+        body = _browser_capture(scene, lesson_dir)
     elif scene.visual == "browser":
-        # Placeholder frame until real page captures (Playwright) are wired in.
+        # No capture yet: a placeholder frame. Add image: and run tools/capture_pages.py.
         body = (
-            '<div class="browser"><div class="bar">'
-            '<span class="dot" style="background:#ff5f57"></span>'
-            '<span class="dot" style="background:#febc2e"></span>'
-            '<span class="dot" style="background:#28c840"></span>'
-            f'<span class="url">{html.escape(scene.fields["url"])}</span></div>'
+            f'<div class="browser">{_browser_bar(scene.fields["url"])}'
             '<div class="page">[ screen capture goes here ]</div></div>'
             f'<div class="caption">{html.escape(scene.fields["caption"])}</div>'
         )
@@ -122,20 +175,23 @@ def scene_html(scene: Scene, lesson_title: str) -> str:
 
 
 def screenshot(html_path: Path, png_path: Path) -> None:
-    subprocess.run(
-        [
-            str(CHROME),
-            "--headless=new",
-            "--disable-gpu",
-            "--hide-scrollbars",
-            "--force-device-scale-factor=1",
-            f"--window-size={WIDTH},{HEIGHT}",
-            f"--screenshot={png_path}",
-            html_path.as_uri(),
-        ],
-        check=True,
-        capture_output=True,
-    )
+    with tempfile.TemporaryDirectory() as profile:  # never touch the user's Chrome profile
+        subprocess.run(
+            [
+                str(CHROME),
+                "--headless=new",
+                "--disable-gpu",
+                "--hide-scrollbars",
+                "--force-device-scale-factor=1",
+                "--allow-file-access-from-files",
+                f"--user-data-dir={profile}",
+                f"--window-size={WIDTH},{HEIGHT}",
+                f"--screenshot={png_path}",
+                html_path.as_uri(),
+            ],
+            check=True,
+            capture_output=True,
+        )
 
 
 def synthesize(text: str, out: Path, voice: str, rate: int) -> None:
@@ -243,7 +299,7 @@ def render(lesson: Path, voice: str, rate: int, scene_range: str | None) -> Path
     clips, durations = [], []
     for scene in scenes:
         stem = build / f"scene{scene.number:02}"
-        stem.with_suffix(".html").write_text(scene_html(scene, script.title), encoding="utf-8")
+        stem.with_suffix(".html").write_text(scene_html(scene, script.title, lesson), encoding="utf-8")
         screenshot(stem.with_suffix(".html"), stem.with_suffix(".png"))
         synthesize(scene.narration, stem.with_suffix(".aiff"), voice, rate)
         make_clip(stem.with_suffix(".png"), stem.with_suffix(".aiff"), stem.with_suffix(".mp4"))
