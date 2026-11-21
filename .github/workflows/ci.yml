@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   pull_request:
+    # First-commit PRs are checked by first-commit.yml. Skipping them here
+    # avoids a stuck "waiting for approval" CI run on every learner's PR.
+    paths-ignore: ["first-commits/**"]
 
 permissions:
   contents: read
