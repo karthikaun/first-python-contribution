@@ -9,6 +9,8 @@ to a merged contribution to a real Python project.
   pre-commit — the things maintainers will actually check.
 - **Then a real project:** finding an issue nobody else is working on,
   passing CI, handling review, and using AI tools without annoying maintainers.
+- **You finish with a merged PR in a project you chose**, verified by a bot
+  and added to the graduates wall. After that you can contribute anywhere.
 
 👉 Start with [the curriculum](CURRICULUM.md).
 
