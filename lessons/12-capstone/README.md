@@ -110,7 +110,7 @@ You can contribute to any open source project now. A few ideas:
   and maintainers remember helpful people.
 - **Help the next beginner.** Answer a question in this course's issues,
   review someone's first-commit PR, or improve a lesson that confused you.
-- **Read the troubleshooting page**
-  (coming soon) when something odd happens.
+- **Bookmark the [troubleshooting page](../A-troubleshooting/)** for when
+  something odd happens.
 
 Welcome to open source. 🎓
