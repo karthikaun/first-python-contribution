@@ -9,7 +9,7 @@ name: Check bug report
 
 on:
   issues:
-    types: [opened, edited]
+    types: [opened, edited, labeled]
 
 permissions:
   contents: read

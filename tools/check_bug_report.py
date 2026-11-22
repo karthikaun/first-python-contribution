@@ -40,6 +40,8 @@ NOT_A_BUG_HUNT_ISSUE = 3
 CURRENT_VERSION = "1.2.0"
 MAX_PEOPLE = 1000
 MAX_ARGS = 12
+MAX_ARG_LEN = 40
+MAX_SHOWN_LINES = 40
 
 OK, WARN, FAIL = "✔", "!", "✘"
 NO_RESPONSE = "_No response_"
@@ -98,7 +100,7 @@ def check_title(title: str, report: Report) -> None:
     specific = [w for w in words if w.lower() not in VAGUE_WORDS]
     if not rest:
         report.add(FAIL, "**Title:** add what goes wrong after `splitbill: `.")
-    elif len(words) < 4 or len(specific) < 2:
+    elif len(words) < 3 or len(specific) < 2:
         report.add(
             FAIL,
             f'**Title:** "{rest}" is too vague. Say what goes wrong and when, like '
@@ -159,10 +161,10 @@ def command_args(steps: str) -> list[str] | None:
     """The arguments after ``splitbill.py`` in the first command line of the steps, if any."""
     for line in steps.splitlines():
         line = re.sub(r"^\s*(?:\$|>|%|PS [^>]*>)\s*", "", line.strip().strip("`"))
-        if "splitbill" not in line or "import" in line:
+        if "splitbill" not in line or re.search(r"\bimport\b", line):
             continue
         try:
-            tokens = shlex.split(line)
+            tokens = shlex.split(line, comments=True)
         except ValueError:
             return None
         for i, token in enumerate(tokens):
@@ -184,7 +186,10 @@ class Outcome:
         text = self.stdout
         if self.code:
             text += self.error + "\n"
-        return text.rstrip() or "(no output)"
+        lines = text.rstrip().splitlines()
+        if len(lines) > MAX_SHOWN_LINES:  # keep the comment well under GitHub's size limit
+            lines = [*lines[:MAX_SHOWN_LINES], f"... ({len(lines) - MAX_SHOWN_LINES} more lines)"]
+        return "\n".join(lines) or "(no output)"
 
 
 def last_line(text: str) -> str:
@@ -209,14 +214,20 @@ def money(amount: float) -> str:
     return f"${amount:,.2f}"
 
 
-def reference(args: list[str]) -> Outcome:
-    """What README.md says splitbill should do."""
+def build_parser() -> argparse.ArgumentParser:
+    """The same command line as bug-hunt/splitbill.py, abbreviations like --peo included."""
     parser = argparse.ArgumentParser(prog="splitbill", description="Split a restaurant bill between friends.")
     parser.add_argument("bill", type=float, help="the bill before tax and tip, e.g. 120 or 120.50")
     parser.add_argument("--people", type=int, default=1, help="how many people share the bill (default: 1)")
     parser.add_argument("--tip", default="0", help="tip percentage, e.g. 15 or 15%% (default: 0)")
     parser.add_argument("--tax", type=float, default=0.0, help="tax as an amount, e.g. 9.60 (default: 0)")
     parser.add_argument("--version", action="version", version=f"splitbill {CURRENT_VERSION}")
+    return parser
+
+
+def reference(args: list[str]) -> Outcome:
+    """What README.md says splitbill should do."""
+    parser = build_parser()
     out, err = io.StringIO(), io.StringIO()
     try:
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
@@ -243,10 +254,20 @@ def reference(args: list[str]) -> Outcome:
 
 
 def too_big(args: list[str]) -> bool:
-    for flag, value in zip(args, args[1:], strict=False):
-        if flag == "--people" and value.lstrip("-").isdigit() and int(value) > MAX_PEOPLE:
-            return True
-    return any(a.startswith("--people=") and a[9:].isdigit() and int(a[9:]) > MAX_PEOPLE for a in args)
+    """True if running these arguments could print a huge amount.
+
+    The arguments are parsed exactly as splitbill parses them, so every
+    spelling of the option counts: ``--people 5000``, ``--people=5000``,
+    ``--peo 5000``.
+    """
+    if len(args) > MAX_ARGS or any(len(a) > MAX_ARG_LEN for a in args):
+        return True
+    try:
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            people = build_parser().parse_args(args).people
+    except SystemExit:  # a bad command, --help or --version: splitbill prints a little and stops
+        return False
+    return people > MAX_PEOPLE
 
 
 def check_reproduces(form: dict[str, str], report: Report) -> None:
@@ -259,7 +280,9 @@ def check_reproduces(form: dict[str, str], report: Report) -> None:
         )
         return
     command = shlex.join(["python", "bug-hunt/splitbill.py", *args])
-    if len(args) > MAX_ARGS or too_big(args):
+    if len(command) > 200:
+        command = command[:200] + "..."
+    if too_big(args):
         report.add(
             FAIL, f"**Steps:** `{command}` is bigger than it needs to be. Use the smallest numbers that show it."
         )

@@ -113,3 +113,41 @@ def test_missing_versions_fail_and_old_version_warns():
 def test_needs_work_comment_says_how_to_edit():
     text = cbr.comment(cbr.check("splitbill: bug", body()), "octocat")
     assert "**Edit**" in text and "maintainer" not in text
+
+
+@pytest.mark.parametrize("people", ["--people 5000", "--people=5000", "--peo 5000", "--p=5000", "--people 0005000"])
+def test_every_spelling_of_a_huge_people_count_is_refused(people):
+    report = cbr.check(GOOD_TITLE, body(steps=f"python bug-hunt/splitbill.py 10 {people}"))
+    assert any("bigger than it needs to be" in text for _, text in report.lines), report.lines
+
+
+def test_long_arguments_are_refused_and_never_fill_the_comment():
+    report = cbr.check(GOOD_TITLE, body(steps="python bug-hunt/splitbill.py 10 --tax " + "1" * 50_000))
+    assert any("bigger than it needs to be" in text for _, text in report.lines)
+    assert len(cbr.comment(report, "octocat")) < 2_000
+
+
+def test_the_comment_stays_small_at_the_people_limit():
+    report = cbr.check(GOOD_TITLE, body(steps=f"python bug-hunt/splitbill.py 10 --people {cbr.MAX_PEOPLE}"))
+    assert len(cbr.comment(report, "octocat")) < 10_000  # GitHub's limit is 65,536
+
+
+@pytest.mark.parametrize("args", [["-h"], ["--version"], ["--peop"], ["abc"], ["10", "--t", "5"]])
+def test_help_version_and_bad_commands_print_nothing_into_the_comment(args, capsys):
+    assert not cbr.too_big(args)
+    cbr.reference(args)
+    assert capsys.readouterr().out == ""
+
+
+def test_a_shell_comment_after_the_command_is_ignored():
+    report = cbr.check(GOOD_TITLE, body(steps="python bug-hunt/splitbill.py 10 --people 3  # important: 3 people"))
+    assert any("Steps reproduce a bug" in text for _, text in report.lines), report.lines
+
+
+def test_python_code_steps_are_not_run_as_a_command():
+    assert cbr.command_args("import splitbill\nsplitbill.split(10, 3)") is None
+
+
+def test_a_short_specific_title_passes():
+    report = cbr.check("splitbill: --tip 15% crashes", body())
+    assert ("✔", "**Title** says what goes wrong.") in report.lines
