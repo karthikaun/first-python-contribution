@@ -227,13 +227,14 @@ def test_every_scene_of_every_lesson_builds_frames(folder):
             assert px * 0.61 * longest <= render_video.CODE_WIDTH_PX, f"scene {scene.number}: a line is too long"
 
 
-def test_say_runs_one_at_a_time(monkeypatch, tmp_path):
-    """Concurrent `say` processes garble some clips, so synthesize holds a lock."""
+def test_say_runs_one_at_a_time_and_retries_until_two_runs_agree(monkeypatch, tmp_path):
+    """Concurrent or busy-machine `say` garbles some clips: hold a lock, keep a clip two runs agree on."""
     import fcntl
 
     import render_video
 
     monkeypatch.setattr(render_video, "SAY_LOCK", tmp_path / "say.lock")
+    outputs = iter([b"garbled", b"good", b"good"])
     held = []
 
     def fake_run(cmd, check):
@@ -243,7 +244,11 @@ def test_say_runs_one_at_a_time(monkeypatch, tmp_path):
                 held.append(False)
             except BlockingIOError:
                 held.append(True)
+        Path(cmd[cmd.index("-o") + 1]).write_bytes(next(outputs))
 
     monkeypatch.setattr(render_video.subprocess, "run", fake_run)
-    render_video.synthesize("Hello.", tmp_path / "out.aiff", "Aman", 170)
-    assert held == [True]
+    out = tmp_path / "out.aiff"
+    render_video.synthesize("Hello.", out, "Aman", 170)
+    assert out.read_bytes() == b"good"
+    assert held == [True, True, True]
+    assert sorted(p.name for p in tmp_path.iterdir()) == ["out.aiff", "say.lock"]

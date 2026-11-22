@@ -418,17 +418,29 @@ def screenshot(html_path: Path, png_path: Path) -> None:
 
 
 SAY_LOCK = Path(tempfile.gettempdir()) / "first-python-contribution-say.lock"
+SAY_ATTEMPTS = 6
 
 
 def synthesize(text: str, out: Path, voice: str, rate: int) -> None:
     """Text to speech. macOS ``say`` for the prototype; replace for production voices.
 
-    Only one ``say`` runs at a time, across threads and processes: when several
-    ran at once, some clips silently came out in a different voice.
+    ``say`` sometimes garbles a clip when other ``say`` processes or heavy work
+    run at the same time, and it doesn't report it. Serial runs are
+    byte-identical, so only one runs at a time (across processes), and a clip
+    is kept only when two runs in a row agree.
     """
+    check = out.with_name(out.stem + ".check" + out.suffix)
+    cmd = ["say", "-v", voice, "-r", str(rate), "-o"]
     with SAY_LOCK.open("w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
-        subprocess.run(["say", "-v", voice, "-r", str(rate), "-o", str(out), text], check=True)
+        subprocess.run([*cmd, str(out), text], check=True)
+        for _ in range(SAY_ATTEMPTS):
+            subprocess.run([*cmd, str(check), text], check=True)
+            if check.read_bytes() == out.read_bytes():
+                check.unlink()
+                return
+            check.replace(out)
+    raise RuntimeError(f"say gave a different clip on every run: {text[:60]!r}")
 
 
 def duration(path: Path) -> float:
@@ -549,15 +561,14 @@ def render(lesson: Path, voice: str, rate: int, scene_range: str | None) -> Path
     for segment, page in zip(segments, pages, strict=True):
         segment.png.with_suffix(".html").write_text(page, encoding="utf-8")
 
-    def produce(segment: Segment) -> None:
-        screenshot(segment.png.with_suffix(".html"), segment.png)
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        list(pool.map(lambda s: screenshot(s.png.with_suffix(".html"), s.png), segments))
+    # Narration last and one clip at a time: say garbles clips on a busy machine.
+    for segment in segments:
         speech = segment.wav.with_suffix(".aiff")
         synthesize(script_format.spoken(segment.text), speech, voice, rate)
         pad_audio(speech, segment.wav, segment.pad)
         segment.seconds = duration(segment.wav)
-
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        list(pool.map(produce, segments))
 
     for scene in scenes:
         mine = [s for s in segments if s.scene is scene]
