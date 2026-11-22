@@ -1,6 +1,6 @@
 # First commits
 
-Everyone who finishes [Lesson 01](../lessons/01-first-pr-in-browser/) has a
+Everyone who finishes [Lesson 02](../lessons/02-first-pr-in-browser/) has a
 file in this folder. Add yours as `first-commits/YOUR-USERNAME.py`:
 
 ```python

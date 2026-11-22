@@ -1,6 +1,6 @@
 # News fragments
 
-Exercise 3 (Lesson 08) asks you to add one file here describing your fix,
+Exercise 3 (Lesson 09) asks you to add one file here describing your fix,
 the way many projects collect changelog entries:
 
 ```

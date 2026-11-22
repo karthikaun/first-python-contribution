@@ -24,7 +24,7 @@ MAX_MINUTES = 10
 def check_lesson(folder: Path) -> list[str]:
     out: list[str] = []
     if not FOLDER_RE.match(folder.name):
-        out.append("folder name should look like '03-just-enough-git'")
+        out.append("folder name should look like '04-just-enough-git'")
     for name in REQUIRED_FILES:
         if not (folder / name).is_file():
             out.append(f"missing {name}")

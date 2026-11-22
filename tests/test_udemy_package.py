@@ -36,7 +36,7 @@ def test_sections_follow_the_curriculum():
 
 
 def test_lecture_file_names_are_safe():
-    lec = up.Lecture(13, "12-capstone", "Capstone: your first external contribution")
+    lec = up.Lecture(13, "13-capstone", "Capstone: your first external contribution")
     assert lec.stem == "13 - Capstone - your first external contribution"
 
 

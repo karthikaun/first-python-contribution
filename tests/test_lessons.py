@@ -61,12 +61,12 @@ def test_problems_reported():
 
 
 def test_lesson_04_examples_pass_the_bot():
-    """The example files in Lesson 04 must be exactly what the bot accepts."""
+    """The example files in Lesson 05 must be exactly what the bot accepts."""
     import re
 
     from check_exercise_2 import check_greeting, check_test
 
-    text = (ROOT / "lessons/04-second-pr-from-terminal/README.md").read_text()
+    text = (ROOT / "lessons/05-second-pr-from-terminal/README.md").read_text()
     blocks = re.findall(r"```python\n(.*?)```", text, re.DOTALL)
     greeting = next(b for b in blocks if "def greet" in b)
     test = next(b for b in blocks if "from greetings" in b)
@@ -163,9 +163,9 @@ def test_slide_layouts():
     def frame(layout, bullets, focus="all"):
         scene = script_format.Scene(1, "S", {"visual": "slide", "title": "T", "layout": layout, "focus": focus})
         scene.bullets, scene.beats = bullets, ["Hi."]
-        return render_video.scene_html(scene, "Demo", ROOT / "lessons" / "04-second-pr-from-terminal")
+        return render_video.scene_html(scene, "Demo", ROOT / "lessons" / "05-second-pr-from-terminal")
 
-    assert '<div class="badge">Lesson 04</div>' in frame("title", ["sub"])
+    assert '<div class="badge">Lesson 05</div>' in frame("title", ["sub"])
     assert "Click <b>Commit</b> in <code>a.py</code>" in frame("bullets", ["Click **Commit** in `a.py`"])
     steps = frame("steps", ["a", "b", "c"], "2")
     assert [c in steps for c in ('"step done"', '"step on"', '"step todo"')] == [True] * 3

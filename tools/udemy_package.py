@@ -19,6 +19,7 @@ against Udemy's limits first.
 
 from __future__ import annotations
 
+import os
 import re
 import subprocess
 import sys
@@ -35,7 +36,7 @@ CHROME = Path("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 TITLE_MAX, SUBTITLE_MAX, LECTURE_TITLE_MAX = 60, 120, 80
 DESCRIPTION_MIN_WORDS, OBJECTIVES_MIN = 200, 4
 LOUDNESS = "loudnorm=I=-16:TP=-1.5:LRA=11"
-TEST_VIDEO_LESSON, TEST_VIDEO_SECONDS = "04-second-pr-from-terminal", 150
+TEST_VIDEO_LESSON, TEST_VIDEO_SECONDS = "05-second-pr-from-terminal", 150
 MAX_UPLOAD_BYTES = int(9.5 * 1024 * 1024)  # browser automation uploads at most 10 MB per file
 
 
@@ -130,10 +131,17 @@ def encode_lecture(src: Path, dst: Path) -> None:
                 text=True,
             ).stdout
         )
-        kbps = int(MAX_UPLOAD_BYTES * 8 * 0.95 / seconds / 1000) - 128  # leave room for audio and the container
-        video = ["-c:v", "libx264", "-preset", "slow", "-tune", "stillimage", "-pix_fmt", "yuv420p",
-                 "-b:v", f"{kbps}k", "-maxrate", f"{kbps * 2}k", "-bufsize", f"{kbps * 4}k"]  # fmt: skip
-        run(["ffmpeg", "-y", "-i", str(src), *video, *audio, "-movflags", "+faststart", str(dst)])
+        # Two passes, so the opening title slide isn't starved while a one-pass
+        # rate control settles (that made the first seconds blocky). 96k audio
+        # is plenty for narration and leaves more of the budget for the picture.
+        audio[audio.index("128k")] = "96k"
+        kbps = int(MAX_UPLOAD_BYTES * 8 * 0.95 / seconds / 1000) - 96  # leave room for audio and the container
+        video = ["-c:v", "libx264", "-preset", "slow", "-pix_fmt", "yuv420p", "-b:v", f"{kbps}k"]
+        with tempfile.TemporaryDirectory() as tmp:
+            log = ["-passlogfile", str(Path(tmp) / "x264")]
+            run(["ffmpeg", "-y", "-i", str(src), *video, "-pass", "1", *log, "-an", "-f", "mp4", os.devnull])
+            run(["ffmpeg", "-y", "-i", str(src), *video, "-pass", "2", *log, *audio,
+                 "-movflags", "+faststart", str(dst)])  # fmt: skip
 
 
 def course_image(landing: dict, dst: Path) -> None:

@@ -7,7 +7,7 @@ import check_lessons  # noqa: E402
 import render_video  # noqa: E402
 import script_format  # noqa: E402
 
-LESSON = Path(__file__).resolve().parent.parent / "lessons" / "01-first-pr-in-browser"
+LESSON = Path(__file__).resolve().parent.parent / "lessons" / "02-first-pr-in-browser"
 
 
 def test_png_size_of_real_capture():

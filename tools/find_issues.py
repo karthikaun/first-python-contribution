@@ -1,4 +1,4 @@
-"""List beginner-friendly issues that nobody seems to be working on (Lesson 07).
+"""List beginner-friendly issues that nobody seems to be working on (Lesson 08).
 
 Usage::
 
@@ -6,7 +6,7 @@ Usage::
     python3 tools/find_issues.py --label "help wanted" --days 30 --min-stars 500
     python3 tools/find_issues.py --repo pallets/flask
 
-Uses the GitHub CLI (``gh``, logged in: Lesson 02). First it finds active
+Uses the GitHub CLI (``gh``, logged in: Lesson 03). First it finds active
 Python repositories with enough stars and open good-first issues. Then, in
 those repositories, it searches for open issues that are labelled for
 newcomers, unassigned, not linked to a pull request and recently active. It
@@ -123,7 +123,7 @@ def keep(row: dict, min_stars: int, show_claimed: bool) -> bool:
 
 def _graphql(query: str, q: str, n: int) -> list[dict]:
     if not shutil.which("gh"):
-        sys.exit("This needs the GitHub CLI (gh). See Lesson 02.")
+        sys.exit("This needs the GitHub CLI (gh). See Lesson 03.")
     proc = subprocess.run(
         ["gh", "api", "graphql", "-f", f"query={query}", "-f", f"q={q}", "-F", f"n={n}"],
         capture_output=True,

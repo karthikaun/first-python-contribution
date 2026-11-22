@@ -165,7 +165,7 @@ def format_comment(result: Result, login: str) -> str:
             f"🎉 Looks great, @{login}! Your file passed every check, so this pull "
             "request will be merged automatically in a moment.\n\n"
             "That purple **Merged** badge means your commit is now part of a public "
-            "project. Next up: Lesson 02, setting up git on your own machine."
+            "project. Next up: Lesson 03, setting up git on your own machine."
         )
     lines = "\n".join(f"- {e}" for e in result.errors)
     return (
