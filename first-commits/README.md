@@ -10,4 +10,4 @@ message = "Why you're learning Python"
 ```
 
 A bot checks your file with Python's parser (it never runs it), comments on
-your pull request, and merges it if everything's right.
+your pull request. If everything's right, a maintainer reviews and merges it.

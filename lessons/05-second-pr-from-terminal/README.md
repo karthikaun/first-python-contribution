@@ -191,8 +191,8 @@ like Steps 5 and 6.
 
 When it finishes, a separate review bot checks your file names and that your
 code only contains what it should. It doesn't appear in the checks list:
-about a minute later it **comments** on your PR, and if everything passed, it
-merges.
+about a minute later it **comments** on your PR. If everything passed, a
+maintainer reviews your PR and merges it.
 
 Read the bot's comment with:
 

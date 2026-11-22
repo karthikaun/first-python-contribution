@@ -71,8 +71,9 @@ Within a minute or two:
 
 - A check called **Validate first commit** runs. Scroll down on your PR to
   see it.
-- If your file is right, the bot comments 🎉 and **merges your PR**. The
-  purple **Merged** badge means your commit is now part of the project.
+- If your file is right, the bot comments 🎉, and a **maintainer reviews
+  and merges your PR**, usually within a day. The purple **Merged** badge
+  means your commit is now part of the project.
 - If something's wrong, the bot comments with exactly what to fix. Fix it in
   your fork (open your file, click the ✏️ pencil, commit). Your PR updates
   automatically and the check runs again.

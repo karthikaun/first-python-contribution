@@ -96,9 +96,9 @@ def test_pytest_import_allowed():
 def test_comment_success_and_failure():
     from check_first_commit import Result
 
-    assert "Merging" in format_comment(Result(), "ada", "success", "u")
+    assert "A maintainer will review" in format_comment(Result(), "ada", "success", "u")
     failed = format_comment(Result(), "ada", "failure", "https://run")
-    assert "https://run" in failed and "Merging" not in failed
+    assert "https://run" in failed and "maintainer will review" not in failed
 
 
 def test_validate_against_real_git(tmp_path, monkeypatch):

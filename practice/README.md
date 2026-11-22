@@ -28,7 +28,7 @@ ruff format practice
 ruff check practice
 ```
 
-When your pull request's tests pass, a bot merges it.
+When your pull request's tests pass, a bot comments, and a maintainer reviews and merges it.
 
 **Rules for your greeting** (checked by `tests/test_all_greetings.py` and the bot):
 

@@ -332,7 +332,7 @@ focus: 1 | 2 | 3
 notes:
 - Watch the check run, live
 - The check runs `ruff format --check`, `ruff check` and `pytest`
-- Then the review bot comments, and merges
+- Then the review bot comments, and a maintainer merges
 code:
 ```
 (.venv) $ gh pr checks --watch
@@ -347,8 +347,8 @@ code:
 > {pytest|pie test} on your code. The same three commands you just ran.
 
 > After it passes, a review bot looks at your file names and your code. About
-> a minute later, it leaves a comment. If everything passed, it merges your
-> pull request. Read the comment with {gh pr view --comments|g h, p r, view,
+> a minute later, it leaves a comment. If everything passed, a maintainer
+> reviews and merges your pull request. Read the comment with {gh pr view --comments|g h, p r, view,
 > dash dash comments}.
 
 ## Scene 16: When a test fails

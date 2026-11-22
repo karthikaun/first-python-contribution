@@ -3,9 +3,9 @@ name: Update graduates wall
 # Regenerates graduates/README.md whenever a graduate file lands on main.
 # The files were validated before merging and are only parsed, never run.
 #
-# The graduate bot merges with GITHUB_TOKEN, and GitHub doesn't start new
-# workflows from pushes made with that token, so the push trigger alone would
-# miss every bot merge. workflow_run fires after "Validate graduate" finishes.
+# A maintainer merges graduate PRs, so the push trigger catches them.
+# workflow_run (after "Validate graduate") also keeps working if a merge is
+# ever made with GITHUB_TOKEN, whose pushes don't start new workflows.
 
 on:
   push:

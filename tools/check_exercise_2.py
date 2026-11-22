@@ -14,7 +14,7 @@ Usage (in CI)::
 
     python tools/check_exercise_2.py --login LOGIN --base BASE --head HEAD --tests success --run-url URL
 
-Prints a Markdown comment and exits 0 only if the PR can be merged. Exits 3,
+Prints a Markdown comment and exits 0 only if the PR is ready for a maintainer to merge. Exits 3,
 printing nothing, when the PR isn't a learner's Exercise 2 PR at all (for
 example a maintainer changing the course), so the bot stays quiet.
 """
@@ -212,9 +212,10 @@ def format_comment(result: Result, login: str, tests: str, run_url: str) -> str:
     }.get(tests, f"⚠️ The test run finished with `{tests}`. [Open it]({run_url}) to see why.")
     if result.ok and tests == "success":
         return (
-            f"🎉 Nice work, @{login}! {tests_line} Merging this now.\n\n"
+            f"🎉 Nice work, @{login}! {tests_line} A maintainer will review your pull "
+            "request and merge it soon.\n\n"
             "You just did what real Python contributors do every day: write code, test it, "
-            "pass CI, get merged. Next up: Lesson 06, the house rules every project has."
+            "pass CI and ask for review. Next up: Lesson 06, the house rules every project has."
         )
     parts = [f"Thanks, @{login}! Not quite there yet:\n", tests_line]
     if result.errors:
