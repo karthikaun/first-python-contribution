@@ -247,6 +247,7 @@ def test_say_runs_one_at_a_time_and_retries_until_two_runs_agree(monkeypatch, tm
         Path(cmd[cmd.index("-o") + 1]).write_bytes(next(outputs))
 
     monkeypatch.setattr(render_video.subprocess, "run", fake_run)
+    monkeypatch.setattr(render_video.time, "sleep", lambda s: None)
     out = tmp_path / "out.aiff"
     render_video.synthesize("Hello.", out, "Aman", 170)
     assert out.read_bytes() == b"good"

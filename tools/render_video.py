@@ -27,6 +27,7 @@ import struct
 import subprocess
 import sys
 import tempfile
+import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
@@ -418,7 +419,7 @@ def screenshot(html_path: Path, png_path: Path) -> None:
 
 
 SAY_LOCK = Path(tempfile.gettempdir()) / "first-python-contribution-say.lock"
-SAY_ATTEMPTS = 6
+SAY_ATTEMPTS = 12
 
 
 def synthesize(text: str, out: Path, voice: str, rate: int) -> None:
@@ -434,12 +435,13 @@ def synthesize(text: str, out: Path, voice: str, rate: int) -> None:
     with SAY_LOCK.open("w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         subprocess.run([*cmd, str(out), text], check=True)
-        for _ in range(SAY_ATTEMPTS):
+        for attempt in range(SAY_ATTEMPTS):
             subprocess.run([*cmd, str(check), text], check=True)
             if check.read_bytes() == out.read_bytes():
                 check.unlink()
                 return
             check.replace(out)
+            time.sleep(min(attempt + 1, 5))  # give a busy machine a moment
     raise RuntimeError(f"say gave a different clip on every run: {text[:60]!r}")
 
 
