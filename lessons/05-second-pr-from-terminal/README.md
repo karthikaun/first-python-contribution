@@ -231,4 +231,4 @@ git branch -d exercise-2
 
 `main` now includes your merged work, so the `exercise-2` branch can go.
 
-Next: Lesson 06, the house rules every project expects you to read first.
+Next: [Lesson 06: house rules](../06-house-rules/), the rules every project expects you to read first.
