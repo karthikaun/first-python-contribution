@@ -94,4 +94,5 @@ def main(argv: list[str]) -> int:
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")  # ✔ and ✘ print on Windows too
     sys.exit(main(sys.argv[1:]))

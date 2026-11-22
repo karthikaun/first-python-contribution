@@ -14,10 +14,17 @@ different, do what it says.
 
 from __future__ import annotations
 
+import os
 import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+
+# Windows learners use Git Bash (Lesson 03): `py` instead of `python3`, and the venv keeps its scripts in Scripts/.
+if os.name == "nt":
+    VENV_COMMANDS = ("py -m venv .venv", "source .venv/Scripts/activate")
+else:
+    VENV_COMMANDS = ("python3 -m venv .venv", "source .venv/bin/activate")
 
 CONTRIBUTING_NAMES = ("CONTRIBUTING.md", "CONTRIBUTING.rst", "CONTRIBUTING.txt", "CONTRIBUTING")
 CONTRIBUTING_DIRS = ("", ".github", "docs", "doc")
@@ -135,7 +142,7 @@ def detect(root: Path) -> list[Finding]:
     # Plain pip, when nothing above manages the environment.
     managed = {"uv", "Poetry", "PDM", "Hatch"}
     if not any(f.tool in managed for f in findings):
-        commands = ["python3 -m venv .venv", "source .venv/bin/activate"]
+        commands = list(VENV_COMMANDS)
         groups = _toml_section_keys(pyproject, "dependency-groups")
         extras = _toml_section_keys(pyproject, "project.optional-dependencies")
         reqs = sorted(p.name for p in root.glob("requirements*.txt")) + sorted(
@@ -211,4 +218,5 @@ def main(argv: list[str]) -> int:
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")  # ✔ and ✘ print on Windows too
     sys.exit(main(sys.argv[1:]))
