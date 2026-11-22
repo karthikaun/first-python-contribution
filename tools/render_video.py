@@ -19,6 +19,7 @@ Output goes to ``build/<lesson>/<lesson>.mp4`` (and ``.srt``). Frames are
 from __future__ import annotations
 
 import argparse
+import fcntl
 import html
 import re
 import shutil
@@ -416,9 +417,18 @@ def screenshot(html_path: Path, png_path: Path) -> None:
         )
 
 
+SAY_LOCK = Path(tempfile.gettempdir()) / "first-python-contribution-say.lock"
+
+
 def synthesize(text: str, out: Path, voice: str, rate: int) -> None:
-    """Text to speech. macOS ``say`` for the prototype; replace for production voices."""
-    subprocess.run(["say", "-v", voice, "-r", str(rate), "-o", str(out), text], check=True)
+    """Text to speech. macOS ``say`` for the prototype; replace for production voices.
+
+    Only one ``say`` runs at a time, across threads and processes: when several
+    ran at once, some clips silently came out in a different voice.
+    """
+    with SAY_LOCK.open("w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        subprocess.run(["say", "-v", voice, "-r", str(rate), "-o", str(out), text], check=True)
 
 
 def duration(path: Path) -> float:

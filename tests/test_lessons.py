@@ -225,3 +225,25 @@ def test_every_scene_of_every_lesson_builds_frames(folder):
             px = render_video.code_font_px(scene.code, height)
             longest = max(len(line) for line in scene.code)
             assert px * 0.61 * longest <= render_video.CODE_WIDTH_PX, f"scene {scene.number}: a line is too long"
+
+
+def test_say_runs_one_at_a_time(monkeypatch, tmp_path):
+    """Concurrent `say` processes garble some clips, so synthesize holds a lock."""
+    import fcntl
+
+    import render_video
+
+    monkeypatch.setattr(render_video, "SAY_LOCK", tmp_path / "say.lock")
+    held = []
+
+    def fake_run(cmd, check):
+        with (tmp_path / "say.lock").open("w") as other:
+            try:
+                fcntl.flock(other, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                held.append(False)
+            except BlockingIOError:
+                held.append(True)
+
+    monkeypatch.setattr(render_video.subprocess, "run", fake_run)
+    render_video.synthesize("Hello.", tmp_path / "out.aiff", "Aman", 170)
+    assert held == [True]
