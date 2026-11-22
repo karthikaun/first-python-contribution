@@ -45,7 +45,7 @@ def git(cwd: Path, *args: str) -> str:
 
 def commit(repo: Path, who: list[str], message: str, files: dict[str, str]) -> None:
     for name, text in files.items():
-        (repo / name).write_text(text)
+        (repo / name).write_text(text, encoding="utf-8")
     git(repo, "add", *files)
     git(repo, *who, "commit", "-q", "-m", message)
 
@@ -82,7 +82,8 @@ def create(lab: Path) -> Path:
         "# Review comments on your pull request\n\n"
         "1. **CI:** This branch has conflicts that must be resolved.\n"
         "2. **Reviewer:** Could you add a docstring to `greeting()`?\n"
-        "3. **Reviewer (later):** Looks good! Please squash into one commit before we merge.\n"
+        "3. **Reviewer (later):** Looks good! Please squash into one commit before we merge.\n",
+        encoding="utf-8",
     )
     return work
 
@@ -98,4 +99,5 @@ def main(argv: list[str]) -> int:
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")  # ✔ and ✘ print on Windows too
     sys.exit(main(sys.argv[1:]))

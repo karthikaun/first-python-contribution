@@ -77,9 +77,9 @@ def run_test_against(source: str, test_file: Path) -> int:
     """Run the learner's test file against a given textkit source; return pytest's exit code."""
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
-        (tmp_path / "textkit.py").write_text(source)
+        (tmp_path / "textkit.py").write_text(source, encoding="utf-8")
         shutil.copy(test_file, tmp_path / "test_textkit.py")
-        (tmp_path / "pytest.ini").write_text("[pytest]\n")
+        (tmp_path / "pytest.ini").write_text("[pytest]\n", encoding="utf-8")
         proc = subprocess.run(
             [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "test_textkit.py"],
             cwd=tmp_path,
@@ -104,7 +104,7 @@ def check_commit_message(subject: str) -> list[str]:
 
 
 def news_fragments(news_dir: Path) -> list[Path]:
-    return [p for p in news_dir.glob("*.md") if p.name != "README.md" and p.read_text().strip()]
+    return [p for p in news_dir.glob("*.md") if p.name != "README.md" and p.read_text(encoding="utf-8").strip()]
 
 
 def main() -> int:
@@ -120,7 +120,7 @@ def main() -> int:
         results.append((OK, "your test fails on the original buggy code, so it catches the bug"))
     else:
         results.append((FAIL, "your test passes on the original buggy code: add a case from the bug report"))
-    if run_test_against(TEXTKIT.read_text(), LEARNER_TEST) == 0:
+    if run_test_against(TEXTKIT.read_text(encoding="utf-8"), LEARNER_TEST) == 0:
         results.append((OK, "your test passes on your fix"))
     else:
         results.append((FAIL, "your test fails on your fix: run python -m pytest practice/tests/test_textkit.py"))
@@ -153,4 +153,5 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")  # ✔ and ✘ print on Windows too
     sys.exit(main())
