@@ -164,7 +164,7 @@ url: https://github.com/thejesh23/first-python-contribution/issues/30
 caption: A finished bug-hunt report: every part a maintainer needs
 image: captures/report.png
 height: 2600
-crop: 100,190,920,970
+crop: 100,190,920,670
 
 > Here is a finished report. The title says what goes wrong. The steps are
 > one command anyone can paste.
