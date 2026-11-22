@@ -1,4 +1,4 @@
-# Quiz 05
+# Quiz 06
 
 **1. You open a PR to a new project and a bot asks you to sign a CLA. What
 should you check before signing?**

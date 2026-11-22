@@ -20,3 +20,12 @@ def test_every_action_is_pinned_to_a_commit():
     for path in WORKFLOWS.glob("*.yml"):
         for ref in re.findall(r"uses: \S+@(\S+)", path.read_text(encoding="utf-8")):
             assert re.fullmatch(r"[0-9a-f]{40}", ref), f"{path.name}: pin {ref} to a commit SHA"
+
+
+def test_bug_report_bot_only_comments():
+    text = (WORKFLOWS / "bug-report.yml").read_text(encoding="utf-8")
+    assert "contents: read" in text and "contents: write" not in text
+    assert "gh issue close" not in text and "gh issue edit" not in text
+    # The issue text reaches the checker only through env: never ${{ }} inside run:
+    for block in re.findall(r"run: \|\n((?:\s{10}.*\n?)+)", text):
+        assert "${{" not in block

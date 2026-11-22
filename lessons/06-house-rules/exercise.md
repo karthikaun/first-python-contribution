@@ -1,4 +1,4 @@
-# Exercise 05: Read the house rules of three projects
+# Exercise 06: Read the house rules of three projects
 
 Fill in the pre-flight checklist from the [lesson](README.md) for each of
 these:

@@ -1,4 +1,4 @@
-"""Create a safe practice world for Lesson 10: rebasing, conflicts, review, squashing.
+"""Create a safe practice world for Lesson 11: rebasing, conflicts, review, squashing.
 
 Usage (from the course folder)::
 
@@ -93,7 +93,7 @@ def main(argv: list[str]) -> int:
         return 2
     work = create(Path(argv[0]).resolve())
     print(f"Lab ready. Your clone is {work}")
-    print("Read REVIEW.md in the lab folder, then follow Lesson 10.")
+    print("Read REVIEW.md in the lab folder, then follow Lesson 11.")
     return 0
 
 

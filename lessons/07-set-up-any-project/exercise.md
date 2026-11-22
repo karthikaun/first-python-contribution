@@ -1,4 +1,4 @@
-# Exercise 06: Two projects, two green test runs
+# Exercise 07: Two projects, two green test runs
 
 Pick **two** projects that use different setups. Some suggestions (check
 their current CONTRIBUTING, these change):

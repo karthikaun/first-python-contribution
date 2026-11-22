@@ -17,12 +17,12 @@ target-version = "py312"
 extend-exclude = ["first-commits"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["greetings", "textkit"]
+known-first-party = ["greetings", "splitbill", "textkit"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "practice"]
-pythonpath = ["practice"]
+testpaths = ["tests", "practice", "bug-hunt"]
+pythonpath = ["practice", "bug-hunt"]
 addopts = ["--import-mode=importlib"]

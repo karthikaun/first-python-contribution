@@ -1,4 +1,4 @@
-# Exercise 08: Fix the planted bug (local only)
+# Exercise 10: Fix the planted bug (local only)
 
 Exercise 3 happens on your machine. **Don't open a pull request**: the bug
 has to stay for the next learner.

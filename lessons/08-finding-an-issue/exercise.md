@@ -1,4 +1,4 @@
-# Exercise 07: Shortlist three, claim one
+# Exercise 08: Shortlist three, claim one
 
 - [ ] Run `python3 tools/find_issues.py`, and once more with `--label "help wanted"` or `--label "documentation"`
 - [ ] Also try GitHub search with the filters from the lesson, in a project you use
@@ -14,7 +14,7 @@
 - [ ] Claim it with a comment in your own words, with your plan, *if* you can start this week
 
 **Not ready to claim yet?** That's fine: keep your shortlist for the
-capstone (Lesson 13). Issues move fast, so re-do the checks when you start.
+capstone (Lesson 14). Issues move fast, so re-do the checks when you start.
 
 **Stretch:** find a closed, unmerged PR in one of the projects and read the
 maintainer's last comment. What would you have done differently?

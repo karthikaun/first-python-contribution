@@ -1,7 +1,7 @@
-# Lesson 11: Using AI tools well
+# Lesson 12: Using AI tools well
 
 **Time:** 3 minute video · 30 minute exercise
-**You'll need:** Lesson 06 (house rules) and Lesson 09
+**You'll need:** Lesson 06 (house rules) and Lesson 10
 
 Lesson 06 was about *whether* a project allows AI tools. This lesson is
 about using them **well** when it does: so they make you a better
@@ -23,7 +23,7 @@ without asking the AI again.
 | **Understanding unfamiliar code** | "What does this function do? Where is X handled?" | Open the files it names and check it's right |
 | **Reading a traceback** | Explains an error in plain words | Reproduce the error yourself first |
 | **Finding where to change** | Points you at likely files | Confirm by reading the code, or with `grep` |
-| **Drafting a test** | Suggests cases you forgot | Run it on the buggy code: it must fail (Lesson 09) |
+| **Drafting a test** | Suggests cases you forgot | Run it on the buggy code: it must fail (Lesson 10) |
 | **Rubber-ducking** | Explaining your plan out loud finds gaps | Ideas only. Nothing is submitted |
 
 ## Where AI tools hurt
@@ -33,7 +33,7 @@ without asking the AI again.
 - **Changing the test instead of the code.** Making tests pass by weakening
   them is the opposite of a fix. CPython's guidelines list it as an
   unacceptable use.
-- **Huge diffs.** AI tends to "improve" things nobody asked about. Lesson 09's
+- **Huge diffs.** AI tends to "improve" things nobody asked about. Lesson 10's
   rule still holds: the smallest change the issue needs.
 - **Unverified bug and security reports.** Never report something an AI
   "found" until you've reproduced it yourself. Maintainers spend real hours on
@@ -43,7 +43,7 @@ without asking the AI again.
 
 ## A workflow that keeps you in charge
 
-1. **Understand the issue yourself first.** Reproduce it (Lesson 09).
+1. **Understand the issue yourself first.** Reproduce it (Lesson 10).
 2. **Use AI to explore**: explain code, suggest where to look, list edge cases.
 3. **Write the change yourself, or treat AI output as a draft you rewrite.**
 4. **Read every line of the diff** (`git diff`) as if a stranger wrote it.
@@ -129,4 +129,4 @@ to both. (Some policies allow translation tools: check.)
   AI-generated code as possibly copied from somewhere with an incompatible
   licence. That's why their policies are strict. Respect them.
 
-Next: [Lesson 12: after the PR, and beyond GitHub](../12-after-the-pr/).
+Next: [Lesson 13: after the PR, and beyond GitHub](../13-after-the-pr/).

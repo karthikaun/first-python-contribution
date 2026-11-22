@@ -1,4 +1,4 @@
-# Quiz 03
+# Quiz 04
 
 **1. You created `notes.py`. `git status` lists it under "Untracked files".
 What do you run before committing it?**

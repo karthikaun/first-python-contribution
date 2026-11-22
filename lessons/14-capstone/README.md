@@ -1,4 +1,4 @@
-# Lesson 13: Capstone: your first external contribution
+# Lesson 14: Capstone: your first external contribution
 
 **Time:** 2 minute video · 1–4 weeks, mostly waiting for review
 **You'll need:** everything so far
@@ -46,7 +46,7 @@ covers it.
 - [ ] Set up the way CONTRIBUTING says (`tools/which_setup.py` helps)
 - [ ] The tests pass **before** you change anything
 
-### 4. Make the change (Lesson 09)
+### 4. Make the change (Lesson 10)
 
 - [ ] On a branch, never `main`
 - [ ] Reproduced, with a failing test where it makes sense
@@ -54,19 +54,19 @@ covers it.
 - [ ] Tests and linters pass locally
 - [ ] Clear commit message (with sign-off or trailer if required)
 
-### 5. Open the PR (Lessons 05 and 09)
+### 5. Open the PR (Lessons 05 and 10)
 
 - [ ] Pushed to your fork; PR opened against the project's main branch
 - [ ] Template filled in; `Fixes #...`; how you tested it
-- [ ] Written in your own words; AI use disclosed if the project asks (Lesson 11)
+- [ ] Written in your own words; AI use disclosed if the project asks (Lesson 12)
 
-### 6. Review (Lesson 10)
+### 6. Review (Lesson 11)
 
 - [ ] CI green (or failures explained)
 - [ ] Every review comment answered; new commits pushed; review re-requested
 - [ ] Conflicts resolved with a rebase if needed
 
-### 7. Wait, then graduate (Lesson 12)
+### 7. Wait, then graduate (Lesson 13)
 
 - [ ] One polite nudge after ~2 weeks of silence, at most
 - [ ] **Merged!**

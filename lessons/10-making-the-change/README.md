@@ -1,4 +1,4 @@
-# Lesson 09: Making the change
+# Lesson 10: Making the change
 
 **Time:** 3 minute video · 40 minute exercise
 **You'll need:** this repo set up with your venv (Lesson 05)
@@ -89,7 +89,7 @@ functions or "tidy up" nearby code in the same PR: it makes your change
 harder to review, and that's the fastest way to get a PR stuck.
 
 ```python
-"""Small text helpers used by Exercise 3 (Lesson 09)."""
+"""Small text helpers used by Exercise 3 (Lesson 10)."""
 
 import re
 
@@ -217,18 +217,6 @@ you in Lesson 07. Same workflow: branch, edit, build the docs if you can,
 PR.
 
 **A good bug report.** If you find a bug you can't fix, a clear report is a
-real contribution:
+real contribution. [Lesson 09](../09-opening-an-issue/) shows what goes in one.
 
-```text
-**What happened:** `slugify("Hello  World")` returns "hello--world".
-**What I expected:** "hello-world".
-**Minimal example:**
-    from textkit import slugify
-    print(slugify("Hello  World"))
-**Versions:** textkit 1.2.0 (python -m pip show textkit), Python 3.13.1, macOS 15.1
-```
-
-The **minimal example** is the most valuable part: the smallest code that
-shows the problem, which a maintainer can paste and run.
-
-Next: [Lesson 10: CI and code review](../10-ci-and-review/).
+Next: [Lesson 11: CI and code review](../11-ci-and-review/).

@@ -1,4 +1,4 @@
-# Exercise 03: The sandbox
+# Exercise 04: The sandbox
 
 Do every block in the [lesson](README.md) in your own `git-sandbox` folder.
 Then, without looking:
@@ -14,4 +14,4 @@ Then, without looking:
 **merge commit** or, if both branches changed the same line, reports a
 **merge conflict**. If you get a conflict, open `hello.py`, keep the line
 you want, delete the `<<<<<<<`, `=======` and `>>>>>>>` markers, then run
-`git add hello.py` and `git commit`. You'll meet conflicts again in Lesson 10.
+`git add hello.py` and `git commit`. You'll meet conflicts again in Lesson 11.

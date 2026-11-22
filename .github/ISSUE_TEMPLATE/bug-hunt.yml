@@ -1,0 +1,78 @@
+name: "Bug hunt: report a splitbill bug"
+description: Practice for Lesson 09. Report a bug you found in bug-hunt/splitbill.py.
+title: "splitbill: "
+labels: ["bug-hunt"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Practice for [Lesson 09: Opening a good issue](https://github.com/thejesh23/first-python-contribution/tree/main/lessons/09-opening-an-issue).
+        A bot checks your report within a minute, and a maintainer reviews it.
+
+        **Title:** replace the placeholder after `splitbill: ` with what goes wrong and when,
+        e.g. `splitbill: total is wrong when there are 7 people`.
+  - type: checkboxes
+    id: searched
+    attributes:
+      label: Did you search first?
+      description: >-
+        In a real project, search open *and* closed issues before you report.
+        Here, other learners have found the same bugs, so a duplicate is fine. Search anyway, for practice.
+      options:
+        - label: I searched this repository's issues for my bug
+          required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What went wrong?
+      description: One or two sentences, in your own words.
+      placeholder: When the bill doesn't divide evenly, the shares don't add up to the total.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The exact command someone can paste and run. Use the smallest numbers that still show the bug.
+      placeholder: python bug-hunt/splitbill.py 10 --people 3
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+      description: What should happen, and why. Quote README.md if it says so.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead?
+      description: Paste the output as text, not a screenshot. If there's a traceback, paste all of it.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: splitbill version
+      description: The output of `python bug-hunt/splitbill.py --version`
+      placeholder: splitbill 1.2.0
+    validations:
+      required: true
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      description: The output of `python --version`
+      placeholder: Python 3.13.1
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: macOS 15.1, Windows 11, Ubuntu 24.04...
+    validations:
+      required: true

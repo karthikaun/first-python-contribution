@@ -1,4 +1,4 @@
-# Exercise 04: A function, a test, a green CI
+# Exercise 05: A function, a test, a green CI
 
 - [ ] `git switch main` and `git pull upstream main`
 - [ ] Create and activate `.venv`, then `python -m pip install pytest ruff`

@@ -38,7 +38,7 @@ When your pull request's tests pass, a bot comments, and a maintainer reviews an
 
 # Exercise 3: fix a planted bug (local only)
 
-`practice/textkit.py` has a bug on purpose. [Lesson 09](../lessons/09-making-the-change/)
+`practice/textkit.py` has a bug on purpose. [Lesson 10](../lessons/10-making-the-change/)
 walks you through fixing it on a branch, and `python tools/check_exercise_3.py`
 checks your work. **Don't open a pull request for it**: the next learner
 needs the bug.

@@ -1,4 +1,4 @@
-# Quiz 07
+# Quiz 08
 
 **1. What does `-linked:pr` mean in a GitHub issue search?**
 

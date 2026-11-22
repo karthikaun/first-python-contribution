@@ -1,4 +1,4 @@
-# Exercise 12: The capstone
+# Exercise 14: The capstone
 
 Work through the seven stages in the [lesson](README.md), ticking each box.
 Keep notes as you go. You'll want them for your second contribution.
