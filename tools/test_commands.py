@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -25,6 +26,8 @@ ROOT = Path(__file__).resolve().parent.parent
 LESSONS = ROOT / "lessons"
 FENCE_RE = re.compile(r"^([ \t]*)```bash(?P<info>[^\n]*)\n(?P<body>.*?)^\1```", re.MULTILINE | re.DOTALL)
 FILES = ("README.md", "exercise.md")
+# On Windows a bare "bash" finds WSL in System32 before Git Bash; look it up on PATH instead.
+BASH = shutil.which("bash") or "bash"
 
 
 def blocks(text: str) -> list[str]:
@@ -70,7 +73,7 @@ def run_lesson(folder: Path, home: Path) -> bool:
     }
     print(f"run  {folder.name}")
     proc = subprocess.run(
-        ["bash", "-euxo", "pipefail", "-c", script], cwd=work, env=env, capture_output=True, text=True, timeout=300
+        [BASH, "-euxo", "pipefail", "-c", script], cwd=work, env=env, capture_output=True, text=True, timeout=300
     )
     if proc.returncode != 0:
         print(proc.stdout)

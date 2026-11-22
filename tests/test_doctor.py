@@ -69,6 +69,6 @@ def test_expect_fail_block_wrapped(tmp_path):
     import subprocess
 
     (script,) = test_commands.blocks("```bash expect-fail\ntrue\nfalse\n```\n")
-    assert subprocess.run(["bash", "-e", "-c", script]).returncode == 0
+    assert subprocess.run([test_commands.BASH, "-e", "-c", script]).returncode == 0
     (script,) = test_commands.blocks("```bash expect-fail\ntrue\n```\n")
-    assert subprocess.run(["bash", "-e", "-c", script], capture_output=True).returncode == 1
+    assert subprocess.run([test_commands.BASH, "-e", "-c", script], capture_output=True).returncode == 1
