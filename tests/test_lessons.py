@@ -229,7 +229,7 @@ def test_every_scene_of_every_lesson_builds_frames(folder):
 
 def test_say_runs_one_at_a_time_and_retries_until_two_runs_agree(monkeypatch, tmp_path):
     """Concurrent or busy-machine `say` garbles some clips: hold a lock, keep a clip two runs agree on."""
-    import fcntl
+    fcntl = pytest.importorskip("fcntl")  # the renderer runs on macOS only
 
     import render_video
 

@@ -19,7 +19,6 @@ Output goes to ``build/<lesson>/<lesson>.mp4`` (and ``.srt``). Frames are
 from __future__ import annotations
 
 import argparse
-import fcntl
 import html
 import re
 import shutil
@@ -432,6 +431,8 @@ def synthesize(text: str, out: Path, voice: str, rate: int) -> None:
     """
     check = out.with_name(out.stem + ".check" + out.suffix)
     cmd = ["say", "-v", voice, "-r", str(rate), "-o"]
+    import fcntl  # macOS and Linux only, like `say` itself
+
     with SAY_LOCK.open("w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         subprocess.run([*cmd, str(out), text], check=True)
