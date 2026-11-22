@@ -17,7 +17,9 @@ has changed the same line on upstream's ``main``. Nothing touches GitHub.
 
 from __future__ import annotations
 
+import os
 import shutil
+import stat
 import subprocess
 import sys
 from pathlib import Path
@@ -76,7 +78,7 @@ def create(lab: Path) -> Path:
     git(seed, "pull", "-q", str(upstream), "main")
     commit(seed, MAINTAINER, "Use an f-string and a comma in the greeting", {"app.py": THEIRS})
     git(seed, "push", "-q", str(upstream), "main")
-    shutil.rmtree(seed)
+    remove_tree(seed)
 
     (lab / "REVIEW.md").write_text(
         "# Review comments on your pull request\n\n"
@@ -86,6 +88,14 @@ def create(lab: Path) -> Path:
         encoding="utf-8",
     )
     return work
+
+
+def remove_tree(path: Path) -> None:
+    """shutil.rmtree, but also on Windows, where git's read-only object files can't be deleted as they are."""
+    for p in path.rglob("*"):
+        if p.is_file():
+            os.chmod(p, stat.S_IWRITE | stat.S_IREAD)
+    shutil.rmtree(path)
 
 
 def main(argv: list[str]) -> int:
