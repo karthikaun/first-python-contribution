@@ -36,7 +36,7 @@ def parse_box(text: str) -> tuple[int, int, int, int]:
     return x, y, w, h
 
 
-def capture(url: str, out: Path, height: int = 900) -> None:
+def capture(url: str, out: Path, height: int = 900, budget_ms: int = LOAD_BUDGET_MS) -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as profile:
         subprocess.run(
@@ -46,7 +46,7 @@ def capture(url: str, out: Path, height: int = 900) -> None:
                 "--disable-gpu",
                 "--hide-scrollbars",
                 f"--user-data-dir={profile}",
-                f"--virtual-time-budget={LOAD_BUDGET_MS}",
+                f"--virtual-time-budget={budget_ms}",
                 f"--window-size={WIDTH},{height}",
                 f"--screenshot={out}",
                 url,
@@ -66,6 +66,27 @@ def crop(path: Path, box: tuple[int, int, int, int]) -> None:
     tmp.replace(path)
 
 
+def looks_blank(path: Path) -> bool:
+    """True if the image is (nearly) one flat colour: the page hadn't drawn yet."""
+    gray = subprocess.run(
+        ["ffmpeg", "-loglevel", "error", "-i", str(path), "-vf", "scale=96:-1,format=gray", "-f", "rawvideo", "-"],
+        check=True,
+        capture_output=True,
+    ).stdout
+    return max(gray) - min(gray) < 16
+
+
+def capture_scene(scene: script_format.Scene, out: Path) -> None:
+    """Capture a scene's page, retrying with more load time when it comes out blank (a busy machine)."""
+    for attempt in range(3):
+        capture(scene.fields["url"], out, int(scene.fields.get("height", 900)), LOAD_BUDGET_MS * (attempt + 1))
+        if scene.fields.get("crop"):
+            crop(out, parse_box(scene.fields["crop"]))
+        if not looks_blank(out):
+            return
+    raise RuntimeError(f"{out.name} is still blank after 3 tries: is {scene.fields['url']} up?")
+
+
 def main(argv: list[str]) -> int:
     if len(argv) != 1:
         print("usage: python tools/capture_pages.py LESSON-FOLDER", file=sys.stderr)
@@ -78,9 +99,7 @@ def main(argv: list[str]) -> int:
         if scene.visual != "browser" or not image or image in done:
             continue
         out = lesson / image
-        capture(scene.fields["url"], out, int(scene.fields.get("height", 900)))
-        if scene.fields.get("crop"):
-            crop(out, parse_box(scene.fields["crop"]))
+        capture_scene(scene, out)
         done.add(image)
         print(f"captured {scene.fields['url']} -> {out.relative_to(lesson.parent.parent)}")
     return 0

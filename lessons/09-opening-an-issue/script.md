@@ -158,14 +158,36 @@ bullets:
 > Found one? Open issues, new issue, and pick the bug hunt form. Fill in
 > every field.
 
+## Scene 8: A finished report
+visual: browser
+url: https://github.com/thejesh23/first-python-contribution/issues/30
+caption: A finished bug-hunt report: every part a maintainer needs
+image: captures/report.png
+height: 2600
+crop: 100,190,920,670
+
+> Here is a finished report. The title says what goes wrong. The steps are
+> one command anyone can paste.
+
+> Expected quotes the readme. And actual is the real output, pasted as text.
+
+## Scene 9: The bot checks it
+visual: browser
+url: https://github.com/thejesh23/first-python-contribution/issues/30
+caption: The bot ran the command, and hands over to a maintainer
+image: captures/bot-check.png
+height: 2600
+crop: 100,1225,920,370
+
 > Within a minute, a bot checks your report. It even runs your command, and
-> compares the result with a correct split bill. So it knows if your steps
+> compares the result with a correct split bill. So it knows your steps
 > really show the bug.
 
-> Fix anything it marks, by editing your issue. Then a maintainer reviews
-> it. Please don't fix the bug in a pull request. The next learner needs it.
+> Anything marked with a cross, fix by editing your issue. The bot checks
+> again. Then a maintainer reviews it. Please don't fix the bug in a pull
+> request. The next learner needs it.
 
-## Scene 8: Done
+## Scene 10: Done
 visual: slide
 title: A report anyone can reproduce
 bullets:
