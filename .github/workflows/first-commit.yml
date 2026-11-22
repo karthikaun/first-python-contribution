@@ -58,6 +58,22 @@ jobs:
           PR: ${{ github.event.pull_request.number }}
         run: gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body-file comment.md
 
+      - name: Congratulate from the maintainer's account
+        # Posts .github/congrats/first-commit.md as an approving review from the
+        # MAINTAINER_TOKEN owner. Optional: skipped without the secret, and a
+        # failure here never blocks the merge.
+        if: steps.check.outputs.status == '0'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.MAINTAINER_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          LOGIN: ${{ github.event.pull_request.user.login }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then echo "No MAINTAINER_TOKEN secret; skipping."; exit 0; fi
+          python3 -c 'import os, sys; sys.stdout.write(open(sys.argv[1]).read().replace("{login}", os.environ["LOGIN"]))' \
+            .github/congrats/first-commit.md > congrats.md
+          gh pr review "$PR" --repo "$GITHUB_REPOSITORY" --approve --body-file congrats.md
+
       - name: Merge
         if: steps.check.outputs.status == '0'
         env:
