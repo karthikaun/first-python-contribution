@@ -39,7 +39,7 @@ Each long video also gets one 60-second clip for Shorts/Reels.
 | # | Lesson | Hands-on | Status |
 |---|---|---|---|
 | 01 | [What counts as a contribution](lessons/01-what-counts/) | Pick the kind of contribution you'll make first | Drafted |
-| 02 | [Star, fork, and your first commit, in the browser](lessons/02-first-pr-in-browser/) | Add `first-commits/YOU.py` to this repo; the bot merges it | Drafted |
+| 02 | [Star, fork, and your first commit, in the browser](lessons/02-first-pr-in-browser/) | Add `first-commits/YOU.py` to this repo; the bot checks it and a maintainer merges it | Drafted |
 
 ## Part 2: Real tools
 

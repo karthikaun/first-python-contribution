@@ -180,7 +180,8 @@ def format_comment(result: Result, login: str) -> str:
     if result.ok:
         return (
             f"🎓 Congratulations, @{login}! Your merged contribution checks out, so you're graduating. "
-            "This pull request will be merged and you'll appear on the graduates wall.\n\n"
+            "A maintainer will review this pull request, and once it's merged you'll appear "
+            "on the graduates wall.\n\n"
             "You can contribute to any open source project now. Keep going, and pass it on: "
             "the best thing a graduate can do is help the next beginner."
         )

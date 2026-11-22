@@ -1,7 +1,8 @@
 name: Validate first commit
 
 # pull_request_target runs this workflow from the base branch with a write
-# token, so a fork's PR can be commented on and merged. To stay safe, the PR's
+# token, so a fork's PR can be commented on. A maintainer reviews and merges.
+# To stay safe, the PR's
 # code is never checked out or executed: the validator comes from the base
 # branch and only reads the learner's file with git show + ast.parse.
 # PRs that don't touch first-commits/<name>.py (status 3) get no comment.
@@ -13,7 +14,7 @@ on:
     paths: ["first-commits/**"]
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 
 concurrency:
@@ -57,32 +58,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.number }}
         run: gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body-file comment.md
-
-      - name: Congratulate from the maintainer's account
-        # Posts .github/congrats/first-commit.md as an approving review from the
-        # MAINTAINER_TOKEN owner. Optional: skipped without the secret, and a
-        # failure here never blocks the merge. The token is only in this step's
-        # env, and this step runs only bash and the runner image's own /usr/bin tools.
-        if: steps.check.outputs.status == '0'
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ secrets.MAINTAINER_TOKEN }}
-          PR: ${{ github.event.pull_request.number }}
-          LOGIN: ${{ github.event.pull_request.user.login }}
-        run: |
-          if [ -z "$GH_TOKEN" ]; then echo "No MAINTAINER_TOKEN secret; skipping."; exit 0; fi
-          # GitHub logins are only letters, digits and hyphens, so they are safe in sed.
-          case "$LOGIN" in *[!A-Za-z0-9-]*|"") echo "Unexpected login"; exit 1;; esac
-          /usr/bin/sed "s/{login}/$LOGIN/g" .github/congrats/first-commit.md > congrats.md
-          /usr/bin/gh pr review "$PR" --repo "$GITHUB_REPOSITORY" --approve --body-file congrats.md
-
-      - name: Merge
-        if: steps.check.outputs.status == '0'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.pull_request.number }}
-          HEAD: ${{ github.event.pull_request.head.sha }}
-        run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --merge --match-head-commit "$HEAD"
 
       - name: Fail the check when the file needs fixes
         if: steps.check.outputs.status != '0' && steps.check.outputs.status != '3'

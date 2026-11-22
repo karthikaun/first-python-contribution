@@ -93,8 +93,8 @@ Once your PR is merged, in **this course repo**:
 
 The **Validate graduate** bot looks up your PR on GitHub and checks it's
 merged, yours, merged by someone else, and in a real project you don't own.
-If everything checks out, it comments 🎓, merges, and you appear on the
-[graduates wall](../../graduates/). If not, its comment says exactly what's
+If everything checks out, it comments 🎓, and once a maintainer merges it you
+appear on the [graduates wall](../../graduates/). If not, its comment says exactly what's
 wrong.
 
 Contributed somewhere other than GitHub (GitLab, Codeberg, a mailing list)?

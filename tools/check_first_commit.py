@@ -162,10 +162,11 @@ def check_source(source: str, login: str) -> Result:
 def format_comment(result: Result, login: str) -> str:
     if result.ok:
         return (
-            f"🎉 Looks great, @{login}! Your file passed every check, so this pull "
-            "request will be merged automatically in a moment.\n\n"
-            "That purple **Merged** badge means your commit is now part of a public "
-            "project. Next up: Lesson 03, setting up git on your own machine."
+            f"🎉 Looks great, @{login}! Your file passed every check. A maintainer "
+            "will review your pull request and merge it soon.\n\n"
+            "When it's merged, you'll see the purple **Merged** badge: your commit is "
+            "then part of a public project. Next up: Lesson 03, setting up git on your "
+            "own machine."
         )
     lines = "\n".join(f"- {e}" for e in result.errors)
     return (

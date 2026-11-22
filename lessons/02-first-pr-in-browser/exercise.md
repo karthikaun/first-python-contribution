@@ -12,7 +12,7 @@
 
 - [ ] Open a pull request to `thejesh23/first-python-contribution`
 - [ ] Wait for the **Validate first commit** check and the bot's comment
-- [ ] See the purple **Merged** badge
+- [ ] See the purple **Merged** badge once a maintainer merges it
 
 **Stuck?** Read the bot's comment first: it names the problem. Then check
 the "Common problems" table in the [lesson](README.md). Still stuck?
