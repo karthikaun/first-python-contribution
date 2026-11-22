@@ -17,3 +17,11 @@ def test_each_workflow_posts_an_existing_message_before_merging():
             assert "@{login}" in message, f"{file} should greet the learner"
         assert text.index("Congratulate from the maintainer") < text.index("- name: Merge")
         assert "secrets.MAINTAINER_TOKEN" in text
+        token_step = text[text.index("Congratulate from the maintainer") : text.index("- name: Merge")]
+        assert "python" not in token_step, "the token step must not run tools a previous step installed"
+
+
+def test_every_action_is_pinned_to_a_commit():
+    for path in (ROOT / ".github" / "workflows").glob("*.yml"):
+        for ref in re.findall(r"uses: \S+@(\S+)", path.read_text(encoding="utf-8")):
+            assert re.fullmatch(r"[0-9a-f]{40}", ref), f"{path.name}: pin {ref} to a commit SHA"
