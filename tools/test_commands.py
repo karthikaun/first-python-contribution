@@ -54,8 +54,15 @@ def lesson_script(folder: Path) -> str:
     return "\n".join(parts)
 
 
+def as_typed_on_windows(script: str) -> str:
+    """Lesson 03 tells Windows learners to type `py` wherever a lesson says `python3`."""
+    return re.sub(r"\bpython3\b", "py", script)
+
+
 def run_lesson(folder: Path, home: Path) -> bool:
     script = lesson_script(folder)
+    if os.name == "nt":
+        script = as_typed_on_windows(script)
     if not script.strip():
         print(f"skip {folder.name} (no runnable commands)")
         return True

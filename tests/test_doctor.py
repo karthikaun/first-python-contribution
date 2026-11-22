@@ -72,3 +72,8 @@ def test_expect_fail_block_wrapped(tmp_path):
     assert subprocess.run([test_commands.BASH, "-e", "-c", script]).returncode == 0
     (script,) = test_commands.blocks("```bash expect-fail\ntrue\n```\n")
     assert subprocess.run([test_commands.BASH, "-e", "-c", script], capture_output=True).returncode == 1
+
+
+def test_windows_learners_type_py_for_python3():
+    script = "python3 tools/doctor.py\npython3 -m venv .venv\npython -m pytest\n"
+    assert test_commands.as_typed_on_windows(script) == "py tools/doctor.py\npy -m venv .venv\npython -m pytest\n"
