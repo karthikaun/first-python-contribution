@@ -1,4 +1,4 @@
-# Quiz 01
+# Quiz 02
 
 **1. You starred a repo. What changed in its code?**
 

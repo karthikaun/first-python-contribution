@@ -1,4 +1,4 @@
-# Quiz 02
+# Quiz 03
 
 **1. Why use your GitHub noreply address in `user.email`?**
 

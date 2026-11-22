@@ -1,4 +1,4 @@
-# Quiz 06
+# Quiz 07
 
 **1. A project has `uv.lock` in its top folder. How do you run its tests?**
 

@@ -1,4 +1,4 @@
-# Exercise 02: A green doctor
+# Exercise 03: A green doctor
 
 - [ ] Install git, gh and Python 3.10+ (Lesson 03, step 1)
 - [ ] Turn on **Keep my email addresses private** on GitHub and copy your noreply address

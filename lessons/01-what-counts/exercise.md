@@ -1,4 +1,4 @@
-# Exercise 00: Get ready
+# Exercise 01: Get ready
 
 1. **Create a GitHub account** at <https://github.com/signup> if you don't
    have one. Pick a username you'd be happy to show an employer: it will

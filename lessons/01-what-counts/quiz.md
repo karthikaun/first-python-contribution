@@ -1,4 +1,4 @@
-# Quiz 00
+# Quiz 01
 
 **1. Which of these is a real open source contribution?**
 a) Fixing a typo in a project's docs

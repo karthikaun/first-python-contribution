@@ -1,4 +1,4 @@
-# Exercise 01: Your first commit
+# Exercise 02: Your first commit
 
 - [ ] Star <https://github.com/thejesh23/first-python-contribution> (optional)
 - [ ] Fork it
