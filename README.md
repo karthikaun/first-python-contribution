@@ -8,6 +8,7 @@ to a merged contribution to a real Python project.
 - **Then the real tools:** git, GitHub CLI, virtualenvs, pytest, ruff,
   pre-commit — the things maintainers will actually check.
 - **Then a real project:** finding an issue nobody else is working on,
+  reporting a bug so it gets fixed (with a practice program full of bugs),
   passing CI, handling review, and using AI tools without annoying maintainers.
 - **You finish with a merged PR in a project you chose**, verified by a bot
   and added to the graduates wall. After that you can contribute anywhere.
@@ -33,6 +34,8 @@ re-rendering. If you spot something wrong, please
 ```
 lessons/NN-slug/   README.md, script.md, exercise.md, quiz.md
 first-commits/     one file per learner, added in Lesson 02
+practice/          Exercise 2 and the planted slugify bug (Lessons 05 and 10)
+bug-hunt/          splitbill, a small program with bugs to report (Lesson 09)
 tools/             lesson checker, video renderer (Python)
 tests/             tests for the tools and lesson structure
 publishing/        Udemy landing page copy (tools/udemy_package.py builds dist/udemy/)
