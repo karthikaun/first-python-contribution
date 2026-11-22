@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools"))
+import which_setup as ws  # noqa: E402
 from which_setup import detect, find_contributing, make_targets, report  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -86,3 +87,11 @@ def test_report_on_this_repo():
 
 def test_report_on_empty_folder(tmp_path):
     assert "No setup files found" in report(tmp_path)
+
+
+def test_venv_commands_match_the_learners_system():
+    commands = ws.VENV_COMMANDS
+    if sys.platform == "win32":
+        assert commands == ("py -m venv .venv", "source .venv/Scripts/activate")
+    else:
+        assert commands == ("python3 -m venv .venv", "source .venv/bin/activate")

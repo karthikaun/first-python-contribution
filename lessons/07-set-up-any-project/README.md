@@ -41,7 +41,8 @@ pre-commit for linting and tox to test several Python versions.
 
 ### Installing with plain pip
 
-After `python3 -m venv .venv` and `source .venv/bin/activate`, install the
+After `python3 -m venv .venv` and `source .venv/bin/activate` (on Windows:
+`py -m venv .venv` and `source .venv/Scripts/activate`), install the
 project itself in **editable** mode (`-e`), so your changes to the code take
 effect immediately, plus its development tools. Which command depends on
 where the project lists those tools:

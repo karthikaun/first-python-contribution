@@ -278,8 +278,12 @@ source .venv/bin/activate
 python -m pip install pytest ruff
 ```
 
+On Windows (Git Bash), the first two lines are `py -m venv .venv` and
+`source .venv/Scripts/activate`.
+
 **`No module named pytest` or `command not found: pytest`:** the venv isn't
-active (open a new terminal? run `source .venv/bin/activate` again), or
+active (open a new terminal? run `source .venv/bin/activate` again, or
+`source .venv/Scripts/activate` on Windows), or
 pytest isn't installed in it. Prefer `python -m pytest`: it always uses the
 active Python.
 
