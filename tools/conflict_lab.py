@@ -17,7 +17,9 @@ has changed the same line on upstream's ``main``. Nothing touches GitHub.
 
 from __future__ import annotations
 
+import os
 import shutil
+import stat
 import subprocess
 import sys
 from pathlib import Path
@@ -45,7 +47,7 @@ def git(cwd: Path, *args: str) -> str:
 
 def commit(repo: Path, who: list[str], message: str, files: dict[str, str]) -> None:
     for name, text in files.items():
-        (repo / name).write_text(text)
+        (repo / name).write_text(text, encoding="utf-8")
     git(repo, "add", *files)
     git(repo, *who, "commit", "-q", "-m", message)
 
@@ -76,15 +78,24 @@ def create(lab: Path) -> Path:
     git(seed, "pull", "-q", str(upstream), "main")
     commit(seed, MAINTAINER, "Use an f-string and a comma in the greeting", {"app.py": THEIRS})
     git(seed, "push", "-q", str(upstream), "main")
-    shutil.rmtree(seed)
+    remove_tree(seed)
 
     (lab / "REVIEW.md").write_text(
         "# Review comments on your pull request\n\n"
         "1. **CI:** This branch has conflicts that must be resolved.\n"
         "2. **Reviewer:** Could you add a docstring to `greeting()`?\n"
-        "3. **Reviewer (later):** Looks good! Please squash into one commit before we merge.\n"
+        "3. **Reviewer (later):** Looks good! Please squash into one commit before we merge.\n",
+        encoding="utf-8",
     )
     return work
+
+
+def remove_tree(path: Path) -> None:
+    """shutil.rmtree, but also on Windows, where git's read-only object files can't be deleted as they are."""
+    for p in path.rglob("*"):
+        if p.is_file():
+            os.chmod(p, stat.S_IWRITE | stat.S_IREAD)
+    shutil.rmtree(path)
 
 
 def main(argv: list[str]) -> int:
@@ -98,4 +109,5 @@ def main(argv: list[str]) -> int:
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")  # ✔ and ✘ print on Windows too
     sys.exit(main(sys.argv[1:]))

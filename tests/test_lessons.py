@@ -89,11 +89,11 @@ def test_code_font_fits_long_lines():
 def test_stated_time_must_match_script(tmp_path):
     words = " ".join(["word"] * 450)  # about 3 minutes at 150 words a minute
     script = script_format.parse(f"# Video script: X\n\n## Scene 1: S\nvisual: slide\ntitle: T\n\n> {words}\n")
-    (tmp_path / "README.md").write_text("# L\n\n**Time:** 3 minute video · 5 minute exercise\n")
+    (tmp_path / "README.md").write_text("# L\n\n**Time:** 3 minute video · 5 minute exercise\n", encoding="utf-8")
     assert check_lessons.check_stated_time(tmp_path, script) == []
-    (tmp_path / "README.md").write_text("# L\n\n**Time:** 8 minute video · 5 minute exercise\n")
+    (tmp_path / "README.md").write_text("# L\n\n**Time:** 8 minute video · 5 minute exercise\n", encoding="utf-8")
     assert "8 minute video" in check_lessons.check_stated_time(tmp_path, script)[0]
-    (tmp_path / "README.md").write_text("# L\n")
+    (tmp_path / "README.md").write_text("# L\n", encoding="utf-8")
     assert "needs a line" in check_lessons.check_stated_time(tmp_path, script)[0]
 
 
@@ -229,7 +229,7 @@ def test_every_scene_of_every_lesson_builds_frames(folder):
 
 def test_say_runs_one_at_a_time_and_retries_until_two_runs_agree(monkeypatch, tmp_path):
     """Concurrent or busy-machine `say` garbles some clips: hold a lock, keep a clip two runs agree on."""
-    import fcntl
+    fcntl = pytest.importorskip("fcntl")  # the renderer runs on macOS only
 
     import render_video
 

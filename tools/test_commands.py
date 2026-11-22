@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -25,6 +26,8 @@ ROOT = Path(__file__).resolve().parent.parent
 LESSONS = ROOT / "lessons"
 FENCE_RE = re.compile(r"^([ \t]*)```bash(?P<info>[^\n]*)\n(?P<body>.*?)^\1```", re.MULTILINE | re.DOTALL)
 FILES = ("README.md", "exercise.md")
+# On Windows a bare "bash" finds WSL in System32 before Git Bash; look it up on PATH instead.
+BASH = shutil.which("bash") or "bash"
 
 
 def blocks(text: str) -> list[str]:
@@ -51,8 +54,15 @@ def lesson_script(folder: Path) -> str:
     return "\n".join(parts)
 
 
+def as_typed_on_windows(script: str) -> str:
+    """Lesson 03 tells Windows learners to type `py` wherever a lesson says `python3`."""
+    return re.sub(r"\bpython3\b", "py", script)
+
+
 def run_lesson(folder: Path, home: Path) -> bool:
     script = lesson_script(folder)
+    if os.name == "nt":
+        script = as_typed_on_windows(script)
     if not script.strip():
         print(f"skip {folder.name} (no runnable commands)")
         return True
@@ -70,7 +80,7 @@ def run_lesson(folder: Path, home: Path) -> bool:
     }
     print(f"run  {folder.name}")
     proc = subprocess.run(
-        ["bash", "-euxo", "pipefail", "-c", script], cwd=work, env=env, capture_output=True, text=True, timeout=300
+        [BASH, "-euxo", "pipefail", "-c", script], cwd=work, env=env, capture_output=True, text=True, timeout=300
     )
     if proc.returncode != 0:
         print(proc.stdout)
@@ -94,4 +104,5 @@ def main(argv: list[str]) -> int:
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")  # ✔ and ✘ print on Windows too
     sys.exit(main(sys.argv[1:]))
