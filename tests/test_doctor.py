@@ -2,6 +2,8 @@ import ast
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools"))
 import doctor  # noqa: E402
 import test_commands  # noqa: E402
@@ -77,3 +79,16 @@ def test_expect_fail_block_wrapped(tmp_path):
 def test_windows_learners_type_py_for_python3():
     script = "python3 tools/doctor.py\npython3 -m venv .venv\npython -m pytest\n"
     assert test_commands.as_typed_on_windows(script) == "py tools/doctor.py\npy -m venv .venv\npython -m pytest\n"
+
+
+@pytest.mark.parametrize("tool", ["check_exercise_3.py", "doctor.py", "which_setup.py"])
+def test_tools_print_on_a_windows_code_page(tool):
+    """Git Bash on Windows gives Python a cp1252 pipe; ✔ and ✘ must not crash the tools."""
+    import os
+    import subprocess
+
+    tools = Path(__file__).resolve().parent.parent / "tools"
+    env = {**os.environ, "PYTHONIOENCODING": "cp1252"}
+    args = [sys.executable, str(tools / tool)] + (["."] if tool == "which_setup.py" else [])
+    proc = subprocess.run(args, capture_output=True, text=True, encoding="utf-8", env=env, cwd=tools.parent)
+    assert "UnicodeEncodeError" not in proc.stderr, proc.stderr
