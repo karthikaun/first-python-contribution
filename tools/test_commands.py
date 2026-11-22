@@ -59,6 +59,7 @@ def run_lesson(folder: Path, home: Path) -> bool:
     work = home / "work" / folder.name
     work.mkdir(parents=True)
     (work / "tools").symlink_to(ROOT / "tools")  # lessons run course tools as tools/...
+    (work / "bug-hunt").symlink_to(ROOT / "bug-hunt")  # and the bug hunt (Lesson 09)
     env = {
         "HOME": str(home),
         "PATH": os.environ["PATH"],
