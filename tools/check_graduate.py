@@ -1,4 +1,4 @@
-"""Validate a capstone graduation pull request (Lesson 13).
+"""Validate a capstone graduation pull request (Lesson 14).
 
 The PR adds ``graduates/<login>.py``::
 

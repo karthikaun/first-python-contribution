@@ -17,7 +17,7 @@ read the fix.
 | `tip of your current branch is behind its remote counterpart` | [5. Push rejected](#5-push-rejected) |
 | `You are in 'detached HEAD' state` | [6. Detached HEAD](#6-detached-head) |
 | Wrong files or message in your last commit | [7. Fix your last commit](#7-fix-your-last-commit) |
-| `This branch has conflicts that must be resolved` | [Lesson 10](../10-ci-and-review/) |
+| `This branch has conflicts that must be resolved` | [Lesson 11](../11-ci-and-review/) |
 | Your fork says "X commits behind" | [8. Fork out of date](#8-your-fork-is-out-of-date) |
 | `nothing to commit, working tree clean` but you changed something | [9. Nothing to commit](#9-nothing-to-commit) |
 | `error: externally-managed-environment` | [10. Python environment](#10-python-and-pip-problems) |
@@ -25,7 +25,7 @@ read the fix.
 | `python3: command not found` (Windows) | [10. Python environment](#10-python-and-pip-problems) |
 | PR opened against your own fork | [11. PR in the wrong place](#11-pr-opened-in-the-wrong-place) |
 | `.venv` or other junk in your PR | [12. Files that shouldn't be committed](#12-files-that-shouldnt-be-committed) |
-| Checks say "awaiting approval" | [Lesson 10](../10-ci-and-review/) (just wait) |
+| Checks say "awaiting approval" | [Lesson 11](../11-ci-and-review/) (just wait) |
 
 **Practise the fixes safely:** sections 3–7 come with a sandbox that
 reproduces each problem. Start it from any folder *outside* a real project:
@@ -158,7 +158,7 @@ git push
 ```
 
 **"behind its remote counterpart"** after you rebased, amended or squashed
-means you rewrote commits you'd already pushed (Lesson 10). That's expected:
+means you rewrote commits you'd already pushed (Lesson 11). That's expected:
 
 ```text
 hint: Updates were rejected because the tip of your current branch is behind

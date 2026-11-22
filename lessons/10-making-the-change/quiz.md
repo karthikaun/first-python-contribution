@@ -1,4 +1,4 @@
-# Quiz 08
+# Quiz 10
 
 **1. Why should your test fail before you write the fix?**
 

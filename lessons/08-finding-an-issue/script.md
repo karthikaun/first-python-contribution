@@ -185,5 +185,5 @@ bullets:
 
 > Check carefully.
 
-> And claim it with a plan, in your own words. Next lesson, making the
-> change.
+> And claim it with a plan, in your own words. Next lesson, opening a
+> good issue, for when there isn't one yet.

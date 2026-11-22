@@ -129,6 +129,9 @@ useful notes.
 
 Fork the project (Lesson 02's **Fork** button, or
 `gh repo fork OWNER/REPO --clone`), set it up (Lesson 07), make a branch,
-and start. Lesson 09 is about making the change itself.
+and start. Lesson 10 is about making the change itself.
 
-Next: [Lesson 09: making the change](../09-making-the-change/).
+No issue for what you want to fix yet? Then you write it, and many
+projects want that before any pull request. That's the next lesson.
+
+Next: [Lesson 09: opening a good issue](../09-opening-an-issue/).

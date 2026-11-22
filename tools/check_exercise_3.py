@@ -1,4 +1,4 @@
-"""Check your Exercise 3 fix locally (Lesson 09).
+"""Check your Exercise 3 fix locally (Lesson 10).
 
 Run it from the course folder, with your venv active::
 

@@ -1,7 +1,7 @@
-# Lesson 10: CI and code review
+# Lesson 11: CI and code review
 
 **Time:** 4 minute video · 40 minute exercise
-**You'll need:** Lessons 04 and 09
+**You'll need:** Lessons 04 and 10
 
 Opening the PR isn't the end. Almost every PR gets at least one of these:
 
@@ -187,7 +187,7 @@ git push --force-with-lease
 
 `git reset --soft upstream/main` un-does your commits but **keeps all your
 changes staged**, so the next commit contains everything. Write a commit
-message that describes the whole change (Lesson 09).
+message that describes the whole change (Lesson 10).
 
 The other common way, which lets you choose commit by commit, is an
 interactive rebase:
@@ -210,4 +210,4 @@ cd ../..
 rm -rf conflict-lab
 ```
 
-Next: [Lesson 11: using AI tools well](../11-using-ai-well/).
+Next: [Lesson 12: using AI tools well](../12-using-ai-well/).

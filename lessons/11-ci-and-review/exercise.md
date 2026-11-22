@@ -1,4 +1,4 @@
-# Exercise 09: The conflict lab
+# Exercise 11: The conflict lab
 
 Do the whole lab from the [lesson](README.md), then do it **again without
 looking**:
