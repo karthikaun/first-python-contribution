@@ -1,6 +1,6 @@
 # Lesson 09: Opening a good issue
 
-**Time:** 4 minute video · 30 minute exercise
+**Time:** 3 minute video · 30 minute exercise
 **You'll need:** this repo cloned (Lesson 05)
 
 Sometimes there's no issue to pick up: you found a bug yourself, or a docs

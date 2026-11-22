@@ -1,6 +1,6 @@
 # Video script: Opening a good issue
 
-Target length: about 4 minutes.
+Target length: about 3 minutes.
 
 ## Scene 1: Start here
 visual: slide
