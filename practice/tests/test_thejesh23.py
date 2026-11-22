@@ -7,3 +7,7 @@ def test_greet_includes_name():
 
 def test_greet_is_friendly():
     assert greet("Sam").startswith("Hello")
+
+
+def test_greet_mentions_open_source():
+    assert "open source" in greet("Sam")
