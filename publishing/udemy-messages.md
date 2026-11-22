@@ -16,7 +16,7 @@ By the end of this course you'll have a pull request merged in a real open sourc
 3. A bot checks your work within minutes, and I review and merge it myself.
 4. Stuck? Ask in the Q&A, or open an issue in the repository. That's good practice too.
 
-Every lesson is short. One a day is a great pace.
+You can do the whole course in a day: about an hour of video and six hours of exercises. Only the capstone takes longer, because a real maintainer has to review your pull request.
 
 See you in your first pull request!
 
