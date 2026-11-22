@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out main (trusted code only)
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
           fetch-depth: 0
@@ -46,7 +46,7 @@ jobs:
           PR: ${{ steps.pr.outputs.number }}
         run: git fetch --no-tags origin "pull/${PR}/head"
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         if: steps.pr.outputs.number
         with:
           python-version: "3.12"
@@ -76,7 +76,8 @@ jobs:
       - name: Congratulate from the maintainer's account
         # Posts .github/congrats/exercise-2.md as an approving review from the
         # MAINTAINER_TOKEN owner. Optional: skipped without the secret, and a
-        # failure here never blocks the merge.
+        # failure here never blocks the merge. The token is only in this step's
+        # env, and this step runs only bash and the runner image's own /usr/bin tools.
         if: steps.pr.outputs.number && steps.check.outputs.status == '0'
         continue-on-error: true
         env:
@@ -85,9 +86,10 @@ jobs:
           LOGIN: ${{ steps.pr.outputs.login }}
         run: |
           if [ -z "$GH_TOKEN" ]; then echo "No MAINTAINER_TOKEN secret; skipping."; exit 0; fi
-          python3 -c 'import os, sys; sys.stdout.write(open(sys.argv[1]).read().replace("{login}", os.environ["LOGIN"]))' \
-            .github/congrats/exercise-2.md > congrats.md
-          gh pr review "$PR" --repo "$GITHUB_REPOSITORY" --approve --body-file congrats.md
+          # GitHub logins are only letters, digits and hyphens, so they are safe in sed.
+          case "$LOGIN" in *[!A-Za-z0-9-]*|"") echo "Unexpected login"; exit 1;; esac
+          /usr/bin/sed "s/{login}/$LOGIN/g" .github/congrats/exercise-2.md > congrats.md
+          /usr/bin/gh pr review "$PR" --repo "$GITHUB_REPOSITORY" --approve --body-file congrats.md
 
       - name: Merge
         if: steps.pr.outputs.number && steps.check.outputs.status == '0'
