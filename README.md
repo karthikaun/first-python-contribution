@@ -49,6 +49,10 @@ uv run ruff check .     # lint
 uv run python tools/render_video.py lessons/01-what-counts   # render a video
 ```
 
+Videos are narrated by an Azure AI Speech voice, and every clip is checked by
+transcribing it back (`tools/azure_tts.py` says how to set up a key). Without
+a key, add `--voice Aman` to narrate with a macOS voice instead.
+
 ## License
 
 Code is [MIT](LICENSE). Lesson text and videos are
