@@ -19,6 +19,7 @@ read the fix.
 | Wrong files or message in your last commit | [7. Fix your last commit](#7-fix-your-last-commit) |
 | `This branch has conflicts that must be resolved` | [Lesson 12](../12-ci-and-review/) |
 | Your fork says "X commits behind" | [8. Fork out of date](#8-your-fork-is-out-of-date) |
+| `fatal: Need to specify how to reconcile divergent branches` | [8. Fork out of date](#8-your-fork-is-out-of-date) |
 | `nothing to commit, working tree clean` but you changed something | [9. Nothing to commit](#9-nothing-to-commit) |
 | `error: externally-managed-environment` | [10. Python environment](#10-python-and-pip-problems) |
 | `No module named pytest` / `command not found: pytest` | [10. Python environment](#10-python-and-pip-problems) |
@@ -240,9 +241,19 @@ git push origin main
 Or without touching your computer: `gh repo sync YOUR-USERNAME/REPO`, or the
 **Sync fork** button on your fork's page.
 
-If `git pull upstream main` says your branches have **diverged** (common
-after a project squash-merged your PR), and your fork's `main` has nothing you
-need, reset it to match upstream:
+If `git pull upstream main` stops with `Need to specify how to reconcile
+divergent branches`, your `main` and the original's `main` each have commits
+the other lacks.
+
+**In this course**, that means your Lesson 02 pull request isn't merged yet:
+its commit is on your `main`. Don't reset anything, because that pull
+request is made from your fork's `main`. You don't need the pull: start new
+work with `git fetch upstream` and `git switch -c my-branch upstream/main`,
+as Lesson 05 does. After the merge, `git pull upstream main` works again.
+
+**In a real project**, it's common after your PR was squash-merged. If your
+fork's `main` has nothing you need and no open pull request is made from it,
+reset it to match upstream:
 
 ```bash norun
 git switch main
