@@ -110,8 +110,8 @@ Because `main` hadn't changed since `shout` branched off, git just moves
 `main` forward to C. That's called a **fast-forward**.
 
 In real projects you rarely merge into `main` yourself. You push a branch and
-open a pull request, and the **maintainer** merges it. That's exactly what
-happened to your first commit in Lesson 02.
+open a pull request, and the **maintainer** merges it. For your first commit
+in Lesson 02, a bot did that for you.
 
 ## 6. Remotes
 

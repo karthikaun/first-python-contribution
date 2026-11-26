@@ -196,11 +196,12 @@ runs `ruff format --check`, `ruff check` and `pytest` on your code, exactly
 like Steps 5 and 6.
 
 > **No checks yet?** GitHub doesn't run a newcomer's checks until a
-> maintainer approves them. If your Lesson 02 pull request hasn't been
-> merged yet, this check waits too: `gh pr checks` reports no checks, and
-> the pull request page says a workflow is awaiting approval. You did
-> nothing wrong. The check starts when a maintainer approves it, usually
-> within a day. Run `gh pr checks --watch` again then.
+> maintainer approves them. If your Lesson 02 pull request isn't merged
+> (you skipped it, or the bot is still waiting for a fix), this check waits
+> too: `gh pr checks` reports no checks, and the pull request page says a
+> workflow is awaiting approval. Finish Lesson 02 first, or wait: a
+> maintainer approves the run, usually within a day. Then run
+> `gh pr checks --watch` again.
 
 When it finishes, a separate review bot checks your file names and that your
 code only contains what it should. It doesn't appear in the checks list:

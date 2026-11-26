@@ -186,8 +186,8 @@ $ git log --oneline --graph --all
 > Look at the log. Main and shout now point at the same commit.
 
 > In real projects, you rarely merge into main yourself. You push a branch,
-> and open a pull request. The maintainer merges it. That is exactly what
-> happened to your first commit, in lesson two.
+> and open a pull request. A maintainer merges it. For your first commit, in
+> lesson two, a bot did that for you.
 
 ## Scene 9: Remotes
 visual: slide
