@@ -417,7 +417,7 @@ code:
 (.venv) $ git branch -d exercise-2
 ```
 
-> After the merge, tidy up. Switch back to main.
+> After the merge, tidy up. Switch back to the main branch.
 
 > Pull from upstream. Main now includes your merged work.
 

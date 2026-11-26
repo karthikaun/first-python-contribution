@@ -56,7 +56,7 @@ Initialized empty Git repository in /home/ada/git-sandbox/.git/
 > Make a folder called git sandbox, anywhere outside the course repo. And go
 > into it.
 
-> Now run git init, dash b, main. It creates a hidden folder called dot git.
+> Now run git init, dash b main. It creates a hidden folder, called dot git.
 > That folder is the repository. Your whole history lives in there. And dash
 > b main names the first branch, main.
 
@@ -157,7 +157,7 @@ Hello, open source!
 
 > Run it. It shouts.
 
-> Now switch back to main, and run it again. It doesn't shout. The same file
+> Now switch back to the main branch, and run it again. It doesn't shout. The same file
 > prints different things, depending on which branch you're on. Switching
 > branches changes the files in your folder.
 

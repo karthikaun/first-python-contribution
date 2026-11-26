@@ -176,7 +176,7 @@ bullets:
 > notes. How depends on the project. The contributing file will say. Some
 > use news fragments. A small file per change.
 
-> CPython uses a tool called blurb.
+> {CPython|C Python} uses a tool called blurb.
 
 > Many smaller projects have a changelog file. You add a line under
 > Unreleased.

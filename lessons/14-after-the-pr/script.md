@@ -100,7 +100,7 @@ $ git push origin --delete my-fix
 ```
 
 > And when it is merged? Celebrate. You are a contributor to that project,
-> permanently. Then clean up. Switch to main, and pull from upstream.
+> permanently. Then clean up. Switch to the main branch, and pull from upstream.
 
 > Delete your branch.
 
