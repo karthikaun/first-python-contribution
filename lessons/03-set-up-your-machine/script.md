@@ -177,7 +177,7 @@ visual: terminal
 focus: 1 | 2 | 3-10 | 12
 code:
 ```
-$ git pull upstream main
+$ git fetch upstream
 $ python3 tools/doctor.py
 ✔ Python 3.13.1
 ✔ venv module available
@@ -191,8 +191,8 @@ $ python3 tools/doctor.py
 All set. You're ready for Lesson 04.
 ```
 
-> Last step. Other learners' commits have landed since you forked. So pull
-> from upstream, to bring your copy up to date.
+> Last step. Other learners' commits have landed since you forked. So fetch
+> from upstream. That downloads them, and changes none of your files.
 
 > Then run the course's checker. Python three, tools, slash, doctor
 > {.py|dot p y}.

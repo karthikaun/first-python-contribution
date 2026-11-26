@@ -22,9 +22,8 @@ request for it, because the next learner needs the bug.
 ## Step 1: Branch, then reproduce
 
 ```bash norun
-git switch main
-git pull upstream main
-git switch -c fix-slugify
+git fetch upstream
+git switch -c fix-slugify upstream/main
 cd practice
 python -c "from textkit import slugify; print(repr(slugify('Hello  World')))"
 cd ..

@@ -61,24 +61,20 @@ bullets:
 
 ## Scene 4: Start from the latest upstream
 visual: terminal
-focus: 1 | 2 | 3
+focus: 1 | 2
 notes:
 - Go into your copy of the course repo
-- Always start new work from `main`
-- `upstream` is the original repo. This gets its newest commits.
+- `upstream` is the original repo. This downloads its newest commits.
 code:
 ```
 $ cd first-python-contribution
-$ git switch main
-$ git pull upstream main
+$ git fetch upstream
 ```
 
 > Step one. Open your terminal, and go into the course folder.
 
-> Switch to main.
-
-> Then pull from upstream. Now your main is up to date. Always start new work
-> from an up to date main.
+> Then fetch from upstream. That downloads the original repo's newest
+> commits, and changes none of your files.
 
 ## Scene 5: Make a virtual environment
 visual: terminal
@@ -108,19 +104,26 @@ $ source .venv/bin/activate
 
 ## Scene 6: Make a branch
 visual: terminal
-focus: 1 | 1-2
+focus: 1 | 1 | 1-3
 notes:
-- `-c` means create
+- `-c` means create. `upstream/main` is where the branch starts.
+- Your own `main` may still hold your first commit. This leaves it out.
 - One branch per pull request. Never work on `main`.
 code:
 ```
-(.venv) $ git switch -c exercise-2
+(.venv) $ git switch -c exercise-2 upstream/main
 Switched to a new branch 'exercise-2'
+branch 'exercise-2' set up to track 'upstream/main'.
 ```
 
-> Step three. Make a branch. Git switch, dash c, {exercise-2|exercise two}.
+> Step three. Make a branch. Git switch, dash c, {exercise-2|exercise two},
+> upstream slash main.
 
-> Never work on main directly. One branch per pull request.
+> That starts the branch from the original repo's newest commit. Your own
+> main branch may still hold your first commit, waiting to be merged. This
+> way, it stays out of your new pull request.
+
+> Always start new work like this. One branch per pull request.
 
 ## Scene 7: Write the test first
 visual: code

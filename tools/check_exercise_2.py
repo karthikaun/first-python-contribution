@@ -10,6 +10,10 @@ replaced by ``_``. Both files are parsed with :mod:`ast`, never executed, and
 must not import anything or call dangerous built-ins. The tests themselves run
 in the read-only "Exercise 2 tests" workflow; its result is passed in here.
 
+One more file is accepted: the learner's own ``first-commits/<login>.py``. A
+branch made from the fork's ``main`` carries it along until the learner's
+first pull request is merged. It gets the same checks as in that pull request.
+
 Usage (in CI)::
 
     python tools/check_exercise_2.py --login LOGIN --base BASE --head HEAD --tests success --run-url URL
@@ -29,7 +33,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from check_first_commit import LOGIN_RE, Result, _git  # noqa: E402
+from check_first_commit import FOLDER as FIRST_COMMITS  # noqa: E402
+from check_first_commit import LOGIN_RE, Result, _git, check_source, syntax_problem  # noqa: E402
 
 MAX_BYTES = 3_000
 BANNED_NAMES = {
@@ -84,6 +89,19 @@ def expected_paths(login: str) -> tuple[str, str]:
     return f"practice/greetings/{mod}.py", f"practice/tests/test_{mod}.py"
 
 
+def carried_first_commit(changes: list[tuple[str, str]], login: str) -> str | None:
+    """The learner's own first-commit file, if this PR adds or edits it too.
+
+    Lesson 02's commit sits on the fork's ``main``. Until that pull request is
+    merged, a branch made from the fork's ``main`` brings the file along.
+    """
+    mine = f"{FIRST_COMMITS}/{login}.py"
+    for status, path in changes:
+        if path == mine and status in ("A", "M"):
+            return path
+    return None
+
+
 def check_changes(changes: list[tuple[str, str]], login: str, existing: set[str] | None = None) -> Result:
     """Check which files the PR touches.
 
@@ -96,7 +114,15 @@ def check_changes(changes: list[tuple[str, str]], login: str, existing: set[str]
     wanted = {greet_path, test_path}
     touched = {path for _, path in changes}
 
-    others = sorted(touched - wanted)
+    carried = carried_first_commit(changes, login)
+    if carried:
+        result.notes.append(
+            f"This pull request also carries your first commit (`{carried}`), because your first pull "
+            "request isn't merged yet and this branch started from your fork's `main`. That's fine here. "
+            "Next time, start the branch from the original repo, as Lesson 05 shows: "
+            "`git switch -c my-branch upstream/main`."
+        )
+    others = sorted(touched - wanted - {carried})
     if others:
         listed = ", ".join(f"`{p}`" for p in others[:5])
         result.errors.append(
@@ -131,7 +157,7 @@ def _parse(source: str, label: str, result: Result) -> ast.Module | None:
     try:
         return ast.parse(source)
     except SyntaxError as exc:
-        result.errors.append(f"{label} isn't valid Python: {exc.msg} (line {exc.lineno}).")
+        result.errors.append(f"{label} isn't valid Python: {syntax_problem(exc)}.")
         return None
 
 
@@ -211,11 +237,13 @@ def format_comment(result: Result, login: str, tests: str, run_url: str) -> str:
         "scroll to the red ✘ step and read the last lines of its output.",
     }.get(tests, f"⚠️ The test run finished with `{tests}`. [Open it]({run_url}) to see why.")
     if result.ok and tests == "success":
+        notes = "".join(f"\n\n{note}" for note in result.notes)
         return (
             f"🎉 Nice work, @{login}! {tests_line} A maintainer will review your pull "
             "request and merge it soon.\n\n"
             "You just did what real Python contributors do every day: write code, test it, "
             "pass CI and ask for review. Next up: Lesson 06, the house rules every project has."
+            f"{notes}"
         )
     parts = [f"Thanks, @{login}! Not quite there yet:\n", tests_line]
     if result.errors:
@@ -243,6 +271,10 @@ def validate(login: str, base: str, head: str) -> Result:
     result = check_changes(changes, login, existing)  # type: ignore[arg-type]
     if not result.ok:
         return result
+    carried = carried_first_commit(changes, login)  # type: ignore[arg-type]
+    if carried:
+        problems = check_source(_git("show", f"{head}:{carried}"), login).errors
+        result.errors.extend(f"Your first-commit file (`{carried}`): {problem}" for problem in problems)
     result.errors.extend(check_greeting(_git("show", f"{head}:{greet_path}")).errors)
     result.errors.extend(check_test(_git("show", f"{head}:{test_path}"), login).errors)
     return result

@@ -1,8 +1,8 @@
 # Exercise 05: A function, a test, a green CI
 
-- [ ] `git switch main` and `git pull upstream main`
+- [ ] `git fetch upstream`
 - [ ] Create and activate `.venv`, then `python -m pip install pytest ruff`
-- [ ] `git switch -c exercise-2`
+- [ ] `git switch -c exercise-2 upstream/main`
 - [ ] Write `practice/tests/test_YOUR_NAME.py` and watch it fail
 - [ ] Write `practice/greetings/YOUR_NAME.py` and watch it pass
 - [ ] `ruff format practice` and `ruff check practice` are clean

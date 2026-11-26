@@ -13,7 +13,9 @@ Usage (in CI)::
 Prints a Markdown comment for the PR and exits 0 if the PR is valid, 1 if not.
 Exits 3, printing nothing, when the PR doesn't add or change any
 ``first-commits/<name>.py`` (for example a maintainer editing the folder's
-README), so the bot stays quiet.
+README), so the bot stays quiet. It also stays quiet on an Exercise 2 pull
+request that carries the learner's first commit along (their first pull
+request isn't merged yet): ``check_exercise_2.py`` reviews that one.
 """
 
 from __future__ import annotations
@@ -43,6 +45,7 @@ def is_learner_pr(paths: list[str]) -> bool:
 @dataclass
 class Result:
     errors: list[str] = field(default_factory=list)
+    notes: list[str] = field(default_factory=list)  # said in the comment, but not a problem
 
     @property
     def ok(self) -> bool:
@@ -95,6 +98,12 @@ def check_changes(changes: list[tuple[str, str]], login: str) -> tuple[Result, s
     return result, path
 
 
+def syntax_problem(exc: SyntaxError) -> str:
+    """ "unterminated string literal (line 3)": Python's message, with the line number said once."""
+    message = re.sub(r"\s*\(detected at line \d+\)", "", str(exc.msg))
+    return f"{message} (line {exc.lineno})"
+
+
 def check_source(source: str, login: str) -> Result:
     """Check the contents of a learner's file without running it."""
     result = Result()
@@ -107,7 +116,7 @@ def check_source(source: str, login: str) -> Result:
         tree = ast.parse(source)
     except SyntaxError as exc:
         hint = ' A missing quote `"` is the most common cause.' if "string" in str(exc.msg).lower() else ""
-        result.errors.append(f"Your file isn't valid Python: {exc.msg} (line {exc.lineno}).{hint}")
+        result.errors.append(f"Your file isn't valid Python: {syntax_problem(exc)}.{hint}")
         return result
 
     values: dict[str, str] = {}
@@ -201,8 +210,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--base", required=True)
     parser.add_argument("--head", required=True)
     args = parser.parse_args(argv)
-    if not is_learner_pr(_git("diff", "--no-renames", "--name-only", f"{args.base}...{args.head}").splitlines()):
+    paths = _git("diff", "--no-renames", "--name-only", f"{args.base}...{args.head}").splitlines()
+    if not is_learner_pr(paths):
         return NOT_A_LEARNER_PR
+    from check_exercise_2 import is_learner_pr as is_exercise_2_pr  # imported here: that module imports this one
+
+    if is_exercise_2_pr(paths):
+        return NOT_A_LEARNER_PR  # an Exercise 2 PR carrying the first commit: the Exercise 2 bot reviews it
     result = validate(args.login, args.base, args.head)
     print(format_comment(result, args.login))
     return 0 if result.ok else 1

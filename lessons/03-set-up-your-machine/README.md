@@ -114,13 +114,18 @@ gh adds `upstream` for you because it knows your repo is a fork.
 
 ## Step 6: Get the latest changes, then run the doctor
 
-Other learners' commits have landed since you forked. Bring your copy up to
-date, then run the course's checker:
+Other learners' commits have landed since you forked. Download them, then
+run the course's checker:
 
 ```bash norun
-git pull upstream main
+git fetch upstream
 python3 tools/doctor.py
 ```
+
+`git fetch` only downloads: it changes none of your files. (Why not
+`git pull`? Your `main` holds your first commit, which may not be merged
+yet, and git refuses to pull when both sides have new commits. In Lesson 05
+you start a branch from what you just fetched.)
 
 Each line should be a green ✔:
 

@@ -25,12 +25,12 @@ if you get it wrong.)
 
 ```bash norun
 cd first-python-contribution
-git switch main
-git pull upstream main
+git fetch upstream
 ```
 
 (Commands in this lesson are marked as not run in CI because they need your
-fork.) Always start new work from an up-to-date `main`.
+fork.) `git fetch` downloads the original repo's newest commits without
+changing your files. You start your branch from them in Step 3.
 
 ## Step 2: Make a virtual environment
 
@@ -57,10 +57,14 @@ never commits it.
 ## Step 3: Make a branch
 
 ```bash norun
-git switch -c exercise-2
+git switch -c exercise-2 upstream/main
 ```
 
-Never work on `main` directly. One branch per pull request.
+`upstream/main` is the original repo's newest commit, as you just fetched
+it. **Always start new work from there**, not from your own `main`: your
+`main` still holds your first commit from Lesson 02, which may not be merged
+yet, and it would come along into this pull request. One branch per pull
+request, one change per branch. Never work on `main` directly.
 
 ## Step 4: Write the test first
 
@@ -155,8 +159,8 @@ git commit -m "Add exercise 2 greeting for ada-lovelace"
 ```
 
 `git status` should show only your two new files. Add exactly those. (If
-you see `.venv/` listed, your `.gitignore` is missing: run
-`git pull upstream main` again.)
+you see `.venv/` listed, your `.gitignore` is missing: check that you made
+the branch from `upstream/main` in Step 3.)
 
 ## Step 8: Push your branch to your fork
 
@@ -239,5 +243,10 @@ git branch -d exercise-2
 ```
 
 `main` now includes your merged work, so the `exercise-2` branch can go.
+
+If `git pull` says you have **divergent branches**, your Lesson 02 pull
+request isn't merged yet. Leave `main` as it is and try again after the
+merge. [Troubleshooting, section 8](../A-troubleshooting/#8-your-fork-is-out-of-date)
+explains why.
 
 Next: [Lesson 06: house rules](../06-house-rules/), the rules every project expects you to read first.
