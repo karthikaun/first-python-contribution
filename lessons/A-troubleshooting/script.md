@@ -149,7 +149,7 @@ $ git switch main
 > Did you make commits you want to keep? Create a branch right where you
 > are, before switching away.
 
-> Otherwise, just switch back to main.
+> Otherwise, just switch back to the main branch.
 
 ## Scene 8: Fix your last commit
 visual: terminal

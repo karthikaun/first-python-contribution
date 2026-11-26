@@ -26,7 +26,7 @@ Congratulations, you finished the course!
 
 You can now find an issue, set up any Python project, make a change with a test, pass CI, answer review and open a good bug report. That's what maintainers hope for from every contributor.
 
-If you haven't yet, do the capstone in Lecture 14: get a pull request merged in a project you chose, then add yourself to the graduates wall in the course repository. I'd love to see your name there.
+If you haven't yet, do the capstone in Lecture 15: get a pull request merged in a project you chose, then add yourself to the graduates wall in the course repository. I'd love to see your name there.
 
 Keep going: your second contribution is easier than your first, and your tenth makes you a regular. Pick a project you use, and keep showing up.
 

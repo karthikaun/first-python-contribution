@@ -52,7 +52,7 @@ bullets:
 > didn't run it, it isn't verified.
 
 > They change the test instead of the code. Making tests pass by weakening
-> them is the opposite of a fix. CPython's guidelines list it as an
+> them is the opposite of a fix. {CPython's|C Python's} guidelines list it as an
 > unacceptable use.
 
 > They make huge diffs, improving things nobody asked about. The rule still
@@ -108,7 +108,7 @@ Assisted-by: TOOL-NAME
 > How do you disclose? There are three common formats. The first is a
 > commit trailer. Git can add it for you, with dash dash trailer.
 
-> It becomes a line at the end of the commit message. LLVM and nixpkgs use
+> It becomes a line at the end of the commit message. LLVM and {nixpkgs|nix packages} use
 > this. The other two formats are a sentence in the pull request
 > description, or a checkbox in the template. No policy? A one line
 > disclosure in the description is the safe default.

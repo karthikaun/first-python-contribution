@@ -1,4 +1,4 @@
-# Lesson 12: Using AI tools well
+# Lesson 13: Using AI tools well
 
 **Time:** 3 minute video · 30 minute exercise
 **You'll need:** Lesson 06 (house rules) and Lesson 10
@@ -129,4 +129,4 @@ to both. (Some policies allow translation tools: check.)
   AI-generated code as possibly copied from somewhere with an incompatible
   licence. That's why their policies are strict. Respect them.
 
-Next: [Lesson 13: after the PR, and beyond GitHub](../13-after-the-pr/).
+Next: [Lesson 14: after the PR, and beyond GitHub](../14-after-the-pr/).

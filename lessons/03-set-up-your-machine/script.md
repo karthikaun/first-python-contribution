@@ -91,7 +91,7 @@ bullets:
 > Tick, keep my email addresses private. Also tick, block command line
 > pushes that expose my email.
 
-> Then copy the noreply address shown there.
+> Then copy the {noreply|no reply} address shown there.
 
 ## Scene 6: Tell git who you are
 visual: terminal
@@ -110,7 +110,7 @@ $ git config --global init.defaultBranch main
 > Now tell git who you are. Git config, dash dash global, user dot name, and
 > your name in quotes.
 
-> Then user dot email, with that noreply address.
+> Then user dot email, with that {noreply|no reply} address.
 
 > The third line makes new repositories start on a branch called main.
 > Global means, for every repository on this computer. So you only do this

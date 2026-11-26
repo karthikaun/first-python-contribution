@@ -9,7 +9,7 @@ title: Opening the PR isn't the end
 bullets:
 - What comes next is normal. None of it means you did something wrong.
 
-> Opening the pull request isn't the end. Almost every pull request gets
+> Opening the pull request is not the end. Almost every pull request gets
 > some back and forth.
 
 > None of it means you did something wrong. It is the normal back and forth

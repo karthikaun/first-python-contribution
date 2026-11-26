@@ -9,6 +9,7 @@ to a merged contribution to a real Python project.
   pre-commit — the things maintainers will actually check.
 - **Then a real project:** finding an issue nobody else is working on,
   reporting a bug so it gets fixed (with a practice program full of bugs),
+  writing a pull request that's easy to review,
   passing CI, handling review, and using AI tools without annoying maintainers.
 - **You finish with a merged PR in a project you chose**, verified by a bot
   and added to the graduates wall. After that you can contribute anywhere.
@@ -48,6 +49,10 @@ uv run pytest           # check lesson structure and tools
 uv run ruff check .     # lint
 uv run python tools/render_video.py lessons/01-what-counts   # render a video
 ```
+
+Videos are narrated by an Azure AI Speech voice, and every clip is checked by
+transcribing it back (`tools/azure_tts.py` says how to set up a key). Without
+a key, add `--voice Aman` to narrate with a macOS voice instead.
 
 ## License
 

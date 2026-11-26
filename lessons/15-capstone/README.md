@@ -1,4 +1,4 @@
-# Lesson 14: Capstone: your first external contribution
+# Lesson 15: Capstone: your first external contribution
 
 **Time:** 2 minute video · 1–4 weeks, mostly waiting for review
 **You'll need:** everything so far
@@ -54,19 +54,20 @@ covers it.
 - [ ] Tests and linters pass locally
 - [ ] Clear commit message (with sign-off or trailer if required)
 
-### 5. Open the PR (Lessons 05 and 10)
+### 5. Open the PR (Lesson 11)
 
 - [ ] Pushed to your fork; PR opened against the project's main branch
-- [ ] Template filled in; `Fixes #...`; how you tested it
-- [ ] Written in your own words; AI use disclosed if the project asks (Lesson 12)
+- [ ] A title that says what the PR does
+- [ ] Template filled in; `Fixes #...`; what changed and why; how you tested it
+- [ ] Written in your own words; AI use disclosed if the project asks (Lesson 13)
 
-### 6. Review (Lesson 11)
+### 6. Review (Lesson 12)
 
 - [ ] CI green (or failures explained)
 - [ ] Every review comment answered; new commits pushed; review re-requested
 - [ ] Conflicts resolved with a rebase if needed
 
-### 7. Wait, then graduate (Lesson 13)
+### 7. Wait, then graduate (Lesson 14)
 
 - [ ] One polite nudge after ~2 weeks of silence, at most
 - [ ] **Merged!**

@@ -4,13 +4,14 @@ Pipeline:
   1. Each scene becomes one HTML frame per narration beat (see
      ``script_format``): bullets appear one at a time, code lines light up.
   2. Screenshot every frame at 1920x1080 with headless Chrome.
-  3. Synthesize each beat's narration (macOS ``say`` for now; swap ``synthesize``).
+  3. Synthesize each beat's narration: an Azure AI Speech voice by default
+     (see ``azure_tts``, which also checks each clip), or a macOS ``say`` voice.
   4. Encode the frames and audio in one ffmpeg pass, each frame held for as
      long as its beat is spoken, and write an .srt subtitle file next to it.
 
 Usage::
 
-    python tools/render_video.py lessons/01-what-counts [--voice Samantha] [--scenes 1-3]
+    python tools/render_video.py lessons/01-what-counts [--voice Aman] [--scenes 1-3]
 
 Output goes to ``build/<lesson>/<lesson>.mp4`` (and ``.srt``). Frames are
 ``sceneNN.png``, or ``sceneNN-K.png`` for beat K of a scene with several.
@@ -20,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
 import re
 import shutil
 import struct
@@ -32,12 +34,14 @@ from dataclasses import dataclass
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import azure_tts  # noqa: E402
 import script_format  # noqa: E402
 from script_format import Scene  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 CHROME = Path("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 WIDTH, HEIGHT = 1920, 1080
+DEFAULT_VOICE = "en-IN-Arjun:DragonHDLatestNeural"  # Azure AI Speech; "Aman" is the macOS fallback
 PAD_SECONDS = 0.7  # silence after each scene's narration
 BEAT_PAD_SECONDS = 0.25  # silence between beats inside a scene
 
@@ -422,7 +426,7 @@ SAY_ATTEMPTS = 12
 
 
 def synthesize(text: str, out: Path, voice: str, rate: int) -> None:
-    """Text to speech. macOS ``say`` for the prototype; replace for production voices.
+    """Text to speech with macOS ``say``, for voices that aren't Azure's.
 
     ``say`` sometimes garbles a clip when other ``say`` processes or heavy work
     run at the same time, and it doesn't report it. Serial runs are
@@ -541,7 +545,10 @@ def parse_range(spec: str | None, count: int) -> list[int]:
 
 
 def render(lesson: Path, voice: str, rate: int, scene_range: str | None) -> Path:
-    for tool in ("ffmpeg", "ffprobe", "say"):
+    azure = azure_tts.is_azure_voice(voice)
+    if azure:
+        azure_tts.speech_key()  # stop now, with instructions, if there's no key
+    for tool in ("ffmpeg", "ffprobe") + (() if azure else ("say",)):
         if not shutil.which(tool):
             sys.exit(f"{tool} not found; install it first (brew install ffmpeg)")
     if not CHROME.exists():
@@ -567,11 +574,20 @@ def render(lesson: Path, voice: str, rate: int, scene_range: str | None) -> Path
     with ThreadPoolExecutor(max_workers=4) as pool:
         list(pool.map(lambda s: screenshot(s.png.with_suffix(".html"), s.png), segments))
     # Narration last and one clip at a time: say garbles clips on a busy machine.
+    clips = []
     for segment in segments:
-        speech = segment.wav.with_suffix(".aiff")
-        synthesize(script_format.spoken(segment.text), speech, voice, rate)
+        spoken = script_format.spoken(segment.text)
+        if azure:
+            speech = segment.wav.with_suffix(".tts.wav")
+            clip = azure_tts.synthesize(spoken, speech, voice, ROOT / "build" / ".tts-cache")
+            clips.append({"clip": segment.wav.stem, **azure_tts.asdict(clip)})
+        else:
+            speech = segment.wav.with_suffix(".aiff")
+            synthesize(spoken, speech, voice, rate)
         pad_audio(speech, segment.wav, segment.pad)
         segment.seconds = duration(segment.wav)
+    if azure:
+        report_narration(clips, build / "narration-check.json")
 
     for scene in scenes:
         mine = [s for s in segments if s.scene is scene]
@@ -585,11 +601,20 @@ def render(lesson: Path, voice: str, rate: int, scene_range: str | None) -> Path
     return video
 
 
+def report_narration(clips: list[dict], path: Path) -> None:
+    """Save how well each Azure clip's transcript matched its text, and print the ones to listen to."""
+    path.write_text(json.dumps(clips, ensure_ascii=False, indent=1), encoding="utf-8")
+    for clip in clips:
+        if not azure_tts.acceptable(clip["text"], clip["heard"]):
+            print(f"listen to {clip['clip']}: match {clip['match']:.2f}")
+            print(f"   text:  {clip['text']}\n   heard: {clip['heard']}")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Render a lesson video from its script.md")
     parser.add_argument("lesson", type=Path)
-    parser.add_argument("--voice", default="Aman", help="macOS voice (Aman: Indian English, male)")
-    parser.add_argument("--rate", type=int, default=170, help="words per minute for say")
+    parser.add_argument("--voice", default=DEFAULT_VOICE, help="an Azure AI Speech voice, or a macOS voice like Aman")
+    parser.add_argument("--rate", type=int, default=170, help="words per minute, for macOS voices")
     parser.add_argument("--scenes", help="e.g. 1-3 to render only some scenes")
     args = parser.parse_args(argv)
     render(args.lesson.resolve(), args.voice, args.rate, args.scenes)

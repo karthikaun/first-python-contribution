@@ -29,7 +29,7 @@ def test_sections_follow_the_curriculum():
     sections = up.parse_sections((ROOT / "CURRICULUM.md").read_text(), ROOT / "lessons")
     assert [s.title for s in sections][0] == "Your first PR, today"
     lectures = [lec for s in sections for lec in s.lectures]
-    assert len(lectures) == 15
+    assert len(lectures) == 16
     # Udemy numbers lectures from 1, so lesson NN must be lecture NN.
     assert all(lec.folder.startswith(f"{lec.number:02d}-") for lec in lectures[:-1])
     assert lectures[0].title == "What counts as a contribution"
@@ -38,8 +38,8 @@ def test_sections_follow_the_curriculum():
 
 
 def test_lecture_file_names_are_safe():
-    lec = up.Lecture(14, "14-capstone", "Capstone: your first external contribution")
-    assert lec.stem == "14 - Capstone - your first external contribution"
+    lec = up.Lecture(15, "15-capstone", "Capstone: your first external contribution")
+    assert lec.stem == "15 - Capstone - your first external contribution"
 
 
 def test_srt_to_vtt():

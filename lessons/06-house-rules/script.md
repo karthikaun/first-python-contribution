@@ -28,7 +28,7 @@ bullets:
 
 > Start with the contributing file. It tells you how to set up, test, and
 > submit. It is the most important file. Read all of it. Big projects often
-> keep it on a website instead. CPython's is called the Python Developer's
+> keep it on a website instead. {CPython's|C Python's} is called the Python Developer's
 > Guide.
 
 > The code of conduct says how people are expected to treat each other.
@@ -84,9 +84,9 @@ bullets:
 > comments, asking you to sign. Your pull request can't be merged until you
 > do.
 
-> CPython works like this. The bot checks the email address of every
+> {CPython|C Python} works like this. The bot checks the email address of every
 > commit's author, and you sign once per email address. So set up your
-> noreply address before you sign.
+> {noreply|no reply} address before you sign.
 
 > And read it before you sign. It is a legal document. If you have a job,
 > check your employment contract. Many employers own code you write, even in
@@ -133,10 +133,10 @@ bullets:
 > written with {AI|A I} tools. Some ban it. Gentoo, NetBSD and QEMU do.
 
 > Some allow it, with disclosure, and a human responsible. In LLVM and
-> nixpkgs, a human must stay in the loop, and you label tool use. The
+> {nixpkgs|nix packages}, a human must stay in the loop, and you label tool use. The
 > example label is an Assisted by line in the commit message.
 
-> And some allow it, and you are responsible for the result. CPython and
+> And some allow it, and you are responsible for the result. {CPython|C Python} and
 > curl work like that. These policies change. Always read the current
 > version.
 

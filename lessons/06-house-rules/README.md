@@ -153,7 +153,7 @@ in November 2026. **Always read the current version: these change.**
 6. **Use the exact disclosure format the project shows** (a trailer, a PR
    checkbox, a sentence). Don't invent your own.
 
-Lesson 12 is about using AI tools *well* when a project allows them.
+Lesson 13 is about using AI tools *well* when a project allows them.
 
 ## Rule 4: The code of conduct
 
