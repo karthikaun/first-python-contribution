@@ -130,11 +130,11 @@ highlight: 56,99,260,36
 
 ## Scene 9: The bot
 visual: browser
-url: https://github.com/thejesh23/first-python-contribution/pull/27
+url: https://github.com/thejesh23/first-python-contribution/pull/52
 caption: The bot explains what to fix. When your file is right, it merges.
 image: captures/bot-review.png
 height: 2600
-crop: 100,528,900,552
+crop: 100,515,900,552
 
 > Now watch. Within a minute or two, a check called Validate first commit
 > runs. It reads your file with Python's own parser, the same way Python
