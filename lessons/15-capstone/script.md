@@ -136,8 +136,8 @@ bullets:
 > That it was merged by someone else.
 
 > And that it is in a real project you don't own. If everything checks out,
-> it comments, merges, and you appear on the graduates wall. If not, its
-> comment says exactly what's wrong.
+> the bot says so. A maintainer merges it, and you appear on the graduates
+> wall. If not, its comment says exactly what's wrong.
 
 ## Scene 8: Welcome
 visual: slide
