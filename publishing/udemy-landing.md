@@ -19,7 +19,7 @@ This course contains the use of artificial intelligence.
 
 Never opened a pull request? This course takes you from zero to a merged contribution in a real open source Python project, one small, practical step at a time.
 
-You start with a win in the first 15 minutes: you star and fork the course's GitHub repository and make your first commit, entirely in the browser. A bot checks your work within minutes, and a maintainer merges it. Then you set up the real tools (git, the GitHub CLI and Python), learn just enough git to never feel lost, and open a second pull request from the terminal with a Python function and its test. That one has to pass CI before it's merged.
+You start with a win in the first 15 minutes: you star and fork the course's GitHub repository and make your first commit, entirely in the browser. A bot checks your work and merges it within a minute. Then you set up the real tools (git, the GitHub CLI and Python), learn just enough git to never feel lost, and open a second pull request from the terminal with a Python function and its test. That one has to pass CI before it's merged.
 
 Then you go out into the real world. You learn the house rules every project has (CONTRIBUTING files, Contributor License Agreements, DCO sign-offs and AI policies), how to set up any Python project whatever tools it uses, how to find an issue nobody else is working on, how to report a bug so it gets fixed (you hunt for bugs planted in a small practice program), how to make a change maintainers want to merge, and how to write a pull request that's easy to review. You practise rebasing, merge conflicts and code review in a safe lab on your own computer, and you learn how to use AI tools honestly and well.
 
