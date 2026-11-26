@@ -14,6 +14,12 @@ to a merged contribution to a real Python project.
 - **You finish with a merged PR in a project you chose**, verified by a bot
   and added to the graduates wall. After that you can contribute anywhere.
 
+**You do every step by hand, in the terminal. No AI agent does it for you.**
+That's on purpose, even though an agent can open a pull request in minutes:
+your name is on it, so you have to check what the agent did, explain every
+line, fix things when git goes wrong, and talk to maintainers yourself.
+[Lesson 01](lessons/01-what-counts/) has the four reasons.
+
 👉 Start with [the curriculum](CURRICULUM.md).
 
 The hands-on exercises happen right here: in Lesson 02 you star and fork
