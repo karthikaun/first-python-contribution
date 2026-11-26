@@ -40,7 +40,7 @@ KEYCHAIN_SERVICE = "azure-speech-key"
 DEFAULT_REGION = "eastus"
 OUTPUT_FORMAT = "riff-48khz-16bit-mono-pcm"
 ALLOWED_ERRORS = 0.03  # letters of a clip's transcript that may differ from its text (at least 1)
-ATTEMPTS = 3  # tries to get a clip that matches
+ATTEMPTS = 4  # tries to get a clip that matches
 MAX_CHECK_SECONDS = 55  # the transcription endpoint takes clips up to 60 s
 RETRY_STATUS = {429, 500, 502, 503, 504}
 
@@ -138,13 +138,37 @@ def wrong_letters(text: str, heard: str) -> int:
     return max(len(a), len(b)) - same
 
 
+def words(text: str) -> list[str]:
+    return [w for w in (re.sub(r"[^a-z0-9']", "", part) for part in text.lower().replace("-", " ").split()) if w]
+
+
+def dropped_words(text: str, heard: str) -> list[str]:
+    """Words of the text that the transcript has nothing for, or far too little.
+
+    A transcriber swaps words that sound alike ("ruff" and "rough"), and that
+    isn't the voice's mistake. A word with no counterpart at all, or a phrase
+    that shrank by three letters or more ("dot p y" heard as "py"), is: the
+    voice skipped or clipped it. Clipped sentence endings are the usual case.
+    """
+    spoken, got = words(text), words(heard)
+    dropped = []
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, spoken, got, autojunk=False).get_opcodes():
+        said, heard_as = "".join(spoken[i1:i2]), "".join(got[j1:j2])
+        if op == "delete" and len(letters(said)) >= 3:
+            dropped.append(" ".join(spoken[i1:i2]))
+        elif op == "replace" and len(letters(said)) - len(letters(heard_as)) >= 3:
+            dropped.append(" ".join(spoken[i1:i2]))
+    return dropped
+
+
 def acceptable(text: str, heard: str) -> bool:
     """True if the transcript is the text, give or take what a transcriber mishears.
 
-    "poll request" for "pull request" is one letter and fine. A dropped or
-    invented word is more than a few letters, and isn't.
+    "poll request" for "pull request" is one letter and fine. More than a
+    few wrong letters, or any dropped word, isn't.
     """
-    return wrong_letters(text, heard) <= max(1, round(ALLOWED_ERRORS * len(letters(text))))
+    close = wrong_letters(text, heard) <= max(1, round(ALLOWED_ERRORS * len(letters(text))))
+    return close and not dropped_words(text, heard)
 
 
 def wav_seconds(wav: Path) -> float:

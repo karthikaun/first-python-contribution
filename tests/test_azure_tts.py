@@ -91,7 +91,7 @@ def test_a_garbled_clip_is_made_again(fake_service, tmp_path):
 
 
 def test_when_no_clip_matches_the_best_one_is_kept_and_reported(fake_service, tmp_path):
-    fake_service["heard"] = ["nothing like it", "give it a wink", "something else"]
+    fake_service["heard"] = ["nothing like it", "give it a wink", "something else", "no"]
     clip = azure_tts.synthesize("Give it a week.", tmp_path / "a.wav", VOICE, tmp_path / "cache")
     assert clip.attempts == azure_tts.ATTEMPTS
     assert clip.heard == "give it a wink" and clip.match < 1.0
@@ -150,3 +150,21 @@ def test_a_refused_request_fails_clearly(monkeypatch):
     monkeypatch.setattr(azure_tts.urllib.request, "urlopen", urlopen)
     with pytest.raises(RuntimeError, match="HTTP 401"):
         azure_tts.speak("Hello", VOICE)
+
+
+@pytest.mark.parametrize(
+    ("text", "heard", "dropped"),
+    [
+        ("Reviewers aren't asked to look yet.", "reviewers aren't asked to look", ["yet"]),
+        ("It creates a hidden folder called dot git.", "it creates a hidden folder called git", ["dot"]),
+        ("Followed by dot p y. It must match.", "followed by py it must match", ["dot p y"]),
+        ("Ruff checks and formats your code.", "rough checks and formats your code", []),
+        ("Run git diff now.", "run giddiff now", []),
+        ("That is your fork.", "that is your folk", []),
+        ("It is a draft.", "it is draft", []),
+    ],
+)
+def test_dropped_words_are_found_but_soundalikes_are_not(text, heard, dropped):
+    assert azure_tts.dropped_words(text, heard) == dropped
+    if dropped:
+        assert not azure_tts.acceptable(text, heard)
