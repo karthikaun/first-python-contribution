@@ -260,12 +260,11 @@ title: A change maintainers can merge
 bullets:
 - Reproduce, failing test, smallest fix
 - Docs, changelog, commit message
-- In a real PR: `Fixes #1234` closes the issue on merge
+- Next: the pull request itself
 
 > Reproduce. Failing test. Smallest fix.
 
 > Docs, changelog, and a good commit message.
 
-> And when you open a real pull request, write Fixes, hash, and the issue
-> number in the description. GitHub closes the issue when it's merged. Next
-> lesson, {CI|C I} and code review.
+> Your change is ready. Next lesson, opening the pull request. The title
+> and description that get it reviewed.

@@ -21,7 +21,7 @@ Never opened a pull request? This course takes you from zero to a merged contrib
 
 You start with a win in the first 15 minutes: you star and fork the course's GitHub repository and make your first commit, entirely in the browser. A bot checks your work within minutes, and a maintainer merges it. Then you set up the real tools (git, the GitHub CLI and Python), learn just enough git to never feel lost, and open a second pull request from the terminal with a Python function and its test. That one has to pass CI before it's merged.
 
-Then you go out into the real world. You learn the house rules every project has (CONTRIBUTING files, Contributor License Agreements, DCO sign-offs and AI policies), how to set up any Python project whatever tools it uses, how to find an issue nobody else is working on, how to report a bug so it gets fixed (you hunt for bugs planted in a small practice program), and how to make a change maintainers want to merge. You practise rebasing, merge conflicts and code review in a safe lab on your own computer, and you learn how to use AI tools honestly and well.
+Then you go out into the real world. You learn the house rules every project has (CONTRIBUTING files, Contributor License Agreements, DCO sign-offs and AI policies), how to set up any Python project whatever tools it uses, how to find an issue nobody else is working on, how to report a bug so it gets fixed (you hunt for bugs planted in a small practice program), how to make a change maintainers want to merge, and how to write a pull request that's easy to review. You practise rebasing, merge conflicts and code review in a safe lab on your own computer, and you learn how to use AI tools honestly and well.
 
 The course ends with a capstone: a merged pull request in a real project you choose. A bot verifies it on GitHub and adds you to the graduates wall.
 
@@ -37,6 +37,7 @@ How this course is made: the lessons and video scripts were drafted with AI and 
 - Find an issue that's open, unclaimed and has no pull request yet, and claim it the right way
 - Open a bug report maintainers can act on: minimal steps to reproduce, expected and actual results, versions
 - Make a change maintainers want: a failing test, the smallest fix, docs, a changelog entry and a clear commit message
+- Write a pull request title and description that get your change reviewed quickly
 - Fix failing CI, respond to code review, rebase, resolve merge conflicts and squash commits when asked
 - Use AI tools within a project's rules, disclose them properly and write in your own words
 - Land a merged pull request in a real open source project you don't own

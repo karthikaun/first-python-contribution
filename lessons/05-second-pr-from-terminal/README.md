@@ -175,7 +175,8 @@ gh pr create --fill
 
 `set-default` tells gh which repo your pull requests go to (you only do it
 once). `--fill` uses your commit message as the title. gh prints the link
-to your new PR.
+to your new PR. That's fine for this exercise; for a real project,
+Lesson 11 shows how to write a title and description that get reviewed.
 
 Prefer the browser? Open your fork on GitHub and click **Compare & pull request**.
 

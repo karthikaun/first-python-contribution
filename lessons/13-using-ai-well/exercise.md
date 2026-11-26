@@ -1,4 +1,4 @@
-# Exercise 12: Verify, then rewrite
+# Exercise 13: Verify, then rewrite
 
 ## Part 1: Check what an AI tells you
 

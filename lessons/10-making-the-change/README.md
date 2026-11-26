@@ -188,25 +188,11 @@ The second line matters most: the checker runs **your test against the
 original buggy code**. A test that passes on broken code doesn't test
 anything.
 
-## In a real project: the PR description
+## In a real project: open the pull request
 
-When you open a real PR, the description is your pitch to the reviewer.
-Fill in the project's template if it has one. Otherwise:
-
-```text
-Fixes #1234
-
-`slugify` kept punctuation and produced doubled hyphens for repeated
-spaces. It now turns every run of non-alphanumeric characters into a
-single hyphen and strips hyphens from the ends.
-
-Tested: added a parametrized regression test with the cases from the
-issue; full test suite and ruff pass locally.
-```
-
-`Fixes #1234` makes GitHub close the issue automatically when the PR is
-merged. Write the description yourself, and disclose AI use if the project
-asks (Lesson 06).
+Your fix is committed. In a real project the next step is the pull request,
+and its title and description are your pitch to the reviewer.
+[Lesson 11](../11-opening-the-pull-request/) is about writing them well.
 
 ## Not every contribution is code
 
@@ -219,4 +205,4 @@ PR.
 **A good bug report.** If you find a bug you can't fix, a clear report is a
 real contribution. [Lesson 09](../09-opening-an-issue/) shows what goes in one.
 
-Next: [Lesson 11: CI and code review](../11-ci-and-review/).
+Next: [Lesson 11: opening the pull request](../11-opening-the-pull-request/).

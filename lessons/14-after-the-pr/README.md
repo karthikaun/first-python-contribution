@@ -1,7 +1,7 @@
-# Lesson 13: After the PR, and beyond GitHub
+# Lesson 14: After the PR, and beyond GitHub
 
 **Time:** 3 minute video · 20 minute exercise
-**You'll need:** Lesson 11
+**You'll need:** Lesson 12
 
 Your PR is open, checks are green, and... nothing happens. This lesson is
 about the human side: waiting, nudging, rejection, and what comes after a
@@ -116,4 +116,4 @@ commits. Each project documents its own process; the kernel's is
 *Submitting patches* in its docs. Read it fully before sending anything:
 mailing lists are public and permanent.
 
-Next: [Lesson 14: the capstone](../14-capstone/).
+Next: [Lesson 15: the capstone](../15-capstone/).

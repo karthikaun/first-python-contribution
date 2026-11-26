@@ -19,5 +19,5 @@ safe on the `fix-slugify` branch.
 for what you think is right, and see what your fix does. In a real project
 this is a question to ask in the issue before you decide.
 
-**Stretch 2:** write the PR description you *would* submit, using the
-template in the lesson.
+**Next:** in Lesson 11 you write the pull request title and description
+for this fix.

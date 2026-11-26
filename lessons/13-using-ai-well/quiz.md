@@ -1,4 +1,4 @@
-# Quiz 12
+# Quiz 13
 
 **1. A reviewer asks why your AI-assisted fix works and you're not sure.
 What should have happened before you opened the PR?**

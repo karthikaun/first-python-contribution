@@ -100,7 +100,7 @@ else. Wait for a yes before you write the code.
   when the PR is merged into the default branch. `Closes` and `Resolves`
   work too.
 - **Write it yourself.** Like comments and PRs, an issue is in your own
-  words, with output you really saw (Lessons 06 and 12).
+  words, with output you really saw (Lessons 06 and 13).
 
 ## The bug hunt
 

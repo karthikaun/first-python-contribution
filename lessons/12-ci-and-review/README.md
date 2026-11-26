@@ -1,4 +1,4 @@
-# Lesson 11: CI and code review
+# Lesson 12: CI and code review
 
 **Time:** 4 minute video · 40 minute exercise
 **You'll need:** Lessons 04 and 10
@@ -210,4 +210,4 @@ cd ../..
 rm -rf conflict-lab
 ```
 
-Next: [Lesson 12: using AI tools well](../12-using-ai-well/).
+Next: [Lesson 13: using AI tools well](../13-using-ai-well/).
