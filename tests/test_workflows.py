@@ -4,11 +4,27 @@ import re
 from pathlib import Path
 
 WORKFLOWS = Path(__file__).resolve().parent.parent / ".github" / "workflows"
-BOTS = ["first-commit.yml", "exercise-2-merge.yml", "graduate.yml"]
+BOTS = ["exercise-2-merge.yml", "graduate.yml"]
 
 
-def test_bots_only_check_and_comment():
-    """The bots never merge: a maintainer reviews and merges every learner PR."""
+def test_only_the_first_commit_bot_merges():
+    """A first pull request that passes is merged by the bot, so nobody waits for a maintainer.
+
+    It must merge only the commit it checked, with a merge commit (a squash
+    would leave the learner's main out of step), and never run the PR's code.
+    """
+    text = (WORKFLOWS / "first-commit.yml").read_text(encoding="utf-8")
+    merges = re.findall(r"gh pr merge .*", text)
+    assert len(merges) == 1
+    assert "--merge" in merges[0] and '--match-head-commit "$HEAD"' in merges[0]
+    assert "--squash" not in text and "--rebase" not in text and "--admin" not in text
+    assert "steps.check.outputs.status == '0'" in text
+    assert "persist-credentials: false" in text
+    assert "git checkout" not in text and "ref: ${{" not in text, "the PR's code must never be checked out"
+
+
+def test_the_other_bots_only_check_and_comment():
+    """Exercise 2 and graduate pull requests are merged by a maintainer."""
     for name in BOTS:
         text = (WORKFLOWS / name).read_text(encoding="utf-8")
         assert "gh pr merge" not in text, f"{name} must not merge"
@@ -16,15 +32,31 @@ def test_bots_only_check_and_comment():
         assert "gh pr comment" in text
 
 
-def test_no_lesson_says_a_bot_merges():
-    """The lessons and videos must say what the bots do: check and comment."""
+def test_lessons_say_who_merges():
+    """The bot merges the first pull request (Lesson 02). A maintainer merges Exercise 2 and graduates."""
     root = WORKFLOWS.parent.parent
-    pages = [*root.glob("*.md"), *root.glob("lessons/*/*.md"), *root.glob("publishing/**/*.md")]
-    pages += [*root.glob("first-commits/README.md"), *root.glob("practice/README.md")]
-    claim = re.compile(r"bots? (?:check(?:s)? and )?merges?\b|it comments,? (?:and )?merges", re.IGNORECASE)
-    for page in pages:
-        text = " ".join(page.read_text(encoding="utf-8").replace(">", " ").split())
-        assert not claim.search(text), f"{page.relative_to(root)} says a bot merges; a maintainer does"
+
+    def words(path: str) -> str:
+        return " ".join((root / path).read_text(encoding="utf-8").replace(">", " ").split())
+
+    bot_merges = re.compile(r"bots? (?:check(?:s)? (?:it )?,? ?and )?merges?\b|it comments,? (?:and )?merges", re.I)
+    for page in (
+        "lessons/05-second-pr-from-terminal/README.md",
+        "lessons/05-second-pr-from-terminal/script.md",
+        "lessons/15-capstone/README.md",
+        "lessons/15-capstone/script.md",
+        "practice/README.md",
+    ):
+        assert not bot_merges.search(words(page)), f"{page} says a bot merges; a maintainer does"
+    maintainer_merges = re.compile(r"maintainer (?:reviews (?:it )?and )?merges", re.I)
+    for page in (
+        "lessons/02-first-pr-in-browser/README.md",
+        "lessons/02-first-pr-in-browser/script.md",
+        "lessons/02-first-pr-in-browser/exercise.md",
+        "first-commits/README.md",
+        "publishing/promo/script.md",
+    ):
+        assert not maintainer_merges.search(words(page)), f"{page} says a maintainer merges the first PR; the bot does"
 
 
 def test_every_action_is_pinned_to_a_commit():
