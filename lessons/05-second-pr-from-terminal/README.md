@@ -1,6 +1,6 @@
 # Lesson 05: Your second PR, from the terminal
 
-**Time:** 6 minute video · 30 minute exercise
+**Time:** 7 minute video · 30 minute exercise
 **You'll need:** a green `tools/doctor.py` (Lesson 03)
 
 This time you'll contribute like you would to a real Python project: on a
@@ -117,16 +117,17 @@ python -m pytest practice
 ```
 
 ```text
-practice/tests/test_ada_lovelace.py .                                    [ 14%]
-practice/tests/test_all_greetings.py ...                                 [ 57%]
-practice/tests/test_textkit.py .                                         [ 71%]
-practice/tests/test_thejesh23.py ..                                      [100%]
+practice/tests/test_ada_lovelace.py .                                    [ 12%]
+practice/tests/test_all_greetings.py ...                                 [ 50%]
+practice/tests/test_textkit.py .                                         [ 62%]
+practice/tests/test_thejesh23.py ...                                     [100%]
 
-============================== 7 passed in 0.01s ===============================
+============================== 8 passed in 0.01s ===============================
 ```
 
 Each `.` is a passing test. `test_all_greetings.py` is the course's own test:
-it checks every learner's `greet` follows the rules, including yours.
+it checks every learner's `greet` follows the rules, including yours. Your
+list is longer and your number is higher: every learner adds a test file.
 
 ## Step 6: Format and lint
 
@@ -189,6 +190,13 @@ gh pr checks --watch
 One check runs on your PR: **Exercise 2 tests** (listed as `test`). It
 runs `ruff format --check`, `ruff check` and `pytest` on your code, exactly
 like Steps 5 and 6.
+
+> **No checks yet?** GitHub doesn't run a newcomer's checks until a
+> maintainer approves them. If your Lesson 02 pull request hasn't been
+> merged yet, this check waits too: `gh pr checks` reports no checks, and
+> the pull request page says a workflow is awaiting approval. You did
+> nothing wrong. The check starts when a maintainer approves it, usually
+> within a day. Run `gh pr checks --watch` again then.
 
 When it finishes, a separate review bot checks your file names and that your
 code only contains what it should. It doesn't appear in the checks list:

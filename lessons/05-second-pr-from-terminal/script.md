@@ -214,12 +214,12 @@ notes:
 code:
 ```
 (.venv) $ python -m pytest practice
-practice/tests/test_ada_lovelace.py .                                    [ 14%]
-practice/tests/test_all_greetings.py ...                                 [ 57%]
-practice/tests/test_textkit.py .                                         [ 71%]
-practice/tests/test_thejesh23.py ..                                      [100%]
+practice/tests/test_ada_lovelace.py .                                    [ 12%]
+practice/tests/test_all_greetings.py ...                                 [ 50%]
+practice/tests/test_textkit.py .                                         [ 62%]
+practice/tests/test_thejesh23.py ...                                     [100%]
 
-============================== 7 passed in 0.01s ===============================
+============================== 8 passed in 0.01s ===============================
 ```
 
 > Run the same command again.
@@ -328,10 +328,11 @@ code:
 
 ## Scene 15: Watch CI
 visual: terminal
-focus: 1 | 2 | 3
+focus: 1 | 2 | 2 | 3
 notes:
 - Watch the check run, live
 - The check runs `ruff format --check`, `ruff check` and `pytest`
+- No checks yet? A maintainer approves a newcomer's first run. Just wait.
 - Then the review bot comments, and a maintainer merges
 code:
 ```
@@ -345,6 +346,10 @@ code:
 
 > One check runs. It is called test. It runs ruff format, ruff check and
 > {pytest|pie test} on your code. The same three commands you just ran.
+
+> If it says no checks, don't worry. Until your first pull request is
+> merged, GitHub waits for a maintainer to approve the run. Try again
+> later.
 
 > After it passes, a review bot looks at your file names and your code. About
 > a minute later, it leaves a comment. If everything passed, a maintainer
