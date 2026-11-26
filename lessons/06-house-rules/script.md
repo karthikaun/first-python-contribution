@@ -86,7 +86,7 @@ bullets:
 
 > CPython works like this. The bot checks the email address of every
 > commit's author, and you sign once per email address. So set up your
-> noreply address before you sign.
+> {noreply|no reply} address before you sign.
 
 > And read it before you sign. It is a legal document. If you have a job,
 > check your employment contract. Many employers own code you write, even in
