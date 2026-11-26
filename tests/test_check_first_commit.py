@@ -36,6 +36,10 @@ def test_comments_are_allowed():
         ('name = "Ada"\ngithub = "someone-else"\nmessage = "hi"\n', "must match"),
         ('name = "Ada"\ngithub = "ada"\nmessage = "' + "x" * 300 + '"\n', "too long"),
         ("x" * 3000, "too long"),
+        ('name = "Ada"\ngithub = "ada"\nmessage = "see https://example.com"\n', "links or @mentions"),
+        ('name = "Ada"\ngithub = "ada"\nmessage = "Visit WWW.example.com"\n', "links or @mentions"),
+        ('name = "Ada"\ngithub = "ada"\nmessage = "hi @someone"\n', "links or @mentions"),
+        ('name = "ada@example.com"\ngithub = "ada"\nmessage = "hi"\n', "links or @mentions"),
     ],
 )
 def test_invalid_sources(source, expected):
@@ -72,7 +76,8 @@ def test_deleting_own_file_rejected():
 
 
 def test_comment_mentions_user():
-    assert "@ada" in format_comment(check_source(GOOD, "ada"), "ada")
+    passed = format_comment(check_source(GOOD, "ada"), "ada")
+    assert "@ada" in passed and "merging your pull request now" in passed and "maintainer" not in passed
     assert "fix" in format_comment(check_source("", "ada"), "ada")
 
 
@@ -153,3 +158,27 @@ def test_a_syntax_error_says_its_line_once():
         "Your file isn't valid Python: unterminated string literal (line 3). "
         'A missing quote `"` is the most common cause.'
     ]
+
+
+def test_only_an_ordinary_file_passes(tmp_path, monkeypatch):
+    """The file is merged unread, so a symlink or an executable must not get through."""
+
+    def git(*args):
+        return subprocess.run(["git", *args], cwd=tmp_path, check=True, capture_output=True, text=True).stdout.strip()
+
+    git("init", "-q", "-b", "main")
+    git("config", "user.email", "t@example.com")
+    git("config", "user.name", "t")
+    (tmp_path / "first-commits").mkdir()
+    (tmp_path / "first-commits" / "README.md").write_text("hi\n")
+    git("add", ".")
+    git("commit", "-qm", "base")
+    base = git("rev-parse", "HEAD")
+    (tmp_path / "first-commits" / "ada.py").write_text(GOOD)
+    git("add", ".")
+    git("update-index", "--chmod=+x", "first-commits/ada.py")
+    git("commit", "-qm", "an executable file")
+    monkeypatch.chdir(tmp_path)
+
+    errors = validate("ada", base, git("rev-parse", "HEAD")).errors
+    assert errors == ["`first-commits/ada.py` must be an ordinary text file (not a link or a program)."]
