@@ -25,7 +25,7 @@ Then you go out into the real world. You learn the house rules every project has
 
 The course ends with a capstone: a merged pull request in a real project you choose. A bot verifies it on GitHub and adds you to the graduates wall.
 
-Every lesson has a short video, a written lesson, a hands-on exercise and a quiz. All the materials, exercises and bots live in a free, open source GitHub repository, linked from every lecture.
+Every lesson has a short video, a written lesson, a hands-on exercise and a quiz. All the materials, exercises and bots live in a free, open source GitHub repository: thejesh23/first-python-contribution. Every lecture links straight to its lesson there.
 
 How this course is made: the lessons and video scripts were drafted with AI and reviewed by the instructor, and the narration uses a text-to-speech voice. Every command shown in the course is tested.
 

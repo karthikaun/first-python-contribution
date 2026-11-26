@@ -83,11 +83,12 @@ ready, click **Ready for review**, or run `gh pr ready`.
 ## Opening it
 
 Write the description in a file, so you can read it over before anyone
-else does:
+else does. The title goes on the command line, so the file holds only the
+description, without a title line:
 
 ```bash norun
-gh pr create --title "Fix slugify for repeated spaces and punctuation" --body-file pr-description.md
-gh pr create --draft --title "..." --body-file pr-description.md   # not ready yet
+gh pr create --title "Fix slugify for repeated spaces and punctuation" --body-file description.md
+gh pr create --draft --title "..." --body-file description.md   # not ready yet
 ```
 
 Or in the browser: open your fork and click **Compare & pull request**, as
