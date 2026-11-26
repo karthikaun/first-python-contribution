@@ -4,7 +4,7 @@ A free video course that takes you from "I've never opened a pull request"
 to a merged contribution to a real Python project.
 
 - **Lesson 02 needs no install.** You open your first pull request in the
-  browser. A bot checks it within minutes and a maintainer merges it.
+  browser. A bot checks it and merges it within a minute.
 - **Then the real tools:** git, GitHub CLI, virtualenvs, pytest, ruff,
   pre-commit — the things maintainers will actually check.
 - **Then a real project:** finding an issue nobody else is working on,
@@ -18,7 +18,7 @@ to a merged contribution to a real Python project.
 
 The hands-on exercises happen right here: in Lesson 02 you star and fork
 this repo, then add your own file to [`first-commits/`](first-commits/) as
-your first commit. A bot checks it, then a maintainer reviews and merges it.
+your first commit. A bot checks it and, when it's right, merges it.
 
 ## How this course is made
 

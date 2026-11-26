@@ -11,6 +11,8 @@ Usage (in CI)::
     python tools/check_first_commit.py --login LOGIN --base BASE_SHA --head HEAD_SHA
 
 Prints a Markdown comment for the PR and exits 0 if the PR is valid, 1 if not.
+A valid PR is merged by the workflow without a human reading it, so the rules
+are strict: one ordinary file, three short strings, no links or mentions.
 Exits 3, printing nothing, when the PR doesn't add or change any
 ``first-commits/<name>.py`` (for example a maintainer editing the folder's
 README), so the bot stays quiet. It also stays quiet on an Exercise 2 pull
@@ -32,6 +34,8 @@ REQUIRED = ("name", "github", "message")
 MAX_BYTES = 2_000
 MAX_LEN = {"name": 80, "github": 39, "message": 280}
 LOGIN_RE = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$")
+LINK_RE = re.compile(r"https?://|www\.|@", re.IGNORECASE)  # nobody reads the file before it's merged
+REGULAR_FILE = "100644"
 
 
 NOT_A_LEARNER_PR = 3
@@ -155,6 +159,8 @@ def check_source(source: str, login: str) -> Result:
             result.errors.append(f"`{var}` is too long ({len(stripped)} characters, maximum {MAX_LEN[var]}).")
         if "\n" in value or "\r" in value:
             result.errors.append(f"`{var}` must be on one line.")
+        if var != "github" and LINK_RE.search(value):
+            result.errors.append(f"`{var}` can't contain links or @mentions. Use plain words.")
 
     placeholder = {"name": "Your Name", "github": "your-github-username"}
     for var, text in placeholder.items():
@@ -171,10 +177,10 @@ def check_source(source: str, login: str) -> Result:
 def format_comment(result: Result, login: str) -> str:
     if result.ok:
         return (
-            f"🎉 Looks great, @{login}! Your file passed every check. A maintainer "
-            "will review your pull request and merge it soon.\n\n"
-            "When it's merged, you'll see the purple **Merged** badge: your commit is "
-            "then part of a public project. Next up: Lesson 03, setting up git on your "
+            f"🎉 Looks great, @{login}! Your file passed every check, so I'm merging "
+            "your pull request now.\n\n"
+            "In a moment you'll see the purple **Merged** badge: your commit is then "
+            "part of a public project. Next up: Lesson 03, setting up git on your "
             "own machine."
         )
     lines = "\n".join(f"- {e}" for e in result.errors)
@@ -198,6 +204,10 @@ def validate(login: str, base: str, head: str) -> Result:
     changes = [tuple(line.split("\t", 1)) for line in raw.splitlines() if line.strip()]
     result, path = check_changes(changes, login)  # type: ignore[arg-type]
     if path is None:
+        return result
+    mode = _git("ls-tree", head, "--", path).split(" ", 1)[0]
+    if mode != REGULAR_FILE:
+        result.errors.append(f"`{path}` must be an ordinary text file (not a link or a program).")
         return result
     source = _git("show", f"{head}:{path}")
     result.errors.extend(check_source(source, login).errors)

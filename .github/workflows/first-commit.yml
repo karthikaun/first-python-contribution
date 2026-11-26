@@ -1,11 +1,18 @@
 name: Validate first commit
 
 # pull_request_target runs this workflow from the base branch with a write
-# token, so a fork's PR can be commented on. A maintainer reviews and merges.
+# token, so a fork's PR can be commented on and, when it passes, merged.
 # To stay safe, the PR's
 # code is never checked out or executed: the validator comes from the base
 # branch and only reads the learner's file with git show + ast.parse.
 # PRs that don't touch first-commits/<name>.py (status 3) get no comment.
+#
+# A PR that passes is merged here, so a learner's first pull request never
+# waits for a maintainer. It is safe to merge unread because the validator
+# allows exactly one ordinary file, first-commits/<login>.py, holding three
+# short strings with no links or mentions. The merge is a merge commit (a
+# squash would leave the learner's main out of step with ours), and only of
+# the commit that was checked. This is the only bot that merges.
 
 on:
   pull_request_target:
@@ -14,7 +21,7 @@ on:
     paths: ["first-commits/**"]
 
 permissions:
-  contents: read
+  contents: write # to merge a pull request that passed
   pull-requests: write
 
 concurrency:
@@ -58,6 +65,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.number }}
         run: gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body-file comment.md
+
+      - name: Merge the pull request that passed
+        if: steps.check.outputs.status == '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if ! gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --merge --match-head-commit "$HEAD"; then
+            gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body \
+              "I couldn't merge this by myself: the branch may have changed while I was checking, or it has a conflict. A maintainer will take a look."
+          fi
 
       - name: Fail the check when the file needs fixes
         if: steps.check.outputs.status != '0' && steps.check.outputs.status != '3'

@@ -71,9 +71,9 @@ Within a minute or two:
 
 - A check called **Validate first commit** runs. Scroll down on your PR to
   see it.
-- If your file is right, the bot comments 🎉, and a **maintainer reviews
-  and merges your PR**, usually within a day. The purple **Merged** badge
-  means your commit is now part of the project.
+- If your file is right, the bot comments 🎉 and **merges your PR**, usually
+  within a minute. The purple **Merged** badge means your commit is now part
+  of the project.
 - If something's wrong, the bot comments with exactly what to fix. Fix it in
   your fork (open your file, click the ✏️ pencil, commit). Your PR updates
   automatically and the check runs again.
@@ -82,8 +82,9 @@ Within a minute or two:
 
 That's the same workflow behind every open source contribution: **fork →
 commit → pull request → automated checks → merge**. In real projects a human
-reviews it too, and the checks run tests instead of reading three lines. You
-will do both in Part 3.
+reviews it and merges it, and the checks run tests instead of reading three
+lines. Here a bot merges your first commit, so you don't have to wait. You
+meet a human reviewer in your next pull request, in Lesson 05.
 
 ## Common problems
 
@@ -93,5 +94,6 @@ will do both in Part 3.
 | Changes files outside `first-commits/` | You edited another file too. Undo that change in your fork. |
 | Isn't valid Python | Usually a missing quote. Each value needs `"` at both ends. |
 | `github` doesn't match | The `github = "..."` value must be your username. |
+| Can't contain links or @mentions | Nobody reads your file before the bot merges it, so `name` and `message` must be plain words. |
 
 Next: [Lesson 03: set up your machine](../03-set-up-your-machine/).

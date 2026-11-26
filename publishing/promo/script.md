@@ -29,13 +29,13 @@ crop: 15,85,1260,245
 ## Scene 3: What you'll do
 visual: browser
 url: https://github.com/thejesh23/first-python-contribution/pull/27
-caption: Your first pull request: a bot checks it, a maintainer merges it
+caption: Your first pull request: a bot checks it, and merges it within a minute
 image: captures/first-pr.png
 height: 2600
 crop: 112,836,880,215
 
 > Your first pull request lands in about fifteen minutes, right in your
-> browser. A bot checks it within minutes, and a maintainer merges it.
+> browser. A bot checks it, and merges it within a minute.
 
 > By the end, you'll have a pull request merged in a real open source
 > project. One you chose yourself.

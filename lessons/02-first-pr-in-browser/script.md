@@ -131,7 +131,7 @@ highlight: 56,99,260,36
 ## Scene 9: The bot
 visual: browser
 url: https://github.com/thejesh23/first-python-contribution/pull/27
-caption: The bot explains what to fix, then hands over to a maintainer
+caption: The bot explains what to fix. When your file is right, it merges.
 image: captures/bot-review.png
 height: 2600
 crop: 100,528,900,552
@@ -140,9 +140,8 @@ crop: 100,528,900,552
 > runs. It reads your file with Python's own parser, the same way Python
 > reads your code before running it.
 
-> If your file is right, the bot says so, and a maintainer reviews and
-> merges your pull request. If something is wrong, the bot tells you
-> exactly what to fix. Fix it in your
+> If your file is right, the bot says so, and merges your pull request. If
+> something is wrong, the bot tells you exactly what to fix. Fix it in your
 > fork, and commit. Your pull request updates automatically, and the check
 > runs again.
 
@@ -158,12 +157,12 @@ bullets:
 - Automated checks
 - Merge
 
-> When the maintainer merges it, you get the purple Merged badge. Your
-> commit is now part of a public project.
+> When the bot merges it, you get the purple Merged badge. Your commit is
+> now part of a public project.
 
 > And that is the same workflow behind every open source contribution. Fork,
 > commit, pull request, automated checks, merge.
 
-> Real projects work the same way: the checks run first, then a human
-> reviews and merges. Their checks also run real tests. You'll write some
-> later in this course. Next, we set up your own machine.
+> In real projects, the checks run first, then a human reviews and merges.
+> Their checks also run real tests. You'll write some, and meet a human
+> reviewer, later in this course. Next, we set up your own machine.

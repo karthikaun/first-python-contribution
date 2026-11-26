@@ -13,7 +13,7 @@ By the end of this course you'll have a pull request merged in a real open sourc
 
 1. Open the resources of any lecture. Each one links to the written lesson, the exercise and the quiz in the course's GitHub repository.
 2. Do the exercises. You learn this by doing it, not by watching: your first pull request takes about 15 minutes, right in the browser, in Lecture 2.
-3. A bot checks your work within minutes, and I review and merge it myself.
+3. A bot checks your work within minutes. It merges your first pull request itself, and I review and merge the later ones.
 4. Stuck? Ask in the Q&A, or open an issue in the repository. That's good practice too.
 
 You can do the whole course in a day: about an hour of video and six hours of exercises. Only the capstone takes longer, because a real maintainer has to review your pull request.

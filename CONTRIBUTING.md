@@ -9,8 +9,8 @@ Thanks for helping! There are two kinds of contribution here.
 - **Lesson 05:** add `practice/greetings/YOUR_NAME.py` and its test. See
   [the lesson](lessons/05-second-pr-from-terminal/).
 
-Bots check these PRs, and a maintainer reviews and merges them. Change only
-your own files.
+A bot checks these PRs. It merges a first commit that passes; a maintainer
+reviews and merges the Lesson 05 ones. Change only your own files.
 
 ## 2. Improving the course
 
