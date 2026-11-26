@@ -171,3 +171,55 @@ def test_main_is_silent_for_maintainer_prs(tmp_path, monkeypatch, capsys):
     code = main(["--login", "ada", "--base", base, "--head", "HEAD", "--tests", "success"])
     assert code == NOT_A_LEARNER_PR
     assert capsys.readouterr().out == ""
+
+
+def _repo(tmp_path):
+    def git(*args):
+        return subprocess.run(["git", *args], cwd=tmp_path, check=True, capture_output=True, text=True).stdout.strip()
+
+    git("init", "-q", "-b", "main")
+    git("config", "user.email", "t@example.com")
+    git("config", "user.name", "t")
+    for folder in ("practice/greetings", "practice/tests", "first-commits"):
+        (tmp_path / folder).mkdir(parents=True)
+    (tmp_path / "practice/README.md").write_text("hi\n")
+    git("add", ".")
+    git("commit", "-qm", "base")
+    return git
+
+
+FIRST_COMMIT = 'name = "Ada"\ngithub = "ada"\nmessage = "Hello"\n'
+
+
+def test_first_commit_carried_along_is_accepted_and_explained(tmp_path, monkeypatch):
+    """PR #47: the first PR isn't merged yet, and the Exercise 2 branch started from the fork's main."""
+    git = _repo(tmp_path)
+    base = git("rev-parse", "HEAD")
+    (tmp_path / "first-commits/ada.py").write_text(FIRST_COMMIT)
+    git("add", ".")
+    git("commit", "-qm", "first commit, on the fork's main")
+    (tmp_path / "practice/greetings/ada.py").write_text(GREETING)
+    (tmp_path / "practice/tests/test_ada.py").write_text(TEST.replace("thejesh23", "ada"))
+    git("add", ".")
+    git("commit", "-qm", "exercise 2")
+    monkeypatch.chdir(tmp_path)
+
+    result = validate("ada", base, git("rev-parse", "HEAD"))
+    assert result.ok, result.errors
+    comment = format_comment(result, "ada", "success", "https://run")
+    assert "maintainer will review" in comment
+    assert "first-commits/ada.py" in comment and "upstream/main" in comment
+
+    # The carried file gets the first-commit checks too.
+    (tmp_path / "first-commits/ada.py").write_text('name = "Ada"\ngithub = "ada"\nmessage = "Hello\n')
+    git("commit", "-qam", "break the quote")
+    errors = validate("ada", base, git("rev-parse", "HEAD")).errors
+    assert any("first-commit file" in e and "valid Python" in e for e in errors), errors
+
+
+def test_someone_elses_first_commit_file_is_still_rejected():
+    changes = [("A", "practice/greetings/ada.py"), ("A", "practice/tests/test_ada.py"), ("A", "first-commits/bob.py")]
+    result = check_changes(changes, "ada")
+    assert any("first-commits/bob.py" in e for e in result.errors)
+    deleted = [("A", "practice/greetings/ada.py"), ("A", "practice/tests/test_ada.py"), ("D", "first-commits/ada.py")]
+    assert any("first-commits/ada.py" in e for e in check_changes(deleted, "ada").errors)
