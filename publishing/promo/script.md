@@ -28,11 +28,11 @@ crop: 15,85,1260,245
 
 ## Scene 3: What you'll do
 visual: browser
-url: https://github.com/thejesh23/first-python-contribution/pull/27
+url: https://github.com/thejesh23/first-python-contribution/pull/52
 caption: Your first pull request: a bot checks it, and merges it within a minute
 image: captures/first-pr.png
 height: 2600
-crop: 112,836,880,215
+crop: 112,822,880,236
 
 > Your first pull request lands in about fifteen minutes, right in your
 > browser. A bot checks it, and merges it within a minute.
