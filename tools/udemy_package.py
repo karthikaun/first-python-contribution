@@ -234,7 +234,11 @@ def upload_guide(landing: dict, sections: list[Section]) -> str:
         "## 3. Curriculum",
         "",
         "Create one section per heading below, then one lecture per row. Upload the video, add its",
-        "captions (English) and add the written lesson as an external resource link.",
+        "captions (English) and add the written lesson as an external resource link. Put the same",
+        'link in the lecture\'s description too: "Written lesson, exercise and quiz: LINK".',
+        "",
+        "Udemy allows no links on the landing page itself (only in the instructor bio), so the",
+        "description names the repository without a link.",
         "",
     ]
     for n, section in enumerate(sections, start=1):
