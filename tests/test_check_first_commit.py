@@ -144,3 +144,12 @@ def test_main_is_silent_on_an_exercise_2_pr_that_carries_the_first_commit(tmp_pa
     capsys.readouterr()
     assert main(["--login", "ada", "--base", base, "--head", git("rev-parse", "HEAD")]) == NOT_A_LEARNER_PR
     assert capsys.readouterr().out == ""
+
+
+def test_a_syntax_error_says_its_line_once():
+    """Python adds "(detected at line 3)" to some messages; the bot used to add "(line 3)" after it."""
+    errors = check_source('name = "Ada"\ngithub = "ada"\nmessage = "Hello\n', "ada").errors
+    assert errors == [
+        "Your file isn't valid Python: unterminated string literal (line 3). "
+        'A missing quote `"` is the most common cause.'
+    ]

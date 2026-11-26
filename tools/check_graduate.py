@@ -35,7 +35,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from check_first_commit import LOGIN_RE, Result, _git  # noqa: E402
+from check_first_commit import LOGIN_RE, Result, _git, syntax_problem  # noqa: E402
 
 FOLDER = "graduates"
 REQUIRED = ("name", "github", "pr", "message")
@@ -83,7 +83,7 @@ def parse_source(source: str) -> tuple[Result, dict[str, str]]:
     try:
         tree = ast.parse(source)
     except SyntaxError as exc:
-        result.errors.append(f"Your file isn't valid Python: {exc.msg} (line {exc.lineno}).")
+        result.errors.append(f"Your file isn't valid Python: {syntax_problem(exc)}.")
         return result, values
     for node in tree.body:
         if (

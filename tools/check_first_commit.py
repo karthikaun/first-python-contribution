@@ -98,6 +98,12 @@ def check_changes(changes: list[tuple[str, str]], login: str) -> tuple[Result, s
     return result, path
 
 
+def syntax_problem(exc: SyntaxError) -> str:
+    """ "unterminated string literal (line 3)": Python's message, with the line number said once."""
+    message = re.sub(r"\s*\(detected at line \d+\)", "", str(exc.msg))
+    return f"{message} (line {exc.lineno})"
+
+
 def check_source(source: str, login: str) -> Result:
     """Check the contents of a learner's file without running it."""
     result = Result()
@@ -110,7 +116,7 @@ def check_source(source: str, login: str) -> Result:
         tree = ast.parse(source)
     except SyntaxError as exc:
         hint = ' A missing quote `"` is the most common cause.' if "string" in str(exc.msg).lower() else ""
-        result.errors.append(f"Your file isn't valid Python: {exc.msg} (line {exc.lineno}).{hint}")
+        result.errors.append(f"Your file isn't valid Python: {syntax_problem(exc)}.{hint}")
         return result
 
     values: dict[str, str] = {}

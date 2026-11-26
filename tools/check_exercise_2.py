@@ -34,7 +34,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from check_first_commit import FOLDER as FIRST_COMMITS  # noqa: E402
-from check_first_commit import LOGIN_RE, Result, _git, check_source  # noqa: E402
+from check_first_commit import LOGIN_RE, Result, _git, check_source, syntax_problem  # noqa: E402
 
 MAX_BYTES = 3_000
 BANNED_NAMES = {
@@ -157,7 +157,7 @@ def _parse(source: str, label: str, result: Result) -> ast.Module | None:
     try:
         return ast.parse(source)
     except SyntaxError as exc:
-        result.errors.append(f"{label} isn't valid Python: {exc.msg} (line {exc.lineno}).")
+        result.errors.append(f"{label} isn't valid Python: {syntax_problem(exc)}.")
         return None
 
 
