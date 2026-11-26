@@ -146,7 +146,38 @@ bullets:
 > they are happy to see new people. Review comments are about the code. They
 > are not about you.
 
-## Scene 8: The road ahead
+## Scene 8: By hand, on purpose
+visual: slide
+layout: cards
+title: Why you type every command yourself
+focus: 0 | 1 | 2 | 3 | 4 | all
+bullets:
+- You answer for it | Your name is on the pull request. You must be able to explain every line.
+- You have to check it | Branches, commits and diffs show you what the agent really did.
+- Things go wrong | A rejected push or a conflict only makes sense if you know the words.
+- Open source is people | Choosing an issue, asking first, answering review. Maintainers want to hear from you.
+
+> One more thing. In this course, you type every command yourself, in the
+> terminal. No {AI|A I} agent does it for you. That is on purpose, even
+> though tools like {Claude Code|Clawd Code} and Codex can open a pull
+> request in minutes. Four reasons.
+
+> One. You answer for it. Your name is on the pull request, so you must be
+> able to explain every line.
+
+> Two. You have to check it. Branches, commits and diffs show you what the
+> agent really did.
+
+> Three. Things go wrong. A rejected push, or a conflict, only makes sense
+> if you know the words.
+
+> Four. Open source is people. Choosing an issue, asking first, answering
+> review. Maintainers want to hear from you.
+
+> The steps are small, and you learn them once. After that, an agent is a
+> faster pair of hands, and you still know what is going on.
+
+## Scene 9: The road ahead
 visual: slide
 layout: cards
 title: Where this course goes
@@ -167,7 +198,7 @@ bullets:
 
 > Part four. Being a good contributor. That includes using A I tools honestly.
 
-## Scene 9: Your task
+## Scene 10: Your task
 visual: slide
 title: Before the next lesson
 bullets:

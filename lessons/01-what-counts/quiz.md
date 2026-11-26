@@ -34,3 +34,13 @@ change still takes you through the whole workflow.
 Any two of: a virtual environment (venv), pytest, ruff (or another linter),
 pre-commit.
 </details>
+
+**5. An AI agent can open a pull request for you. Give two reasons this course has you do every step by hand anyway.**
+
+<details><summary>Answer</summary>
+
+Any two of: your name is on it, so you must be able to explain every line;
+you need to read branches, commits and diffs to check what the agent did;
+when a push is rejected or there's a conflict, you have to understand it to
+fix it; and maintainers want to talk to you, in your own words.
+</details>
