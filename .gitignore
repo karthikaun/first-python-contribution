@@ -8,3 +8,4 @@ build/
 .DS_Store
 *.wav
 dist/
+pr-description.md
