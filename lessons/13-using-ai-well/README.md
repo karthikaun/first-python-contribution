@@ -16,6 +16,11 @@ contributor, not a source of work for maintainers.
 it.** If a reviewer asks "why does this work?", you must be able to answer
 without asking the AI again.
 
+That is why this course had you do every step by hand, in the terminal,
+with no agent. An agent such as Claude Code or Codex can run the whole
+workflow, but you can only check its work if you know what a good branch,
+commit, test and pull request look like (Lesson 01 gives the four reasons).
+
 ## Where AI tools help
 
 | Task | How it helps | How to use it safely |

@@ -25,6 +25,8 @@ Then you go out into the real world. You learn the house rules every project has
 
 The course ends with a capstone: a merged pull request in a real project you choose. A bot verifies it on GitHub and adds you to the graduates wall.
 
+In this course you do every step by hand, in the terminal. No AI agent does it for you. That is on purpose, even though agents such as Claude Code or Codex can open a pull request in minutes. Your name is on that pull request: you have to check what the agent did, explain every line to a reviewer, fix things when git goes wrong, and talk to maintainers in your own words. You can only do that if you have done each step yourself. This course gives you that in about a day, and then a lesson on using AI tools well.
+
 Every lesson has a short video, a written lesson, a hands-on exercise and a quiz. All the materials, exercises and bots live in a free, open source GitHub repository: thejesh23/first-python-contribution. Every lecture links straight to its lesson there.
 
 How this course is made: the lessons and video scripts were drafted with AI and reviewed by the instructor, and the narration uses a text-to-speech voice. Every command shown in the course is tested.

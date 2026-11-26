@@ -1,6 +1,6 @@
 # Lesson 01: What counts as a contribution
 
-**Time:** 4 minute video · 5 minute exercise
+**Time:** 5 minute video · 5 minute exercise
 **You'll need:** nothing yet
 
 ## Open source in one paragraph
@@ -50,6 +50,35 @@ what this course teaches.
    PRs are easy to review, so they get merged.
 3. **"Maintainers will be harsh."** Most are volunteers who are happy to see
    new people. Review comments are about the code, not about you.
+
+## Why this course does everything by hand
+
+In this course you type every command yourself, in a terminal. No AI agent
+does a step for you. That's on purpose, even though tools like Claude Code
+and Codex can fork a repo, write a change and open a pull request in
+minutes. Four reasons:
+
+1. **You answer for it, not the tool.** Your name is on the pull request.
+   Projects hold the person who opened it responsible for every line, and
+   many say so in an AI policy (Lesson 06). When a reviewer asks "why this
+   change?", you have to answer.
+2. **You can't check what you can't read.** What an agent produces is a
+   branch, some commits and a diff. Knowing what those are is how you see
+   what it really did, and how you notice that it changed a test instead of
+   the code, or touched files nobody asked about.
+3. **Things go wrong, and then it's you and git.** A rejected push, a
+   conflict, a branch started from the wrong place: you need to know what
+   the words mean to fix it, or even to tell the agent what to fix.
+4. **Open source is people.** Choosing an issue nobody else is working on,
+   asking before you start, answering review, waiting politely: no tool does
+   that for you. Maintainers want to hear from you, in your own words
+   (Lesson 13).
+
+The steps are small and you learn them once: this course takes about a day.
+So do the exercises by hand, even if you have an agent open in another
+window. After that, an agent is a faster pair of hands, and you are still
+the one who knows what is going on. Lesson 13 is about using these tools
+well.
 
 ## Where this course goes
 
