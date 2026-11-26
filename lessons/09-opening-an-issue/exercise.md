@@ -17,7 +17,9 @@ the way a maintainer would want.
 
 - [ ] Search the [issues](https://github.com/thejesh23/first-python-contribution/issues) for your bug. Here a
       duplicate is fine, since other learners hunt the same bugs; in a real project, add to the existing issue instead
-- [ ] Open **Issues → New issue → Bug hunt: report a splitbill bug**, fill in every field, and submit
+- [ ] Open **Issues → New issue → Bug hunt: report a splitbill bug**, fill in every field, and submit.
+      Use the form in the browser, not `gh issue create`: the form adds the `bug-hunt` label the bot looks for,
+      and only maintainers can add labels from the command line
 - [ ] Read the bot's comment. Fix any ✘ by editing your issue (**···** → **Edit**); the bot checks again when you save
 
 Please **don't** open a pull request that fixes the bug: the next learner
