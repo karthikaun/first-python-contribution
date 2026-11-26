@@ -116,11 +116,15 @@ ruff check practice
 ```
 
 ```text
-9 passed in 0.01s
+5 passed in 0.01s
+10 passed in 0.01s
+9 files left unchanged
+All checks passed!
 ```
 
 Narrow first (fast), then the whole suite and the linters, exactly as CI
-will.
+will. Your second number is higher: every learner's merged Exercise 2 adds
+tests.
 
 ## Step 5: A changelog entry
 
