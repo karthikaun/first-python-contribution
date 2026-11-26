@@ -5,7 +5,7 @@
 - [ ] Set `user.name`, `user.email` and `init.defaultBranch` with `git config --global`
 - [ ] `gh auth login`
 - [ ] `gh repo clone YOUR-USERNAME/first-python-contribution` and `cd` into it
-- [ ] `git pull upstream main`
+- [ ] `git fetch upstream`
 - [ ] `python3 tools/doctor.py` shows only green ✔
 
 **Stuck on a red ✘?** The message says what to fix. If it still fails,
