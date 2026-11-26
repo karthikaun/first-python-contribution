@@ -77,7 +77,7 @@ bullets:
 - A bot marks it "stale" | After inactivity, a bot closes the PR. Still interested? Comment before it closes.
 - A maintainer finishes it | They push to your branch, or re-do it. You usually still get credit. That's a success.
 
-> There are two more endings. A bot marks the pull request stale, and
+> There are two more endings. A bot marks the pull request as stale, and
 > closes it after inactivity. If you're still interested, comment before it
 > closes.
 
