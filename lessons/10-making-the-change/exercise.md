@@ -3,7 +3,7 @@
 Exercise 3 happens on your machine. **Don't open a pull request**: the bug
 has to stay for the next learner.
 
-- [ ] `git switch main`, `git pull upstream main`, `git switch -c fix-slugify`
+- [ ] `git fetch upstream`, then `git switch -c fix-slugify upstream/main`
 - [ ] Reproduce the bug from the lesson's bug report
 - [ ] Add a parametrized test to `practice/tests/test_textkit.py` and watch it fail
 - [ ] Fix `slugify` in `practice/textkit.py`, and update its docstring

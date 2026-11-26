@@ -43,12 +43,12 @@ bullets:
 visual: terminal
 focus: 1 | 2-3 | 4
 notes:
-- A new branch for the fix
+- A new branch for the fix, from the newest upstream (`git fetch upstream` first)
 - Call the function yourself
 - Two hyphens. The bug is real.
 code:
 ```
-$ git switch -c fix-slugify
+$ git switch -c fix-slugify upstream/main
 $ cd practice
 $ python -c "from textkit import slugify; print(repr(slugify('Hello  World')))"
 'hello--world'

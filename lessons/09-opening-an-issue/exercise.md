@@ -3,7 +3,8 @@
 `bug-hunt/splitbill.py` has **five** bugs on purpose. Find one and report it
 the way a maintainer would want.
 
-- [ ] Get the latest course files: `git switch main` and `git pull upstream main`
+- [ ] In the course folder, check the bug hunt is there: `ls bug-hunt`. (Missing? Your fork is older than this
+      lesson: `git fetch upstream`, then `git switch -c bug-hunt upstream/main`.)
 - [ ] Read [`bug-hunt/README.md`](../../bug-hunt/README.md): it's the spec, what splitbill *should* do
 - [ ] Try splitbill with different bills, people, tips and tax, and compare with the README
 - [ ] Found something different? Make it **minimal**: the smallest numbers and fewest options that still show it
