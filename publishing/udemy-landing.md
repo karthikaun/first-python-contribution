@@ -15,6 +15,8 @@ From never opening a pull request to a merged contribution: git, GitHub, pytest,
 
 ## Description
 
+This course contains the use of artificial intelligence.
+
 Never opened a pull request? This course takes you from zero to a merged contribution in a real open source Python project, one small, practical step at a time.
 
 You start with a win in the first 15 minutes: you star and fork the course's GitHub repository and make your first commit, entirely in the browser. A bot checks your work within minutes, and a maintainer merges it. Then you set up the real tools (git, the GitHub CLI and Python), learn just enough git to never feel lost, and open a second pull request from the terminal with a Python function and its test. That one has to pass CI before it's merged.
