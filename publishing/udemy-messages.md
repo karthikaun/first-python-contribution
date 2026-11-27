@@ -30,4 +30,6 @@ If you haven't yet, do the capstone in Lecture 15: get a pull request merged in 
 
 Keep going: your second contribution is easier than your first, and your tenth makes you a regular. Pick a project you use, and keep showing up.
 
+You did this course by hand, so you know the basics. For your next contributions, go ahead and use agentic tools like Claude Code, Codex or Cursor: they speed up the work. Check each project's AI policy first, because some don't accept AI-assisted pull requests.
+
 Thank you for learning with me, and welcome to open source!

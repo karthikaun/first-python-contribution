@@ -139,7 +139,26 @@ bullets:
 > the bot says so. A maintainer merges it, and you appear on the graduates
 > wall. If not, its comment says exactly what's wrong.
 
-## Scene 8: Welcome
+## Scene 8: Now you can use AI agents
+visual: slide
+title: Now you can use AI agents
+bullets:
+- You know the basics. Claude Code, Codex or Cursor will speed you up.
+- Read the project's AI policy first. Some accept no AI pull requests.
+- You still answer for every line
+
+> One last thing. You did this whole course by hand, so you know the basics.
+> For your next contributions, go ahead and use agentic tools, like
+> {Claude Code|Clawd Code}, Codex, or Cursor. They speed up the work, and now
+> you can check what they did.
+
+> But be careful. Read the project's {AI|A I} policy first. Some projects,
+> including well known ones, don't accept {AI|A I} assisted pull requests at
+> all. Others want you to say that you used one.
+
+> And everywhere, you still answer for every line.
+
+## Scene 9: Welcome
 visual: slide
 title: Welcome to open source
 bullets:

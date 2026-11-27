@@ -1,6 +1,6 @@
 # Lesson 15: Capstone: your first external contribution
 
-**Time:** 2 minute video · 1–4 weeks, mostly waiting for review
+**Time:** 3 minute video · 1–4 weeks, mostly waiting for review
 **You'll need:** everything so far
 
 Time to do it for real: a **merged pull request in an open source project
@@ -113,5 +113,17 @@ You can contribute to any open source project now. A few ideas:
   review someone's first-commit PR, or improve a lesson that confused you.
 - **Bookmark the [troubleshooting page](../A-troubleshooting/)** for when
   something odd happens.
+
+### Now you can use AI agents
+
+You did this whole course by hand, so you know the basics. For your next
+contributions, go ahead and use agentic tools like Claude Code, Codex or
+Cursor. They speed up the work, and now you can check what they did.
+
+Be careful about one thing: **read the project's AI policy first.** Some
+projects, including well-known ones, don't accept AI-assisted pull requests
+at all (Lesson 06 names Gentoo, NetBSD and QEMU). Others accept them only if
+you disclose it. And everywhere, you still answer for every line and write
+your own comments (Lesson 13).
 
 Welcome to open source. 🎓

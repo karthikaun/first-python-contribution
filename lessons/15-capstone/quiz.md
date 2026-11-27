@@ -36,3 +36,13 @@ Would the maintainer have wanted it even if you weren't doing a course?
 Open an issue in the course repo with a link; the bot can only check GitHub,
 so it's added by hand.
 </details>
+
+**6. You've finished the course. Can you use Claude Code, Codex or Cursor for your next contribution?**
+
+<details><summary>Answer</summary>
+
+Yes, if the project allows it. Read its AI policy first: some projects don't
+accept AI-assisted pull requests at all, and others want it disclosed in a
+set format. Either way you answer for every line, and you write your own
+comments and descriptions.
+</details>
