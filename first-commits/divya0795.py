@@ -1,3 +1,3 @@
 name = "Divya"
 github = "divya0795"
-message = "Testing the course from a second account"
+message = "Learning Python by contributing to open source"
